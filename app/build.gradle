@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'gersion'
+            keyPassword 'hpw3kojn3DdJ'
+            storeFile file('E:/eclipse皮肤/SuperPasswordLock.jks')
+            storePassword 'hpw3kojn3DdJ'
+        }
+    }
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+    defaultConfig {
+        applicationId "com.gersion.superpasswordlock"
+        minSdkVersion 16
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        resConfigs "zh"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false // 是否混淆
+            shrinkResources false // 是否去除无效的资源文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'debug-proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            pseudoLocalesEnabled true
+            zipAlignEnabled true
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile project(':toastlibrary')
+    //    compile 'com.fivehundredpx:blurringview:1.0.0'
+    //    compile(name:'ResideMenu-release', ext:'aar')
+    compile(name: 'DialogUtils', ext: 'aar')
+    //    compile 'com.nightonke:boommenu:1.0.9'
+    //    compile 'com.nightonke:boommenu:1.0.9'
+    //    compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
+    //    compile 'com.flyco.banner:FlycoBanner_Lib:1.1.8@aar'
+    //    compile 'io.reactivex.rxjava2:rxjava:2.0.0-RC3'
+    //    compile 'com.mxn.soul:flowingdrawer-core:1.2.5'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.4'
+    compile 'com.orhanobut:logger:1.15'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.4@aar'
+    compile 'com.gordonwong:material-sheet-fab:1.2.1'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.android.support:support-v4:24.2.1'
+    testCompile 'junit:junit:4.12'
+}

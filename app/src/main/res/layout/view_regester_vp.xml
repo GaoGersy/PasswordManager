@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#20202B" >
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="270dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="30dp"
+        android:background="@mipmap/shadow" />
+
+    <RelativeLayout
+        android:id="@+id/view_regester_bg"
+        android:layout_width="200dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:background="@mipmap/regester_verify_paine" >
+
+        <TextView
+            android:id="@+id/view_regester_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp"
+            android:text="注册用户"
+            android:textColor="#E3E7F2"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical" >
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/layout_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/view_regester_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="请输入密码"
+                android:imeOptions="actionGo"
+                android:paddingTop="1dp"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColorHint="#A2ABBE"
+                android:textColor="#A2ABBE"
+                android:textCursorDrawable="@drawable/color_courser"
+                android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/view_regester_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:src="@mipmap/go" />
+    </RelativeLayout>
+
+</FrameLayout>

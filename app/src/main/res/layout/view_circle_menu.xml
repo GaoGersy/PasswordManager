@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/view_circle_menu_container"
+        android:layout_width="400dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/view_circle_menu_small_1"
+            style="@style/CircleMenuStyle"
+            android:text="+"
+            />
+
+        <TextView
+            android:id="@+id/view_circle_menu_small_2"
+            style="@style/CircleMenuStyle"
+            android:text="+" />
+
+        <TextView
+            android:id="@+id/view_circle_menu_small_3"
+            style="@style/CircleMenuStyle"
+            android:text="+"/>
+
+
+        <TextView
+            android:id="@+id/view_circle_menu_small_4"
+            style="@style/CircleMenuStyle"
+            android:text="+"/>
+        <TextView
+            android:id="@+id/view_circle_menu_small_5"
+            style="@style/CircleMenuStyle"
+            android:text="+"/>
+
+        <TextView
+            android:id="@+id/view_circle_menu_big"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_menu_bg"
+            android:gravity="center"
+            android:text="单"
+            android:textColor="#fff" />
+    </RelativeLayout>
+    <TextView
+        android:layout_margin="10dp"
+        android:id="@+id/view_circle_menu_cai"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape_menu_bg"
+        android:gravity="center"
+        android:text="菜"
+        android:textColor="#fff" />
+
+</RelativeLayout>

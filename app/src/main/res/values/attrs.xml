@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--ToggleButtonView-->
+    <declare-styleable name="ToggleButtonView">
+        <attr name="state" format="boolean" />
+    </declare-styleable>
+    <!--ToggleButton-->
+    <declare-styleable name="MyToggleButton">
+        <attr name="switchState" format="boolean" />
+        <attr name="stateOnSrc" format="reference" />
+        <attr name="stateOffSrc" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ToggleButton">
+        <attr name="tbBorderWidth" format="dimension"/>
+        <attr name="tbOffBorderColor" format="reference|color"/>
+        <attr name="tbOffColor" format="reference|color"/>
+        <attr name="tbOnColor" format="reference|color"/>
+        <attr name="tbSpotColor" format="reference|color"/>
+        <attr name="tbAnimate" format="reference|boolean"/>
+        <attr name="tbAsDefaultOn" format="reference|boolean"/>
+    </declare-styleable>
+
+
+    <!--SlideButtonView-->
+    <declare-styleable name="SlideButtonView">
+        <attr name="status" format="boolean" />
+    </declare-styleable>
+
+    <!--CirecleMenuView-->
+    <declare-styleable name="CirecleMenuView">
+        <attr name="cmvText" format="string|reference" />
+    </declare-styleable>
+    <!--CheckedEditTextView-->
+    <declare-styleable name="CheckedEditTextView">
+        <attr name="lable" format="string|reference" />
+        <attr name="hasStatuBar" format="boolean" />
+        <attr name="lableColor" format="color" />
+        <attr name="lableSize" format="dimension" />
+        <attr name="editTextBg" format="reference" />
+    </declare-styleable>
+</resources>

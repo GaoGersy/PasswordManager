@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#20202B">
+
+    <TextView
+        android:padding="10dp"
+        android:textColor="#C9D1E3"
+        android:text="开发初衷：\n 因为作者经常会忘记密码，而且现在的各种密码越来越多了,基于自身的需求制作了这个小软件。虽然这个程序不算很复杂，确实在这上面花了很多心思。希望这款小软件同样能解决您些许烦恼，你要是有什么意见或建议，欢迎您联系我，不胜感激！"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:padding="10dp"
+        android:textColor="#C9D1E3"
+        android:text="邮箱：gaogersion@163.com"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:padding="10dp"
+        android:textColor="#C9D1E3"
+        android:text="QQ：158654854"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:padding="10dp"
+        android:textColor="#C9D1E3"
+        android:text="如果您想支持下作者：\n\n支付宝：15024047287"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

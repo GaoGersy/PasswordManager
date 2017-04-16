@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_item_bg"
+                android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/defaulticon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="密"
+        android:textColor="#C9D1E3"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:drawableLeft="@drawable/ic_av_timer_purple_200_24dp"
+        android:id="@+id/tv_create_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="创建时间"
+        android:gravity="center|left"
+        android:textColor="#C9D1E3"/>
+
+</RelativeLayout>

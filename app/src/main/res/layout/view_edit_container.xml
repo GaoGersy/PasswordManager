@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/container_bg"
+              android:gravity="center"
+              android:padding="8dp">
+    <TextView
+        android:textSize="12sp"
+        android:maxLines="1"
+        android:layout_weight="1"
+        android:layout_marginBottom="5dp"
+        android:text="用户名:"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:layout_weight="2"
+        android:layout_marginLeft="20dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/text_error_bg"
+        android:maxLines="1"
+        android:padding="6dp"
+        android:textSize="15sp"/>
+    <TextView
+        android:layout_weight="1"
+        android:background="@mipmap/status_warming"
+        android:maxLines="1"
+        android:layout_marginBottom="5dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <!--<EditText-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@drawable/text_bg"/>-->
+    <!--<EditText-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@drawable/text_bg"/>-->
+    <!--<EditText-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@drawable/text_bg"/>-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@drawable/bottom"/>-->
+
+</LinearLayout>

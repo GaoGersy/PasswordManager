@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@mipmap/input_focus" android:state_focused="true"></item>
+    <item android:drawable="@mipmap/input_no_focus" ></item>
+
+</selector>

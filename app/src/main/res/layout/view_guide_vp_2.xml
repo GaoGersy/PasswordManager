@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/activity_main"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#20202B">
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_dot_green"
+            android:src="@drawable/shape_guide_bg_green"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/iv_dot_yellow"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/shape_guide_bg"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/iv_dot_purple"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/shape_guide_bg_blue"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_middle_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="也许你也跟作者一样，经常忘记密码\n找回密码这种事是家常便饭"
+        android:textColor="#6D7281"/>
+    </LinearLayout>
+
+
+</FrameLayout>

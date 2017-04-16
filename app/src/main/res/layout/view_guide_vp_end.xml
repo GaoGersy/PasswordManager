@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#20202B">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_complete_content"
+            android:layout_gravity="center"
+            android:textColor="#9DA6B9"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="非常感谢您能耐心的完成整个引导\n\n接下来让我们一起来创建一个程序的主密码吧"/>
+
+        <TextView
+            android:id="@+id/tv_complete"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:textColor="#ddffffff"
+            android:text="完成"
+            android:background="@drawable/shape_guide_bg_red"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+    </LinearLayout>
+
+</FrameLayout>

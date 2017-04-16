@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_splash"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#20202B" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/activity_splash_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </android.support.v4.view.ViewPager>
+
+    <LinearLayout
+        android:id="@+id/activity_splash_step"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/activity_splash_next"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/next" />
+
+    <ImageView
+        android:id="@+id/activity_splash_go"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/go"
+        android:visibility="gone" />
+
+    <ImageView
+
+        android:visibility="gone"
+        android:id="@+id/activity_splash_pre"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="10dp"
+        android:src="@mipmap/pre" />
+
+</FrameLayout>

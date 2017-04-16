@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="5dp"
+    android:background="@drawable/shape_item_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:drawableLeft="@drawable/ic_add_location_purple_200_24dp"
+        android:id="@+id/address"
+        style="@style/ListTextStyle"
+        android:layout_marginTop="10dp"
+        android:text="这里是密码所在的地方"/>
+
+    <TextView
+        android:drawableLeft="@drawable/ic_assignment_ind_purple_200_24dp"
+        android:id="@+id/name"
+        style="@style/ListTextStyle"
+        android:text="这里是用户名"/>
+
+    <TextView
+        android:drawableLeft="@drawable/ic_vpn_key_purple_200_24dp"
+        android:id="@+id/password"
+        style="@style/ListTextStyle"
+        android:text="这里是密码"/>
+
+    <TextView
+        android:drawableLeft="@drawable/ic_access_time_purple_200_24dp"
+        android:visibility="gone"
+        android:paddingRight="10dp"
+        android:gravity="right"
+        android:id="@+id/time"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        style="@style/ListTextStyle"
+        android:text="这里是密码"/>
+
+</LinearLayout>
