@@ -17,7 +17,7 @@ import com.gersion.superlock.dao.PasswordDao;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -26,7 +26,7 @@ public class MyFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @Bind(R.id.lv_list)
+    @BindView(R.id.lv_list)
     ListView mLvList;
 
     // TODO: Rename and change types of parameters
@@ -107,7 +107,6 @@ public class MyFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     public interface OnFragmentInteractionListener {

@@ -15,8 +15,6 @@ import android.widget.TextView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.utils.LogUtils;
 
-import butterknife.ButterKnife;
-
 /**
  * @作者 Gersy
  * @版本
@@ -108,6 +106,5 @@ public class Page2Fragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

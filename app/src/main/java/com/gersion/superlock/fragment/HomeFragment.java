@@ -52,7 +52,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -75,25 +75,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public static final String TOTAL_COUNT = "total_count";
     public int mTotal_count = 0;
     RecyclerView mRvDetail;
-    @Bind(R.id.ll_container)
+    @BindView(R.id.ll_container)
     LinearLayout mLlContainer;
-    @Bind(R.id.overlay)
+    @BindView(R.id.overlay)
     DimOverlayFrameLayout mOverlay;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FabMenu mFab;
-    @Bind(R.id.fab_sheet)
+    @BindView(R.id.fab_sheet)
     CardView mFabSheet;
-    @Bind(R.id.fab_sheet_item_add)
+    @BindView(R.id.fab_sheet_item_add)
     TextView mFabSheetItemAdd;
-    @Bind(R.id.fab_sheet_item_backup)
+    @BindView(R.id.fab_sheet_item_backup)
     TextView mFabSheetItemBackup;
-    @Bind(R.id.fab_sheet_item_change_pwd)
+    @BindView(R.id.fab_sheet_item_change_pwd)
     TextView mFabSheetItemChangePwd;
-    @Bind(R.id.fab_sheet_item_setting)
+    @BindView(R.id.fab_sheet_item_setting)
     TextView mFabSheetItemSetting;
-    @Bind(R.id.fab_sheet_item_upload)
+    @BindView(R.id.fab_sheet_item_upload)
     TextView mFabSheetItemUpload;
-    @Bind(R.id.sv_container)
+    @BindView(R.id.sv_container)
     ScrollView mSvContainer;
     //用来记录按返回键的次数，按两次退出程序
     private int flag = 1;
@@ -425,6 +425,5 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="rebound-0.3.8">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/toastlibrary/libs/rebound-0.3.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

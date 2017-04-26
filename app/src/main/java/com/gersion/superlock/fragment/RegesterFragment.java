@@ -17,7 +17,7 @@ import com.facebook.rebound.SpringSystem;
 import com.facebook.rebound.SpringUtil;
 import com.gersion.superlock.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -37,13 +37,13 @@ import butterknife.ButterKnife;
  */
 public class RegesterFragment extends Fragment {
 
-    @Bind(R.id.tv)
+    @BindView(R.id.tv)
     TextView mTv;
-    @Bind(R.id.et)
+    @BindView(R.id.et)
     EditText mEt;
-    @Bind(R.id.go)
+    @BindView(R.id.go)
     ImageView mGo;
-    @Bind(R.id.activity_main)
+    @BindView(R.id.activity_main)
     FrameLayout mActivityMain;
     private SpringSystem mSpringSystem;
     private Spring mSpring;
@@ -107,7 +107,6 @@ public class RegesterFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }
   

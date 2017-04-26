@@ -15,7 +15,7 @@ import com.gersion.superlock.R;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  * @更新版本 $
  */
 public class TestFragment extends Fragment {
-    @Bind(R.id.vp_item)
+    @BindView(R.id.vp_item)
     ViewPager mVpItem;
     private View mView;
     private ArrayList<String> mList;

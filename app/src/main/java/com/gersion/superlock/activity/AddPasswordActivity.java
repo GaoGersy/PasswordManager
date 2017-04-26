@@ -26,7 +26,7 @@ import com.gersion.toastlibrary.TastyToast;
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyItemDialogListener;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,25 +36,25 @@ import rx.schedulers.Schedulers;
 
 public class AddPasswordActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.cetv_location)
+    @BindView(R.id.cetv_location)
     EditText mCetvLocation;
-    @Bind(R.id.cetv_name)
+    @BindView(R.id.cetv_name)
     EditText mCetvName;
-    @Bind(R.id.cetv_password)
+    @BindView(R.id.cetv_password)
     EditText mCetvPassword;
-    @Bind(R.id.tv_commit)
+    @BindView(R.id.tv_commit)
     TextView mTvCommit;
-    @Bind(R.id.tv_noteKey)
+    @BindView(R.id.tv_noteKey)
     TextView mTvNoteKey;
-    @Bind(R.id.cv_notes)
+    @BindView(R.id.cv_notes)
     CardView mCvNotes;
-    @Bind(R.id.et_notes)
+    @BindView(R.id.et_notes)
     TextInputEditText mEtNotes;
-    @Bind(R.id.activity_add_password)
+    @BindView(R.id.activity_add_password)
     FrameLayout mActivityAddPassword;
-    @Bind(R.id.cv_info)
+    @BindView(R.id.cv_info)
     CardView mCvInfo;
-    @Bind(R.id.selector)
+    @BindView(R.id.selector)
     TextView mSelector;
     private boolean isOpen = false;
     private String mTotalCount;

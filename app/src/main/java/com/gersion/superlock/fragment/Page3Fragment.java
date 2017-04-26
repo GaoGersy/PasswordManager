@@ -23,7 +23,7 @@ import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.PasswordUtils;
 import com.gersion.superlock.utils.SpfUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -40,13 +40,13 @@ import butterknife.ButterKnife;
 public class Page3Fragment extends Fragment implements View.OnClickListener {
 
 
-    @Bind(R.id.tv_complete_content)
+    @BindView(R.id.tv_complete_content)
     TextView mViewGuideVpTv;
-    @Bind(R.id.tv_complete)
+    @BindView(R.id.tv_complete)
     TextView mTvComplete;
-    @Bind(R.id.activity_main)
+    @BindView(R.id.activity_main)
     FrameLayout mActivityMain;
-    @Bind(R.id.container)
+    @BindView(R.id.container)
     LinearLayout mContainer;
 
     @Nullable
@@ -112,7 +112,6 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

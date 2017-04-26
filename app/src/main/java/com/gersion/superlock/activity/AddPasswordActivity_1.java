@@ -17,7 +17,7 @@ import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.CheckedEditTextView;
 import com.gersion.toastlibrary.TastyToast;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,15 +26,15 @@ import rx.schedulers.Schedulers;
 
 public class AddPasswordActivity_1 extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.cetv_location)
+    @BindView(R.id.cetv_location)
     CheckedEditTextView mCetvLocation;
-    @Bind(R.id.cetv_name)
+    @BindView(R.id.cetv_name)
     CheckedEditTextView mCetvName;
-    @Bind(R.id.cetv_password)
+    @BindView(R.id.cetv_password)
     CheckedEditTextView mCetvPassword;
-    @Bind(R.id.activity_add_password)
+    @BindView(R.id.activity_add_password)
     LinearLayout mActivityAddPassword;
-    @Bind(R.id.tv_commit)
+    @BindView(R.id.tv_commit)
     TextView mTvCommit;
     private float mCetvLocationY;
     private float mCetvNameY;

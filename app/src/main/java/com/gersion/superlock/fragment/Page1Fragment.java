@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -29,9 +29,9 @@ import butterknife.ButterKnife;
  */
 public class Page1Fragment extends Fragment {
 
-    @Bind(R.id.tv_start_content)
+    @BindView(R.id.tv_start_content)
     TextView mViewGuideVpTv;
-    @Bind(R.id.activity_main)
+    @BindView(R.id.activity_main)
     FrameLayout mActivityMain;
 
     @Nullable
