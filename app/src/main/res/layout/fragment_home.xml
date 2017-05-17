@@ -1,87 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-    <ScrollView
-        android:id="@+id/sv_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:paddingBottom="10dp"
-            android:orientation="vertical"
-            android:id="@+id/ll_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </ScrollView>
-
-    <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <com.gersion.superlock.view.FabMenu
-        android:id="@+id/fab"
-        style="@style/Widget.MaterialSheetFab.Fab"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="10dp"/>
-    <!-- Circular reveal container for the sheet -->
-    <io.codetail.widget.RevealLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="end|bottom"
-        android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
 
-        <!-- Sheet that contains your items -->
-        <android.support.v7.widget.CardView
-            android:id="@+id/fab_sheet"
-            style="@style/Widget.MaterialSheetFab.Sheet">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:drawableLeft="@drawable/ic_person_add_purple_200_24dp"
-                    android:id="@+id/fab_sheet_item_add"
-                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                    android:text="添加账号" />
-
-                <TextView
-                    android:drawableLeft="@drawable/ic_backup_purple_200_24dp"
-                    android:id="@+id/fab_sheet_item_backup"
-                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                    android:text="备份密码数据" />
-
-                <TextView
-                    android:drawableLeft="@drawable/ic_cloud_download_purple_200_24dp"
-                    android:id="@+id/fab_sheet_item_upload"
-                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                    android:text="载入密码数据" />
-
-                <TextView
-                    android:drawableLeft="@drawable/ic_history_purple_200_24dp"
-                    android:id="@+id/fab_sheet_item_change_pwd"
-                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                    android:text="修改主密码" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#29A1D3">
-
-                    <TextView
-                        android:drawableLeft="@drawable/ic_settings_purple_200_24dp"
-                        android:id="@+id/fab_sheet_item_setting"
-                        style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                        android:text="设置" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </io.codetail.widget.RevealLinearLayout>
-
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </FrameLayout>

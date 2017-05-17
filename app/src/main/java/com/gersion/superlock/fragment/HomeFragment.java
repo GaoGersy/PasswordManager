@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,14 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.AddPasswordActivity;
 import com.gersion.superlock.activity.MainActivity;
 import com.gersion.superlock.activity.RegesterActivity;
 import com.gersion.superlock.activity.SettingActivity;
+import com.gersion.superlock.adapter.DragTouchAdapter;
 import com.gersion.superlock.adapter.MainAdapter;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.controller.ChildView;
@@ -41,6 +44,8 @@ import com.gersion.toastlibrary.TastyToast;
 import com.gordonwong.materialsheetfab.DimOverlayFrameLayout;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.orhanobut.logger.Logger;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +55,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -118,6 +124,41 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mActivity = (MainActivity) getActivity();
         return mView;
     }
+
+    private void init(){
+        SwipeMenuRecyclerView menuRecyclerView = (SwipeMenuRecyclerView)mView.findViewById(R.id.recycler_view);
+        menuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));// 布局管理器。
+
+        // 触摸拖拽的代码在Adapter中：SwipeMenuRecyclerView#startDrag(ViewHolder);
+        mDragAdapter = new DragTouchAdapter(menuRecyclerView, mDataList);
+//        mDragAdapter.setOnItemClickListener(onItemClickListener);
+        menuRecyclerView.setAdapter(mDragAdapter);
+
+        menuRecyclerView.setLongPressDragEnabled(true); // 开启拖拽。
+        menuRecyclerView.setItemViewSwipeEnabled(false); // 开启滑动删除。
+        menuRecyclerView.setOnItemMoveListener(onItemMoveListener);// 监听拖拽，更新UI。
+        menuRecyclerView.setOnItemStateChangedListener(mOnItemStateChangedListener);
+    }
+
+    /**
+     * 当Item移动的时候。
+     */
+    private OnItemMoveListener onItemMoveListener = new OnItemMoveListener() {
+        @Override
+        public boolean onItemMove(int fromPosition, int toPosition) {
+            Collections.swap(mDataList, fromPosition, toPosition);
+            mDragAdapter.notifyItemMoved(fromPosition, toPosition);
+            return true;
+        }
+
+        @Override
+        public void onItemDismiss(int position) {
+            mDataList.remove(position);
+            mDragAdapter.notifyItemRemoved(position);
+            Toast.makeText(mContext, "现在的第" + position + "条被删除。", Toast.LENGTH_SHORT).show();
+        }
+
+    };
 
     @Subscribe(sticky = true)
     public void onEvent(MessageEvent event) {

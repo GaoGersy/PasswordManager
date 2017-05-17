@@ -7,4 +7,6 @@
     <color name="theme_accent">#29A1D3</color>
     <color name="gray">#20202B</color>
     <color name="material_white">#f9f9f9</color>
+    <color name="app_theme_color">#888888</color>
+    <color name="transpant">#00000000</color>
 </resources>
