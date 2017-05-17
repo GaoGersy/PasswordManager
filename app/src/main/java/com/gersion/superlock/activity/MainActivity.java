@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.fragment.MyFragment;
 import com.hss01248.dialog.StyledDialog;

@@ -3,6 +3,7 @@ package com.gersion.superlock.activity;
 import android.os.Bundle;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.base.BaseActivity;
 
 public class AboutActivity extends BaseActivity {
 

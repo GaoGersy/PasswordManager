@@ -15,6 +15,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.RegesterAdapter;
+import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.controller.MessageEvent;
 import com.gersion.superlock.dao.MainKeyDao;

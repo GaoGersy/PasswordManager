@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.dao.PasswordDao;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.utils.ToastUtils;

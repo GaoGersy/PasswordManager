@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;

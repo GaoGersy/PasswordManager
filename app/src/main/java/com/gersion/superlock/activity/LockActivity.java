@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.dao.MainKeyDao;
 import com.gersion.superlock.utils.Md5Utils;
 import com.gersion.superlock.utils.MyConstants;

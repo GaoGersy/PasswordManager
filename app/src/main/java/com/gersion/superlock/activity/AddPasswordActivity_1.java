@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.dao.PasswordDao;
 import com.gersion.superlock.utils.ToastUtils;
