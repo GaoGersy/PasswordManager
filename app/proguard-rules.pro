@@ -33,6 +33,9 @@
 -keep public class * extends android.preference.Preference        # 保持哪些类不被混淆
 -keep public class com.android.vending.licensing.ILicensingService    # 保持哪些类不被混淆
 
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
 -keepclasseswithmembernames class * {  # 保持 native 方法不被混淆
     native <methods>;
 }

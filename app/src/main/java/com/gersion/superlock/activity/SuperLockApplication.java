@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.gersion.superlock.R;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -53,7 +54,7 @@ public class SuperLockApplication extends Application {
         //初始化上下文
         mContext = getApplicationContext();
         SQLiteDatabase.loadLibs(this);
-
+        CrashReport.initCrashReport(getApplicationContext(), "83a16f6a72", false);
         CalligraphyConfig.
                 initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/NotoSansHans.otf")
@@ -66,7 +67,7 @@ public class SuperLockApplication extends Application {
                 .init("Gersy")                 // defaulticon PRETTYLOGGER or use just init()
                 .methodCount(2)                 // defaulticon 2
 //                .hideThreadInfo()               // defaulticon shown
-                .logLevel(LogLevel.NONE)        // defaulticon LogLevel.FULL
+                .logLevel(LogLevel.FULL)        // defaulticon LogLevel.FULL
                 .methodOffset(0);
     }
 }
