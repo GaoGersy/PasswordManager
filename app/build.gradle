@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'realm-android'
 
 android {
     signingConfigs {
@@ -22,7 +23,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi','armeabi-v7a' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
     }
     buildTypes {
@@ -50,11 +51,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':toastlibrary')
     compile(name: 'DialogUtils', ext: 'aar')
     compile(name: 'luban', ext: 'aar')
+    compile(name: 'tastytoast', ext: 'aar')
     compile(name: 'imagepicker', ext: 'aar')
     compile 'com.jakewharton:butterknife:8.6.0'
+    compile 'com.facebook.rebound:rebound:0.3.8'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
@@ -78,7 +80,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.zhy:autolayout:1.4.5'
-    compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
+    compile 'com.yanzhenjie:recyclerview-swipe:1.0.4'
     compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }

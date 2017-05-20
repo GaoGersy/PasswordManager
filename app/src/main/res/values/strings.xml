@@ -12,4 +12,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_text">数据请求出错</string>
+    <string name="loading_no_data">没有相关数据</string>
 </resources>

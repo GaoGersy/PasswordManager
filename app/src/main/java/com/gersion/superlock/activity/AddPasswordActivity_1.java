@@ -16,7 +16,7 @@ import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.dao.PasswordDao;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.CheckedEditTextView;
-import com.gersion.toastlibrary.TastyToast;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -132,7 +132,7 @@ public class AddPasswordActivity_1 extends BaseActivity implements View.OnClickL
                                 @Override
                                 public void call(Boolean aBoolean) {
                                     if (aBoolean){
-                                        ToastUtils.showTasty(AddPasswordActivity_1.this,"添加成功",TastyToast.SUCCESS);
+                                        ToastUtils.showTasty(AddPasswordActivity_1.this,"添加成功", TastyToast.SUCCESS);
                                         Keyer keyer = dao.queryWithName(name);
                                         mCetvLocation.setText("");
                                         mCetvName.setText("");

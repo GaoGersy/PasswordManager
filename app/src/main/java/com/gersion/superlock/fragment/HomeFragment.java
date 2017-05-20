@@ -1,145 +1,35 @@
 package com.gersion.superlock.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.TypeEvaluator;
-import android.animation.ValueAnimator;
-import android.content.Intent;
-import android.graphics.PointF;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gersion.superlock.R;
-import com.gersion.superlock.activity.AddPasswordActivity;
-import com.gersion.superlock.activity.MainActivity;
-import com.gersion.superlock.activity.RegesterActivity;
-import com.gersion.superlock.activity.SettingActivity;
-import com.gersion.superlock.adapter.DragTouchAdapter;
-import com.gersion.superlock.adapter.MainAdapter;
-import com.gersion.superlock.bean.Keyer;
-import com.gersion.superlock.controller.ChildView;
+import com.gersion.superlock.adapter.PasswordShowAdapter;
+import com.gersion.superlock.base.BaseFragment;
+import com.gersion.superlock.bean.PasswordBean;
 import com.gersion.superlock.controller.MessageEvent;
 import com.gersion.superlock.dao.PasswordDao;
-import com.gersion.superlock.dao.SqlPassword;
-import com.gersion.superlock.utils.SDCardUtils;
-import com.gersion.superlock.utils.SqliteUtils;
+import com.gersion.superlock.db.DbManager;
+import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.utils.ToastUtils;
-import com.gersion.superlock.utils.UIUtils;
-import com.gersion.superlock.view.FabMenu;
-import com.gersion.superlock.view.MyToggleButton;
-import com.gersion.toastlibrary.TastyToast;
-import com.gordonwong.materialsheetfab.DimOverlayFrameLayout;
-import com.gordonwong.materialsheetfab.MaterialSheetFab;
-import com.orhanobut.logger.Logger;
+import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
+import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
+import com.sdsmdg.tastytoast.TastyToast;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-/**
- * @作者 Gersy
- * @版本
- * @包名 com.gersion.superlock.fragment
- * @待完成
- * @创建时间 2016/9/6
- * @功能描述 TODO
- * @更新人 $
- * @更新时间 $
- * @更新版本 $
- */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends BaseFragment {
     public static final String TOTAL_COUNT = "total_count";
-    public int mTotal_count = 0;
-    RecyclerView mRvDetail;
-    @BindView(R.id.ll_container)
-    LinearLayout mLlContainer;
-    @BindView(R.id.overlay)
-    DimOverlayFrameLayout mOverlay;
-    @BindView(R.id.fab)
-    FabMenu mFab;
-    @BindView(R.id.fab_sheet)
-    CardView mFabSheet;
-    @BindView(R.id.fab_sheet_item_add)
-    TextView mFabSheetItemAdd;
-    @BindView(R.id.fab_sheet_item_backup)
-    TextView mFabSheetItemBackup;
-    @BindView(R.id.fab_sheet_item_change_pwd)
-    TextView mFabSheetItemChangePwd;
-    @BindView(R.id.fab_sheet_item_setting)
-    TextView mFabSheetItemSetting;
-    @BindView(R.id.fab_sheet_item_upload)
-    TextView mFabSheetItemUpload;
-    @BindView(R.id.sv_container)
-    ScrollView mSvContainer;
-    //用来记录按返回键的次数，按两次退出程序
-    private int flag = 1;
-    private MainAdapter mAdapter;
-    private MyToggleButton toggleButton;
-    private List<Keyer> mList;
-    private View mView;
-    private MaterialSheetFab<FabMenu> materialSheetFab;
     private PasswordDao mDao;
-    private MainActivity mActivity;
-    private Handler mHandler = new Handler();
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_home, null);
-        ButterKnife.bind(this, mView);
-        mDao = new PasswordDao(getActivity());
-        initView();
-
-        setupFabMenu();
-        mActivity = (MainActivity) getActivity();
-        return mView;
-    }
-
-    private void init(){
-        SwipeMenuRecyclerView menuRecyclerView = (SwipeMenuRecyclerView)mView.findViewById(R.id.recycler_view);
-        menuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));// 布局管理器。
-
-        // 触摸拖拽的代码在Adapter中：SwipeMenuRecyclerView#startDrag(ViewHolder);
-        mDragAdapter = new DragTouchAdapter(menuRecyclerView, mDataList);
-//        mDragAdapter.setOnItemClickListener(onItemClickListener);
-        menuRecyclerView.setAdapter(mDragAdapter);
-
-        menuRecyclerView.setLongPressDragEnabled(true); // 开启拖拽。
-        menuRecyclerView.setItemViewSwipeEnabled(false); // 开启滑动删除。
-        menuRecyclerView.setOnItemMoveListener(onItemMoveListener);// 监听拖拽，更新UI。
-        menuRecyclerView.setOnItemStateChangedListener(mOnItemStateChangedListener);
-    }
-
+    private PasswordShowAdapter mPasswordShowAdapter;
+    private List<PasswordBean> mDataList = new ArrayList<>();
+    private SmartRecycleView mSmartRecycleView;
     /**
      * 当Item移动的时候。
      */
@@ -147,18 +37,74 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         @Override
         public boolean onItemMove(int fromPosition, int toPosition) {
             Collections.swap(mDataList, fromPosition, toPosition);
-            mDragAdapter.notifyItemMoved(fromPosition, toPosition);
+            mPasswordShowAdapter.notifyItemMoved(fromPosition, toPosition);
+            DbManager.getInstance().swap(fromPosition,toPosition);
             return true;
         }
 
         @Override
         public void onItemDismiss(int position) {
             mDataList.remove(position);
-            mDragAdapter.notifyItemRemoved(position);
-            Toast.makeText(mContext, "现在的第" + position + "条被删除。", Toast.LENGTH_SHORT).show();
+            mPasswordShowAdapter.notifyItemRemoved(position);
         }
 
     };
+
+    @Override
+    protected int getLayoutView() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void initView() {
+        mSmartRecycleView = findView(R.id.smartRecycleView);
+        init();
+    }
+
+    @Override
+    protected void initData(Bundle bundle) {
+
+    }
+
+    @Override
+    protected void setClickListener() {
+
+    }
+
+    private void init() {
+        SwipeMenuRecyclerView menuRecyclerView = mSmartRecycleView.getRecyclerView();
+        mPasswordShowAdapter = new PasswordShowAdapter(menuRecyclerView, mDataList);
+        mSmartRecycleView
+                .setAutoRefresh(true)
+                .setAdapter(mPasswordShowAdapter)
+                .loadMoreEnable(false)
+                .refreshEnable(true)
+                .setLayoutManger(SmartRecycleView.LayoutManagerType.LINEAR_LAYOUT)
+                .setRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh(int page) {
+                        //TODO
+                        initData();
+                    }
+
+                    @Override
+                    public void onLoadMore(final int page) {
+                    }
+                });
+
+        // 触摸拖拽的代码在Adapter中：SwipeMenuRecyclerView#startDrag(ViewHolder);
+//        mDragAdapter.setOnItemClickListener(onItemClickListener);
+        mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+            }
+        });
+        menuRecyclerView.setLongPressDragEnabled(true); // 开启拖拽。
+        menuRecyclerView.setItemViewSwipeEnabled(false); // 开启滑动删除。
+        menuRecyclerView.setOnItemMoveListener(onItemMoveListener);// 监听拖拽，更新UI。
+//        menuRecyclerView.setOnItemStateChangedListener(mOnItemStateChangedListener);
+    }
 
     @Subscribe(sticky = true)
     public void onEvent(MessageEvent event) {
@@ -171,10 +117,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (event != null) {
             EventBus.getDefault().removeStickyEvent(event);
         }
-    }
-
-    //初始化控件
-    private void initView() {
     }
 
     @Override
@@ -190,278 +132,254 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-//        initView();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                initData();
-            }
-        }).start();
-        initEvent();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        mDao.destory();
+        DbManager.getInstance().destroy();
+//        mDao.destory();
     }
 
     //初始化数据
     private void initData() {
-        if (mList == null) {
-            initHandle(0);
-        } else {
-            if (mDao.query().size() > mList.size()) {
-                initHandle(mList.size());
-            }
-        }
-//        initHandle();
-
+        getDataFromDB();
     }
 
-    private void initHandle(int i) {
-        mList = mDao.query();
-        for (; i < mList.size(); i++) {
-            Keyer keyer = mList.get(i);
-            final ChildView childView = new ChildView();
-            childView.init(getActivity(), keyer);
-
-            int size = UIUtils.dp2Px(150);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
-            params.topMargin = 20;
-            params.leftMargin = 20;
-            params.rightMargin = 20;
-            childView.viewPager.setLayoutParams(params);
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mLlContainer.addView(childView.viewPager);
-                }
-            });
-        }
+    private void getDataFromDB() {
+//        for (int i = 0; i < 20; i++) {
+//            PasswordBean bean = new PasswordBean();
+//            bean.setIndex(i);
+//            bean.setAddress("地址" + i);
+//            bean.setCreateTime(TimeUtils.getCurrentTimeInString());
+//            bean.setName("名称" + i);
+//            bean.setNotes("备注" + i);
+//            bean.setPwd("密码" + i);
+//            mDataList.add(bean);
+//            DbManager.getInstance().add(bean);
+//        }
+        List<PasswordBean> passwordBeans = DbManager.getInstance().load();
+        mDataList.addAll(passwordBeans);
+        mSmartRecycleView.handleData(mDataList);
     }
 
-    private void addView(Keyer keyer) {
-        ChildView childView = new ChildView();
-        childView.init(getActivity(), keyer);
-
-        int size = UIUtils.dp2Px(150);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
-        params.topMargin = 20;
-        params.leftMargin = 20;
-        params.rightMargin = 20;
-        childView.viewPager.setLayoutParams(params);
-        mLlContainer.addView(childView.viewPager);
-    }
-
-    private void initHandle() {
-        mLlContainer.removeAllViews();
-        Observable.just(mDao.query())
-                .flatMap(new Func1<List<Keyer>, Observable<Keyer>>() {
-                    @Override
-                    public Observable<Keyer> call(List<Keyer> keyers) {
-                        return Observable.from(keyers);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Keyer>() {
-                    @Override
-                    public void call(Keyer keyer) {
-                        Logger.d(keyer.number +"");
-                        addView(keyer);
-                        mTotal_count++;
-                    }
-                });
-    }
-
-    //初始化事件监听
-    private void initEvent() {
-        mFabSheetItemAdd.setOnClickListener(this);
-        mFabSheetItemBackup.setOnClickListener(this);
-        mFabSheetItemChangePwd.setOnClickListener(this);
-        mFabSheetItemSetting.setOnClickListener(this);
-        mFabSheetItemUpload.setOnClickListener(this);
-    }
-
-
-    public void paowuxian(View view) {
-        ValueAnimator valueAnimator = new ValueAnimator();
-        valueAnimator.setDuration(3000);
-        valueAnimator.setObjectValues(new PointF(0, 0));
-        valueAnimator.setInterpolator(new LinearInterpolator());
-        valueAnimator.setEvaluator(new TypeEvaluator<PointF>() {
-            // fraction = t / duration
-            @Override
-            public PointF evaluate(float fraction, PointF startValue,
-                                   PointF endValue) {
-                // x方向200px/s ，则y方向0.5 * 10 * t
-                PointF point = new PointF();
-                point.x = 200 * fraction * 3;
-                point.y = 0.5f * 200 * (fraction * 3) * (fraction * 3);
-                return point;
-            }
-        });
-
-        valueAnimator.start();
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                PointF point = (PointF) animation.getAnimatedValue();
-                toggleButton.setX(point.x);
-                toggleButton.setY(point.y);
-
-            }
-
-        });
-        valueAnimator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                toggleButton.setX(0);
-                toggleButton.setY(0);
-            }
-        });
-    }
-
-    /**
-     * Sets up the Floating action button.
-     */
-    private void setupFabMenu() {
-
-        FabMenu fabMenu = (FabMenu) mView.findViewById(R.id.fab);
-        View sheetView = mView.findViewById(R.id.fab_sheet);
-        View overlay = mView.findViewById(R.id.overlay);
-        int sheetColor = getResources().getColor(R.color.background_card);
-        int FabMenuColor = getResources().getColor(R.color.theme_accent);
-
-        // Create material sheet FabMenu
-        materialSheetFab = new MaterialSheetFab<>(fabMenu, sheetView, overlay, sheetColor, FabMenuColor);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        materialSheetFab.hideSheet();
-        switch (v.getId()) {
-            case R.id.fab_sheet_item_add:
-                Intent intent = new Intent(getActivity(), AddPasswordActivity.class);
-                Logger.d(mTotal_count);
-                intent.putExtra(TOTAL_COUNT, mList.size()+"");
-                startActivity(intent);
-                break;
-            case R.id.fab_sheet_item_change_pwd:
-                startActivity(new Intent(getActivity(), RegesterActivity.class));
-//                mActivity.finish();
-                break;
-            case R.id.fab_sheet_item_backup:
-                if (backupSqlData()) {
-                    ToastUtils.showTasty(mActivity, "恭喜，备份成功", TastyToast.SUCCESS);
-                } else {
-                    ToastUtils.showTasty(mActivity, "真可惜，备份失败了", TastyToast.ERROR);
-                }
-                break;
-            case R.id.fab_sheet_item_setting:
-                startActivity(new Intent(getActivity(), SettingActivity.class));
-                break;
-            case R.id.fab_sheet_item_upload:
-                if (loadSqlData()) {
-
-                    try {
-                        mLlContainer.removeAllViews();
-                        initHandle(0);
-                        ToastUtils.showTasty(mActivity, "恭喜，载入成功", TastyToast.SUCCESS);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        ToastUtils.showTasty(mActivity, "载入的数据与当前主密码不匹配", TastyToast.WARNING);
-                    }
-                } else {
-                    ToastUtils.showTasty(mActivity, "真可惜，载入失败了", TastyToast.ERROR);
-                }
-                break;
-        }
-    }
-
-    private boolean loadSqlData() {
-        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
-        if (!sdCardEnable) {
-            ToastUtils.showTasty(mActivity, "没有SD卡，无法读取备份的文件", TastyToast.WARNING);
-            return false;
-        }
-
-        File sqlPath = new File(SDCardUtils.getSDCardPath() + "biabia.db");
-        if (!sqlPath.exists()) {
-            ToastUtils.showTasty(mActivity, "没有找到任何备份了的文件", TastyToast.WARNING);
-            return false;
-        }
-
-        boolean isSaved = false;
-        try {
-            FileInputStream fis = new FileInputStream(sqlPath);
-            String path = getActivity().getDatabasePath("biabia.db").getAbsolutePath();
-            Logger.d(path);
-            File file = new File(path);
-            if (file.exists()) {
-                file.delete();
-            }
-            byte[] buffer = new byte[1];
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            int len;
-            while ((len = bis.read(buffer)) != -1) {
-                bos.write(buffer);
-            }
-            bis.close();
-            bos.close();
-            isSaved = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return isSaved;
-    }
-
-    private boolean backupSqlData() {
-        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
-        if (!sdCardEnable) {
-            ToastUtils.showTasty(mActivity, "没有SD卡，备份工作无法继续进行", TastyToast.WARNING);
-            return false;
-        }
-
-        File sqlPath = SqliteUtils.getSqlPath(getActivity(), SqlPassword.DB_NAME);
-        if (!sqlPath.exists()) {
-            ToastUtils.showTasty(mActivity, "还没有任何数据，不需要备份", TastyToast.WARNING);
-            return false;
-        }
-
-        if (SDCardUtils.getSDCardAllSize() < sqlPath.length()) {
-            ToastUtils.showTasty(mActivity, "SD卡剩余容量不足，无法备份", TastyToast.WARNING);
-            return false;
-        }
-
-        boolean isSaved = false;
-        try {
-            FileInputStream fis = new FileInputStream(sqlPath);
-            String path = SDCardUtils.getSDCardPath() + "biabia.db";
-            File file = new File(path);
-            if (file.exists()) {
-                file.delete();
-            }
-            byte[] buffer = new byte[1];
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            int len;
-            while ((len = bis.read(buffer)) != -1) {
-                bos.write(buffer);
-            }
-            bis.close();
-            bos.close();
-            isSaved = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return isSaved;
-    }
+//    private void initHandle(int i) {
+//        mList = mDao.query();
+//        for (; i < mList.size(); i++) {
+//            Keyer keyer = mList.get(i);
+//            final ChildView childView = new ChildView();
+//            childView.init(getActivity(), keyer);
+//
+//            int size = UIUtils.dp2Px(150);
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
+//            params.topMargin = 20;
+//            params.leftMargin = 20;
+//            params.rightMargin = 20;
+//            childView.viewPager.setLayoutParams(params);
+//            mHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mLlContainer.addView(childView.viewPager);
+//                }
+//            });
+//        }
+//    }
+//
+//    private void addView(Keyer keyer) {
+//        ChildView childView = new ChildView();
+//        childView.init(getActivity(), keyer);
+//
+//        int size = UIUtils.dp2Px(150);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
+//        params.topMargin = 20;
+//        params.leftMargin = 20;
+//        params.rightMargin = 20;
+//        childView.viewPager.setLayoutParams(params);
+//        mLlContainer.addView(childView.viewPager);
+//    }
+//
+//    private void initHandle() {
+//        mLlContainer.removeAllViews();
+//        Observable.just(mDao.query())
+//                .flatMap(new Func1<List<Keyer>, Observable<Keyer>>() {
+//                    @Override
+//                    public Observable<Keyer> call(List<Keyer> keyers) {
+//                        return Observable.from(keyers);
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<Keyer>() {
+//                    @Override
+//                    public void call(Keyer keyer) {
+//                        Logger.d(keyer.number +"");
+//                        addView(keyer);
+//                        mTotal_count++;
+//                    }
+//                });
+//    }
+//
+//    //初始化事件监听
+//    private void initEvent() {
+//    }
+//
+//
+//    public void paowuxian(View view) {
+//        ValueAnimator valueAnimator = new ValueAnimator();
+//        valueAnimator.setDuration(3000);
+//        valueAnimator.setObjectValues(new PointF(0, 0));
+//        valueAnimator.setInterpolator(new LinearInterpolator());
+//        valueAnimator.setEvaluator(new TypeEvaluator<PointF>() {
+//            // fraction = t / duration
+//            @Override
+//            public PointF evaluate(float fraction, PointF startValue,
+//                                   PointF endValue) {
+//                // x方向200px/s ，则y方向0.5 * 10 * t
+//                PointF point = new PointF();
+//                point.x = 200 * fraction * 3;
+//                point.y = 0.5f * 200 * (fraction * 3) * (fraction * 3);
+//                return point;
+//            }
+//        });
+//
+//        valueAnimator.start();
+//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                PointF point = (PointF) animation.getAnimatedValue();
+//                toggleButton.setX(point.x);
+//                toggleButton.setY(point.y);
+//
+//            }
+//
+//        });
+//        valueAnimator.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                toggleButton.setX(0);
+//                toggleButton.setY(0);
+//            }
+//        });
+//    }
+//
+//    @Override
+//    public void onClick(View v) {
+//        materialSheetFab.hideSheet();
+//        switch (v.getId()) {
+//            case R.id.fab_sheet_item_add:
+//                Intent intent = new Intent(getActivity(), AddPasswordActivity.class);
+//                Logger.d(mTotal_count);
+//                intent.putExtra(TOTAL_COUNT, mList.size()+"");
+//                startActivity(intent);
+//                break;
+//            case R.id.fab_sheet_item_change_pwd:
+//                startActivity(new Intent(getActivity(), RegesterActivity.class));
+////                mActivity.finish();
+//                break;
+//            case R.id.fab_sheet_item_backup:
+//                if (backupSqlData()) {
+//                    ToastUtils.showTasty(mActivity, "恭喜，备份成功", TastyToast.SUCCESS);
+//                } else {
+//                    ToastUtils.showTasty(mActivity, "真可惜，备份失败了", TastyToast.ERROR);
+//                }
+//                break;
+//            case R.id.fab_sheet_item_setting:
+//                startActivity(new Intent(getActivity(), SettingActivity.class));
+//                break;
+//            case R.id.fab_sheet_item_upload:
+//                if (loadSqlData()) {
+//
+//                    try {
+//                        mLlContainer.removeAllViews();
+//                        initHandle(0);
+//                        ToastUtils.showTasty(mActivity, "恭喜，载入成功", TastyToast.SUCCESS);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        ToastUtils.showTasty(mActivity, "载入的数据与当前主密码不匹配", TastyToast.WARNING);
+//                    }
+//                } else {
+//                    ToastUtils.showTasty(mActivity, "真可惜，载入失败了", TastyToast.ERROR);
+//                }
+//                break;
+//        }
+//    }
+//
+//    private boolean loadSqlData() {
+//        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
+//        if (!sdCardEnable) {
+//            ToastUtils.showTasty(mActivity, "没有SD卡，无法读取备份的文件", TastyToast.WARNING);
+//            return false;
+//        }
+//
+//        File sqlPath = new File(SDCardUtils.getSDCardPath() + "biabia.db");
+//        if (!sqlPath.exists()) {
+//            ToastUtils.showTasty(mActivity, "没有找到任何备份了的文件", TastyToast.WARNING);
+//            return false;
+//        }
+//
+//        boolean isSaved = false;
+//        try {
+//            FileInputStream fis = new FileInputStream(sqlPath);
+//            String path = getActivity().getDatabasePath("biabia.db").getAbsolutePath();
+//            Logger.d(path);
+//            File file = new File(path);
+//            if (file.exists()) {
+//                file.delete();
+//            }
+//            byte[] buffer = new byte[1];
+//            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+//            BufferedInputStream bis = new BufferedInputStream(fis);
+//            int len;
+//            while ((len = bis.read(buffer)) != -1) {
+//                bos.write(buffer);
+//            }
+//            bis.close();
+//            bos.close();
+//            isSaved = true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return isSaved;
+//    }
+//
+//    private boolean backupSqlData() {
+//        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
+//        if (!sdCardEnable) {
+//            ToastUtils.showTasty(mActivity, "没有SD卡，备份工作无法继续进行", TastyToast.WARNING);
+//            return false;
+//        }
+//
+//        File sqlPath = SqliteUtils.getSqlPath(getActivity(), SqlPassword.DB_NAME);
+//        if (!sqlPath.exists()) {
+//            ToastUtils.showTasty(mActivity, "还没有任何数据，不需要备份", TastyToast.WARNING);
+//            return false;
+//        }
+//
+//        if (SDCardUtils.getSDCardAllSize() < sqlPath.length()) {
+//            ToastUtils.showTasty(mActivity, "SD卡剩余容量不足，无法备份", TastyToast.WARNING);
+//            return false;
+//        }
+//
+//        boolean isSaved = false;
+//        try {
+//            FileInputStream fis = new FileInputStream(sqlPath);
+//            String path = SDCardUtils.getSDCardPath() + "biabia.db";
+//            File file = new File(path);
+//            if (file.exists()) {
+//                file.delete();
+//            }
+//            byte[] buffer = new byte[1];
+//            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+//            BufferedInputStream bis = new BufferedInputStream(fis);
+//            int len;
+//            while ((len = bis.read(buffer)) != -1) {
+//                bos.write(buffer);
+//            }
+//            bis.close();
+//            bos.close();
+//            isSaved = true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return isSaved;
+//    }
 
     @Override
     public void onDestroyView() {

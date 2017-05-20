@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.gersion.superlock.R;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class SmartRecycleView extends RelativeLayout {
     protected PullToRefreshLayout.OnRefreshListener mRefreshListener;
     private PullToRefreshLayout mPullRereshLayout;
     private Context mContext;
-    private RecyclerView mRecyclerView;
+    private SwipeMenuRecyclerView mRecyclerView;
     private View mFailedView;
     private View mNoDataView;
     private View mLoadingView;
@@ -58,7 +59,7 @@ public class SmartRecycleView extends RelativeLayout {
         addView(mPullRereshLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
 
-        mRecyclerView = new RecyclerView(mContext);
+        mRecyclerView = new SwipeMenuRecyclerView(mContext);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setOverScrollMode(SCROLL_AXIS_NONE);
         mPullRereshLayout.addView(mRecyclerView,
@@ -101,6 +102,10 @@ public class SmartRecycleView extends RelativeLayout {
         mLoadingView.setVisibility(View.GONE);
     }
 
+    public SwipeMenuRecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+
     private void initListener() {
     }
 
@@ -124,7 +129,7 @@ public class SmartRecycleView extends RelativeLayout {
                 setViewStatus(ViewStatus.NO_DATA);
                 refreshEnable(false);
             } else {
-                currentPage = firstPage+1;
+                currentPage = firstPage + 1;
                 mAdapter.setNewData(data);
                 if (data.size() >= mPageSize) {
                     mPullRereshLayout.onRefreshSuccess();
@@ -156,18 +161,18 @@ public class SmartRecycleView extends RelativeLayout {
         mPullRereshLayout.setCurrentPage(currentPage);
     }
 
-    public <T> void handleData(List<T> data){
-        if (isRefresh){
+    public <T> void handleData(List<T> data) {
+        if (isRefresh) {
             onRefresh(data);
-        }else{
+        } else {
             onLoadMore(data);
         }
     }
 
-    public<T> void removeAll(List<T> data){
+    public <T> void removeAll(List<T> data) {
         mAdapter.getData().removeAll(data);
         mAdapter.notifyDataSetChanged();
-        if (mAdapter.getData().size()==0){
+        if (mAdapter.getData().size() == 0) {
             setViewStatus(ViewStatus.NO_DATA);
         }
     }
@@ -298,15 +303,15 @@ public class SmartRecycleView extends RelativeLayout {
         }
     }
 
-    public View setFailedView(){
+    public View setFailedView() {
         return null;
     }
 
-    public View setNoDataView(){
+    public View setNoDataView() {
         return null;
     }
 
-    public View setLoadingView(){
+    public View setLoadingView() {
         return null;
     }
 
@@ -355,6 +360,7 @@ public class SmartRecycleView extends RelativeLayout {
             public void onRefresh(int page) {
                 setListener(listener, true, page);
             }
+
             @Override
             public void onLoadMore(int page) {
                 setListener(listener, false, page);
@@ -365,13 +371,13 @@ public class SmartRecycleView extends RelativeLayout {
         return this;
     }
 
-    private void setListener(PullToRefreshLayout.OnRefreshListener listener,boolean isRefresh,int page) {
+    private void setListener(PullToRefreshLayout.OnRefreshListener listener, boolean isRefresh, int page) {
         if (isRefresh) {
             this.isRefresh = true;
             if (listener != null) {
                 listener.onRefresh(page);
             }
-        }else{
+        } else {
             this.isRefresh = false;
             if (listener != null) {
                 listener.onLoadMore(page);

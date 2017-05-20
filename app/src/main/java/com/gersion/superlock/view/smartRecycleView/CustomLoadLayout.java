@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.jojo.sns.R;
+import com.gersion.superlock.R;
 
 
 /**

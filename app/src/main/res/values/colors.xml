@@ -9,4 +9,5 @@
     <color name="material_white">#f9f9f9</color>
     <color name="app_theme_color">#888888</color>
     <color name="transpant">#00000000</color>
+    <color name="bgContent">#fff</color>
 </resources>

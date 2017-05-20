@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.db.DbManager;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -12,6 +13,8 @@ import com.tencent.bugly.crashreport.CrashReport;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
+import io.realm.Realm;
 
 /**
  * @作者 Gersy
@@ -53,6 +56,8 @@ public class SuperLockApplication extends Application {
     public void onCreate() {
         //初始化上下文
         mContext = getApplicationContext();
+        Realm.init(this);
+        DbManager.getInstance().init(this,1);
         SQLiteDatabase.loadLibs(this);
         CrashReport.initCrashReport(getApplicationContext(), "83a16f6a72", false);
         CalligraphyConfig.

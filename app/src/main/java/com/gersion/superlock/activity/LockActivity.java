@@ -19,7 +19,7 @@ import com.gersion.superlock.utils.Md5Utils;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
-import com.gersion.toastlibrary.TastyToast;
+import com.sdsmdg.tastytoast.TastyToast;
 
 public class LockActivity extends BaseActivity implements View.OnClickListener {
 

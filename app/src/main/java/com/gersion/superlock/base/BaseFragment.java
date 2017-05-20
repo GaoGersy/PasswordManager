@@ -11,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.jojo.sns.activity.LoginActivity;
-import com.jojo.sns.views.dialog.LoadingDialog;
+import com.gersion.superlock.dialog.LoadingDialog;
 
 
 public abstract class BaseFragment extends Fragment {
@@ -21,7 +20,6 @@ public abstract class BaseFragment extends Fragment {
     protected BaseActivity activity;
     protected View view;
     private Toast mToast;
-    protected boolean mIsGoLogin = false;
 
     public LoadingDialog m_cProgressDialog;
 
@@ -34,8 +32,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(getLayoutView(), container, false);
-        initView(view);
-        bus.created();
+        initView();
         return view;
     }
 
@@ -48,18 +45,26 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutView();
 
-    protected abstract void initView(View view);
+    protected abstract void initView();
 
     protected abstract void initData(Bundle bundle);
 
     protected abstract void setClickListener();
 
+    protected <T extends View> T findView(int id){
+        return (T) view.findViewById(id);
+    }
+
     public void toActivity(Class<?> clazz) {
-        activity.toActivity(clazz);
+        toActivity(clazz);
     }
 
     public void toActivity(Class<?> clazz, Bundle bundle) {
-        ((BaseActivity) getActivity()).toActivity(clazz, bundle);
+        Intent intent = new Intent(getActivity(), clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent,bundle);
     }
 
     public void toActivityForResult(Class<?> clazz, int requestCode) {
@@ -93,10 +98,6 @@ public abstract class BaseFragment extends Fragment {
             }
             mToast.show();
         }
-    }
-
-    public void setIsGoLogin(boolean isGoLogin) {
-        mIsGoLogin = isGoLogin;
     }
 
     /**

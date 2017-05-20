@@ -11,7 +11,7 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.event.DetailEvent;
 import com.gersion.superlock.utils.ToastUtils;
-import com.gersion.toastlibrary.TastyToast;
+import com.sdsmdg.tastytoast.TastyToast;
 
 /**
  * @作者 Gersy

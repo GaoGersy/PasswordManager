@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.jojo.sns.R;
+import com.gersion.superlock.R;
+
 
 /**
  * Created by Administrator on 2017/2/10.

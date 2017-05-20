@@ -27,8 +27,8 @@ import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.SqliteUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.NoTouchViewPager;
-import com.gersion.toastlibrary.TastyToast;
 import com.orhanobut.logger.Logger;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

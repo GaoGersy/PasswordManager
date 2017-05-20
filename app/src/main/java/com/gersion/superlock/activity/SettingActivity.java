@@ -12,7 +12,7 @@ import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.ToggleButton;
-import com.gersion.toastlibrary.TastyToast;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.EventBus;
 

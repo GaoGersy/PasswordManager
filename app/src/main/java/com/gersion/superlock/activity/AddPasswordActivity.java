@@ -23,9 +23,9 @@ import com.gersion.superlock.dao.PasswordDao;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.utils.UIUtils;
-import com.gersion.toastlibrary.TastyToast;
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyItemDialogListener;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

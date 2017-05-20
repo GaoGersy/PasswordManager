@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PasswordManager.iml" filepath="$PROJECT_DIR$/PasswordManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/toastlibrary/toastlibrary.iml" filepath="$PROJECT_DIR$/toastlibrary/toastlibrary.iml" />
     </modules>
   </component>
 </project>

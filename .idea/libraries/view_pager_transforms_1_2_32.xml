@@ -1,10 +1,12 @@
 <component name="libraryTable">
   <library name="view-pager-transforms-1.2.32">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/53189e1f47dcbae883c5a5a7b531b97e10d5ff86/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/53189e1f47dcbae883c5a5a7b531b97e10d5ff86/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/4497eefbe8fe802dec4b0b37f1d1b1f1891c6ef8/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/4497eefbe8fe802dec4b0b37f1d1b1f1891c6ef8/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ToxicBakery.viewpager.transforms/view-pager-transforms/1.2.32/d59a4c11e83fd8646853d59f853508296c3f69da/view-pager-transforms-1.2.32-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
