@@ -161,16 +161,25 @@ public class HomeFragment extends BaseFragment {
 //            bean.getUpdateHistorys().add(updateBean);
 //            DbManager.getInstance().add(bean,i);
 //        }
+
         final List<PasswordBean> passwordBeans = DbManager.getInstance().load();
-        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
-        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
-            @Override
-            public PasswordBean onUpdate() {
-                updateBean.setUpdateTime(123459999);
-                return passwordBeans.get(0);
-            }
-        });
         mDataList.addAll(passwordBeans);
+        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
+//        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
+//            @Override
+//            public PasswordBean onUpdate() {
+//                updateBean.setUpdateTime(123459999);
+//                return passwordBeans.get(0);
+//            }
+//        });
+//
+//        DbManager.getInstance().updateById(2, new DbManager.OnUpdateByIdCallback() {
+//            @Override
+//            public PasswordBean onUpdate(PasswordBean bean) {
+//                bean.getUpdateHistorys().get(0).setUpdateTime(9990767);
+//                return bean;
+//            }
+//        });
         mSmartRecycleView.handleData(mDataList);
     }
 

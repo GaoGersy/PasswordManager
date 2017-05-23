@@ -94,13 +94,13 @@ public final class DbManager {
     }
 
     /**
-     * @param movie movie的id, 必须有realm中的对象的id (@PrimaryKey标志的字段)
+     * @param bean movie的id, 必须有realm中的对象的id (@PrimaryKey标志的字段)
      * @return 返回更改后的realm中的对象
      */
-    public PasswordBean update(PasswordBean movie) {
+    public PasswordBean update(PasswordBean bean) {
         mRealm.beginTransaction();
         //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
-        PasswordBean dbPasswordBean = mRealm.copyToRealmOrUpdate(movie);
+        PasswordBean dbPasswordBean = mRealm.copyToRealmOrUpdate(bean);
         mRealm.commitTransaction();
 
         return dbPasswordBean;
@@ -110,6 +110,18 @@ public final class DbManager {
         mRealm.beginTransaction();
         //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
         PasswordBean dbPasswordBean = mRealm.copyToRealmOrUpdate(callback.onUpdate());
+        mRealm.commitTransaction();
+
+        return dbPasswordBean;
+    }
+
+    public PasswordBean updateById(long id, OnUpdateByIdCallback callback) {
+        //复制到realm中
+        mRealm.beginTransaction();
+        PasswordBean dbPasswordBean = mRealm.where(PasswordBean.class)
+                .equalTo("id", id)
+                .findFirst();
+        mRealm.copyToRealmOrUpdate(callback.onUpdate(dbPasswordBean));
         mRealm.commitTransaction();
 
         return dbPasswordBean;
@@ -197,5 +209,9 @@ public final class DbManager {
 
     public interface OnUpdateCallback{
         PasswordBean onUpdate();
+    }
+
+    public interface OnUpdateByIdCallback{
+        PasswordBean onUpdate(PasswordBean bean);
     }
 }
