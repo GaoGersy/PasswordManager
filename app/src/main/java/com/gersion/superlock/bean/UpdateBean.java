@@ -1,31 +1,30 @@
 package com.gersion.superlock.bean;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by a3266 on 2017/5/21.
  */
 
 public class UpdateBean extends RealmObject {
-    @PrimaryKey
-    private long id;
-    private String updateTime;
+//    @PrimaryKey
+//    private long id;
+    private long updateTime;
     private String password;
 
-    public long getId() {
-        return id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUpdateTime() {
+    public long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(String updateTime) {
+    public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
 

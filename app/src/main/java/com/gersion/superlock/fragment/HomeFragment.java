@@ -6,6 +6,7 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.PasswordShowAdapter;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.bean.PasswordBean;
+import com.gersion.superlock.bean.UpdateBean;
 import com.gersion.superlock.controller.MessageEvent;
 import com.gersion.superlock.dao.PasswordDao;
 import com.gersion.superlock.db.DbManager;
@@ -153,9 +154,22 @@ public class HomeFragment extends BaseFragment {
 //            bean.setNotes("备注" + i);
 //            bean.setPwd("密码" + i);
 //            mDataList.add(bean);
-//            DbManager.getInstance().add(bean);
+//            UpdateBean updateBean = new UpdateBean();
+//            updateBean.setPassword("aaaa");
+//            updateBean.setUpdateTime(System.currentTimeMillis());
+//            bean.setUpdateHistorys(new RealmList<UpdateBean>());
+//            bean.getUpdateHistorys().add(updateBean);
+//            DbManager.getInstance().add(bean,i);
 //        }
-        List<PasswordBean> passwordBeans = DbManager.getInstance().load();
+        final List<PasswordBean> passwordBeans = DbManager.getInstance().load();
+        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
+        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
+            @Override
+            public PasswordBean onUpdate() {
+                updateBean.setUpdateTime(123459999);
+                return passwordBeans.get(0);
+            }
+        });
         mDataList.addAll(passwordBeans);
         mSmartRecycleView.handleData(mDataList);
     }

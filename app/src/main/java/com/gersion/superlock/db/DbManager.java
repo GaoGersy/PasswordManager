@@ -59,13 +59,21 @@ public final class DbManager {
      * @param bean 要添加的对象
      * @return 返回realm中的对象
      */
-    public PasswordBean add(final PasswordBean bean) {
+    public PasswordBean add(PasswordBean bean) {
+        return add(bean,generateNewPrimaryKey());
+    }
+
+    /**
+     * @param bean 要添加的对象
+     * @return 返回realm中的对象
+     */
+    public PasswordBean add(final PasswordBean bean, final long id) {
         mRealm.executeTransaction(
                 new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         //必须设置新的PrimaryKey
-                        bean.setId(generateNewPrimaryKey());
+                        bean.setId(id);
                         realm.insert(bean);
                     }
                 });
@@ -93,6 +101,15 @@ public final class DbManager {
         mRealm.beginTransaction();
         //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
         PasswordBean dbPasswordBean = mRealm.copyToRealmOrUpdate(movie);
+        mRealm.commitTransaction();
+
+        return dbPasswordBean;
+    }
+
+    public PasswordBean update(OnUpdateCallback callback){
+        mRealm.beginTransaction();
+        //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
+        PasswordBean dbPasswordBean = mRealm.copyToRealmOrUpdate(callback.onUpdate());
         mRealm.commitTransaction();
 
         return dbPasswordBean;
@@ -176,5 +193,9 @@ public final class DbManager {
 
     private static class InstanceHolder {
         private static final DbManager INSTANCE = new DbManager();
+    }
+
+    public interface OnUpdateCallback{
+        PasswordBean onUpdate();
     }
 }
