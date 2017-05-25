@@ -1,8 +1,12 @@
 package com.gersion.superlock.db;
 
 import android.content.Context;
+import android.text.TextUtils;
 
-import com.gersion.superlock.bean.PasswordBean;
+import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.utils.Md5Utils;
+import com.gersion.superlock.utils.SpfUtils;
+import com.gersion.superlock.utils.TimeUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -14,6 +18,7 @@ import io.realm.Sort;
 
 public final class DbManager {
     private Realm mRealm;
+    private RealmConfiguration mRealmConfiguration;
 
     private DbManager() {
     }
@@ -22,25 +27,45 @@ public final class DbManager {
         return InstanceHolder.INSTANCE;
     }
 
+    public void onStart(){
+        mRealm = Realm.getInstance(mRealmConfiguration);
+    }
+    public Realm getRealm(){
+        return mRealm;
+    }
+
     /**
      * @param appContext
      * @param dbVersion
      */
     public void init(Context appContext, long dbVersion) {
-        byte[] key = new byte[64];
-//        new SecureRandom().nextBytes(key);
-        key[10] =100;
-        key[13] =99;
-        key[45] =10;
-        key[12] =88;
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                .name("app.realm")
+        byte[] key = getKey(appContext);
+        mRealmConfiguration = new RealmConfiguration.Builder()
+                .name("Lock.realm")
                 .encryptionKey(key)
                 .schemaVersion(dbVersion)
                 .deleteRealmIfMigrationNeeded()
                 .build();
+    }
 
-        mRealm = Realm.getInstance(realmConfiguration);
+    /*
+    * ~~ 时间：2017/5/25 21:30 ~~
+    * 生成加密Key
+    **/
+    private byte[] getKey(Context appContext) {
+        byte[] key = new byte[64];
+        String createDate = PasswordManager.mCreateDate;
+        if (TextUtils.isEmpty(createDate)){
+            createDate = TimeUtils.getCurrentTimeInString();
+            SpfUtils.putString(appContext,"createDate",createDate);
+        }
+        String password = Md5Utils.encodeTimes(createDate);
+        char[] chars = password.toCharArray();
+        int length = chars.length;
+        for (int i = 0; i < length; i++) {
+            key[i] = (byte) chars[i];
+        }
+        return key;
     }
 
     /**
@@ -51,7 +76,6 @@ public final class DbManager {
             if (!mRealm.isClosed()) {
                 mRealm.close();
             }
-            mRealm = null;
         }
     }
 
@@ -59,7 +83,7 @@ public final class DbManager {
      * @param bean 要添加的对象
      * @return 返回realm中的对象
      */
-    public PasswordBean add(PasswordBean bean) {
+    public DbBean add(DbBean bean) {
         return add(bean,generateNewPrimaryKey());
     }
 
@@ -67,12 +91,11 @@ public final class DbManager {
      * @param bean 要添加的对象
      * @return 返回realm中的对象
      */
-    public PasswordBean add(final PasswordBean bean, final long id) {
+    public DbBean add(final DbBean bean, final long id) {
         mRealm.executeTransaction(
                 new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        //必须设置新的PrimaryKey
                         bean.setId(id);
                         realm.insert(bean);
                     }
@@ -85,9 +108,9 @@ public final class DbManager {
     private long generateNewPrimaryKey() {
         long primaryKey = 0;
         //必须排序, 否则last可能不是PrimaryKey最大的数据. findAll()查询出来的数据是乱序的
-        RealmResults<PasswordBean> results = mRealm.where(PasswordBean.class).findAllSorted("id", Sort.ASCENDING);
+        RealmResults<DbBean> results = mRealm.where(DbBean.class).findAllSorted("id", Sort.ASCENDING);
         if (results != null && results.size() > 0) {
-            PasswordBean last = results.last(); //根据id顺序排序后, last()取得的对象就是PrimaryKey的值最大的数据
+            DbBean last = results.last(); //根据id顺序排序后, last()取得的对象就是PrimaryKey的值最大的数据
             primaryKey = last.getId() + 1;
         }
         return primaryKey;
@@ -97,28 +120,28 @@ public final class DbManager {
      * @param bean movie的id, 必须有realm中的对象的id (@PrimaryKey标志的字段)
      * @return 返回更改后的realm中的对象
      */
-    public PasswordBean update(PasswordBean bean) {
+    public DbBean update(DbBean bean) {
         mRealm.beginTransaction();
         //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
-        PasswordBean dbPasswordBean = mRealm.copyToRealmOrUpdate(bean);
+        DbBean dbPasswordBean = mRealm.copyToRealmOrUpdate(bean);
         mRealm.commitTransaction();
 
         return dbPasswordBean;
     }
 
-    public PasswordBean update(OnUpdateCallback callback){
+    public DbBean update(OnUpdateCallback callback){
         mRealm.beginTransaction();
         //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
-        PasswordBean dbPasswordBean = mRealm.copyToRealmOrUpdate(callback.onUpdate());
+        DbBean dbPasswordBean = mRealm.copyToRealmOrUpdate(callback.onUpdate());
         mRealm.commitTransaction();
 
         return dbPasswordBean;
     }
 
-    public PasswordBean updateById(long id, OnUpdateByIdCallback callback) {
+    public DbBean updateById(long id, OnUpdateByIdCallback callback) {
         //复制到realm中
         mRealm.beginTransaction();
-        PasswordBean dbPasswordBean = mRealm.where(PasswordBean.class)
+        DbBean dbPasswordBean = mRealm.where(DbBean.class)
                 .equalTo("id", id)
                 .findFirst();
         mRealm.copyToRealmOrUpdate(callback.onUpdate(dbPasswordBean));
@@ -127,10 +150,10 @@ public final class DbManager {
         return dbPasswordBean;
     }
 
-    public PasswordBean updateById(long id, PasswordBean newPasswordBean) {
+    public DbBean updateById(long id, DbBean newPasswordBean) {
         //复制到realm中
         mRealm.beginTransaction();
-        PasswordBean dbPasswordBean = mRealm.where(PasswordBean.class)
+        DbBean dbPasswordBean = mRealm.where(DbBean.class)
                 .equalTo("id", id)
                 .findFirst();
         dbPasswordBean.copyParams(newPasswordBean);
@@ -140,26 +163,26 @@ public final class DbManager {
         return dbPasswordBean;
     }
 
-    public void delete(PasswordBean movie) {
-        if (movie.getId() < 0) {
+    public void delete(DbBean bean) {
+        if (bean.getId() < 0) {
             throw new IllegalArgumentException("非法参数: PasswordBean的id不正确");
         }
 
         //managed, 直接删除
-        if (movie.isValid()) {
+        if (bean.isValid()) {
             mRealm.beginTransaction();
-            movie.deleteFromRealm();
+            bean.deleteFromRealm();
             mRealm.commitTransaction();
             return;
         }
 
         //unmanaged: 先查询, 再删除
-        deleteById(movie.getId());
+        deleteById(bean.getId());
     }
 
     public void deleteById(long id) {
         //查询
-        PasswordBean dbPasswordBean = mRealm.where(PasswordBean.class)
+        DbBean dbPasswordBean = mRealm.where(DbBean.class)
                 .equalTo("id", id)
                 .findFirst();
 
@@ -172,10 +195,10 @@ public final class DbManager {
     public void swap(int oldIndex,int newIndex){
         Logger.d("swap");
         mRealm.beginTransaction();
-        PasswordBean oldPasswordBean = mRealm.where(PasswordBean.class)
+        DbBean oldPasswordBean = mRealm.where(DbBean.class)
                 .equalTo("index", oldIndex)
                 .findFirst();
-        PasswordBean newPasswordBean = mRealm.where(PasswordBean.class)
+        DbBean newPasswordBean = mRealm.where(DbBean.class)
                 .equalTo("index", newIndex)
                 .findFirst();
         oldPasswordBean.setIndex(newIndex);
@@ -185,7 +208,7 @@ public final class DbManager {
         mRealm.commitTransaction();
     }
 
-    public List<PasswordBean> load() {
+    public List<DbBean> load() {
         //异步查询
 //        mRealm.where(PasswordBean.class).
 //                findAllAsync()
@@ -200,7 +223,7 @@ public final class DbManager {
 //                .findAllSorted("year", Sort.DESCENDING); //Sort by year, in descending order
 
         //同步查询所有数据(根据id倒序排序, 最后添加的在ListView的顶部)
-        return mRealm.where(PasswordBean.class).findAllSorted("index", Sort.ASCENDING);
+        return mRealm.where(DbBean.class).findAllSorted("index", Sort.ASCENDING);
     }
 
     private static class InstanceHolder {
@@ -208,10 +231,10 @@ public final class DbManager {
     }
 
     public interface OnUpdateCallback{
-        PasswordBean onUpdate();
+        DbBean onUpdate();
     }
 
     public interface OnUpdateByIdCallback{
-        PasswordBean onUpdate(PasswordBean bean);
+        DbBean onUpdate(DbBean bean);
     }
 }

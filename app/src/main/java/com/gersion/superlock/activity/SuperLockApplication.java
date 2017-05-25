@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.db.DbManager;
+import com.gersion.superlock.db.PasswordManager;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -57,6 +58,7 @@ public class SuperLockApplication extends Application {
         //初始化上下文
         mContext = getApplicationContext();
         Realm.init(this);
+        PasswordManager.getInstance().init(this,1);
         DbManager.getInstance().init(this,1);
         SQLiteDatabase.loadLibs(this);
         CrashReport.initCrashReport(getApplicationContext(), "83a16f6a72", false);

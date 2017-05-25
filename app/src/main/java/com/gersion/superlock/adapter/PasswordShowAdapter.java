@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
-import com.gersion.superlock.bean.PasswordBean;
+import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
 import com.ramotion.foldingcell.FoldingCell;
@@ -33,15 +33,15 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import java.util.HashSet;
 import java.util.List;
 
-public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.DefaultViewHolder>implements IRVAdapter<PasswordBean> {
+public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.DefaultViewHolder>implements IRVAdapter<DbBean> {
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private SwipeMenuRecyclerView mMenuRecyclerView;
 
-    private List<PasswordBean> mDatas;
+    private List<DbBean> mDatas;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public PasswordShowAdapter(SwipeMenuRecyclerView menuRecyclerView, List<PasswordBean> data) {
+    public PasswordShowAdapter(SwipeMenuRecyclerView menuRecyclerView, List<DbBean> data) {
         this.mMenuRecyclerView = menuRecyclerView;
         this.mDatas = data;
     }
@@ -95,31 +95,31 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
     }
 
     @Override
-    public void setNewData(List<PasswordBean> data) {
+    public void setNewData(List<DbBean> data) {
         mDatas = data;
         notifyDataSetChanged();
     }
 
     @Override
-    public void addData(List<PasswordBean> data) {
+    public void addData(List<DbBean> data) {
         mDatas.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void removeAll(List<PasswordBean> data) {
+    public void removeAll(List<DbBean> data) {
         mDatas.removeAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void remove(PasswordBean data) {
+    public void remove(DbBean data) {
         mDatas.remove(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public List<PasswordBean> getData() {
+    public List<DbBean> getData() {
         return null;
     }
 
@@ -147,7 +147,7 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
 
         public void setData(int position) {
             mPosition = position;
-            PasswordBean passwordBean = mDatas.get(position);
+            DbBean passwordBean = mDatas.get(position);
             mTvName.setText(passwordBean.getUpdateHistorys().get(0).getUpdateTime()+"");
             mTvTitle.setText(passwordBean.getName());
             if (unfoldedIndexes.contains(position)) {

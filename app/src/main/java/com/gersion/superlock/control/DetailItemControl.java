@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseDetailControl;
 import com.gersion.superlock.bean.Keyer;
-import com.gersion.superlock.dao.PasswordDao;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.hss01248.dialog.StyledDialog;
@@ -48,8 +47,6 @@ public class DetailItemControl extends BaseDetailControl implements View.OnClick
 
     public View getRootView() {
         mView = View.inflate(mContext, R.layout.item_main_show, null);
-        final PasswordDao dao = new PasswordDao(mContext);
-
         mConfigBean = StyledDialog.buildNormalInput(mContext, mTitle, mHintText, null, "修改", "取消", new MyDialogListener() {
             @Override
             public void onFirst() {
@@ -77,7 +74,6 @@ public class DetailItemControl extends BaseDetailControl implements View.OnClick
                         break;
                 }
                 Logger.d(mKeyer.number+"asd");
-                boolean update = dao.update(mKeyer.number, mKeyer);
             }
         });
         initView();

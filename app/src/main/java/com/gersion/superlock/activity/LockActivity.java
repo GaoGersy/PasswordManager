@@ -14,8 +14,7 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.dao.MainKeyDao;
-import com.gersion.superlock.utils.Md5Utils;
+import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
@@ -65,6 +64,7 @@ public class LockActivity extends BaseActivity implements View.OnClickListener {
                 return false;
             }
         });
+        final int length = SpfUtils.getInt(LockActivity.this, MyConstants.LENGTH, 0);
 
         mLoginPwd.addTextChangedListener(new TextWatcher() {
 
@@ -84,10 +84,8 @@ public class LockActivity extends BaseActivity implements View.OnClickListener {
             public void afterTextChanged(Editable s) {
                 if (mIsAutoLogin) {
                     String pwd = mLoginPwd.getText().toString().trim();
-                    int length = SpfUtils.getInt(LockActivity.this, MyConstants.LENGTH, 0);
                     if (pwd.length() == length) {
                         login();
-                        return;
                     }
                 }
             }
@@ -101,11 +99,9 @@ public class LockActivity extends BaseActivity implements View.OnClickListener {
 
     // 登录
     private void login() {
-        String pwd = Md5Utils.encodeTimes(MyConstants.ADD_SALT
-                + mLoginPwd.getText().toString().trim() + MyConstants.ADD_SALT);
-        MainKeyDao mkd = new MainKeyDao(this);
-        String key = mkd.query();
-        if (TextUtils.equals(pwd, key)) {
+        String password = PasswordManager.getInstance().getPassword();
+        String inputPwd = mLoginPwd.getText().toString().trim();
+        if (TextUtils.equals(password, inputPwd)) {
 //            ToastUtils.showTasty(LockActivity.this,"登录成功", TastyToast.SUCCESS);
             finish();
         } else {

@@ -31,8 +31,12 @@ public class Md5Utils {
     }
     
     public static  String encodeTimes(String pwd) {
+        return encodeWithTimes(pwd,100);
+    }
+
+    public static  String encodeWithTimes(String pwd, int times) {
         String str = encode(pwd);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < times; i++) {
             str = encode(str);
             if(i%2==0){
                 str = str+str;

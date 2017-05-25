@@ -19,7 +19,8 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.dao.PasswordDao;
+import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.utils.UIUtils;
@@ -29,11 +30,6 @@ import com.sdsmdg.tastytoast.TastyToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 public class AddPasswordActivity extends BaseActivity implements View.OnClickListener {
 
@@ -58,7 +54,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.selector)
     TextView mSelector;
     private boolean isOpen = false;
-    private String mTotalCount;
+    private int mTotalCount;
     private int mDistance;
 
     @Override
@@ -80,7 +76,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     private void initData() {
         mDistance = UIUtils.dp2Px(40);
         Intent intent = getIntent();
-        mTotalCount = intent.getStringExtra(HomeFragment.TOTAL_COUNT);
+        mTotalCount = intent.getIntExtra(HomeFragment.TOTAL_COUNT,-1);
     }
 
     private void performAnimator(final View view, int y, int dely) {
@@ -139,37 +135,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_commit:
-                final String pwd = mCetvPassword.getText().toString().trim();
-                final String name = mCetvName.getText().toString().trim();
-                final String location = mCetvLocation.getText().toString().trim();
-                final String notes = mEtNotes.getText().toString().trim();
-                if (!(TextUtils.isEmpty(pwd) || TextUtils.isEmpty(name) || TextUtils.isEmpty(location))) {
-                    scaleAnimator();
-                    final PasswordDao dao = new PasswordDao(this);
-                    Observable.just("a")
-                            .map(new Func1<String, Boolean>() {
-                                @Override
-                                public Boolean call(String s) {
-                                    return dao.add(location, name, pwd, notes, mTotalCount);
-                                }
-                            })
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<Boolean>() {
-                                @Override
-                                public void call(Boolean aBoolean) {
-                                    if (aBoolean) {
-                                        ToastUtils.showTasty(AddPasswordActivity.this, "添加成功", TastyToast.SUCCESS);
-                                        mCetvLocation.setText("");
-                                        mCetvName.setText("");
-                                        mCetvPassword.setText("");
-                                        mEtNotes.setText("");
-                                    }
-                                }
-                            });
-                } else {
-                    shakeAnimator();
-                }
+                addItem();
 
                 break;
             case R.id.tv_noteKey:
@@ -205,6 +171,30 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
                     }
                 }).show();
                 break;
+        }
+    }
+
+    private void addItem() {
+        String pwd = mCetvPassword.getText().toString().trim();
+        String name = mCetvName.getText().toString().trim();
+        String location = mCetvLocation.getText().toString().trim();
+        String notes = mEtNotes.getText().toString().trim();
+        if (!(TextUtils.isEmpty(pwd) || TextUtils.isEmpty(name) || TextUtils.isEmpty(location))) {
+            scaleAnimator();
+            DbBean dbBean = new DbBean();
+            dbBean.setAddress(location);
+            dbBean.setCreateTime(System.currentTimeMillis());
+            dbBean.setName(name);
+            dbBean.setNotes(notes);
+            dbBean.setIndex(mTotalCount+1);
+            DbManager.getInstance().add(dbBean);
+            ToastUtils.showTasty(AddPasswordActivity.this, "添加成功", TastyToast.SUCCESS);
+            mCetvLocation.setText("");
+            mCetvName.setText("");
+            mCetvPassword.setText("");
+            mEtNotes.setText("");
+        } else {
+            shakeAnimator();
         }
     }
 

@@ -12,7 +12,6 @@ import android.widget.ListView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.MainAdapter;
 import com.gersion.superlock.bean.Keyer;
-import com.gersion.superlock.dao.PasswordDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +68,6 @@ public class MyFragment extends Fragment {
     }
 
     private void initData() {
-        PasswordDao dao = new PasswordDao(getActivity());
-//        mData = dao.query();
         mData = new ArrayList<>();
         for(int i = 0;i<100;i++){
             Keyer keyer = new Keyer();

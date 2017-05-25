@@ -16,34 +16,19 @@ import android.widget.TextView.OnEditorActionListener;
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.RegesterAdapter;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.controller.MessageEvent;
-import com.gersion.superlock.dao.MainKeyDao;
-import com.gersion.superlock.dao.PasswordDao;
-import com.gersion.superlock.dao.SqlPassword;
-import com.gersion.superlock.utils.Md5Utils;
+import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
-import com.gersion.superlock.utils.SqliteUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.NoTouchViewPager;
-import com.orhanobut.logger.Logger;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * ClassName: NewsCenterBean <br/>
@@ -73,7 +58,6 @@ public class RegesterActivity extends BaseActivity {
     private EditText mOldPwd;
     private ImageView mOldPwdGo;
     private boolean mIsChangePwd;
-    private MainKeyDao mMkd;
     private String mCurrentPwd;
     //用来判断是不是第一次创建密码，第一次的时候会跳转到LockActivity,所以visibleCount多加了1;
     // 为了以后的页面能够正常进入后台能加密，所以onStop又必须减1
@@ -85,8 +69,6 @@ public class RegesterActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_regester);
-        mMkd = new MainKeyDao(this);
-        mOriginalPwd = mMkd.query();
         initView();
 
         initData();
@@ -248,115 +230,58 @@ public class RegesterActivity extends BaseActivity {
 
     private void verifyPwd() {
 
-        if (!mIsChangePwd){
-            long timeMillis = System.currentTimeMillis();
-            SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
-            String currenTime = format.format(new Date(timeMillis));
-            SpfUtils.putString(this,MyConstants.FIRST_TIME,currenTime);
-        }
-        final String verifyPwd = mVerifyPwd.getText().toString().trim();
+        String verifyPwd = mVerifyPwd.getText().toString().trim();
         if (TextUtils.equals(mCurrentPwd, verifyPwd)) {
-            Observable.just("")
-                    .map(new Func1<String, Object>() {
-                        @Override
-                        public Object call(String s) {
-                            return mMkd.add(verifyPwd);
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .subscribe();
-            if (mIsChangePwd){
-
-                EventBus.getDefault().postSticky(new MessageEvent("ChangePwd"));
-            }else{
+            if (mIsChangePwd) {
+                PasswordManager.getInstance().updatePassword(verifyPwd);
+            } else {
+                PasswordManager.getInstance().addPassword(verifyPwd);
+                SpfUtils.putBoolean(this, MyConstants.IS_FINISH_GUIDE, true);
                 startActivity(new Intent(RegesterActivity.this, MainActivity.class));
             }
-            SpfUtils.putBoolean(RegesterActivity.this, MyConstants.IS_CHANGE_PWD, true);
-            SpfUtils.putBoolean(this, MyConstants.IS_FINISH_GUIDE,true);
-            SpfUtils.putInt(this, MyConstants.LENGTH,mVerifyPwd.getText().toString().trim().length());
-
-            boolean b = resetSqlData();
+            SpfUtils.putInt(this, MyConstants.LENGTH, verifyPwd.length());
+//                SpfUtils.putBoolean(RegesterActivity.this, MyConstants.IS_CHANGE_PWD, true);
             finish();
         } else {
-            ToastUtils.showTasty(RegesterActivity.this,"两次密码不一致", TastyToast.WARNING);
+            ToastUtils.showTasty(RegesterActivity.this, "两次密码不一致", TastyToast.WARNING);
         }
 
-    }
-
-    private void handleReset(){
-        Observable.just(resetSqlData())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Action1<Boolean>() {
-                    @Override
-                    public void call(Boolean aBoolean) {
-                        resetSqlData();
-                    }
-                });
-    }
-
-    //因为数据库加密密码与主密码有关，所以在修改主密码后也必须对数据库重新设置密码
-    private boolean resetSqlData(){
-        final File sqlPath = SqliteUtils.getSqlPath(this, SqlPassword.DB_NAME);
-        if (sqlPath.exists()){
-            final PasswordDao dao = new PasswordDao(this,mOriginalPwd);
-            Observable.just("a")
-                    .map(new Func1<String, List<Keyer>>() {
-                        @Override
-                        public List<Keyer> call(String s) {
-                            return dao.query();
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(new Action1<List<Keyer>>() {
-                        @Override
-                        public void call(List<Keyer> keyers) {
-                            Logger.d(keyers.size());
-                            dao.destory();
-                            sqlPath.delete();
-                            PasswordDao passwordDao = new PasswordDao(RegesterActivity.this);
-                            passwordDao.addAll(keyers);
-                            passwordDao.destory();
-                        }
-                    });
-        }
-        return true;
     }
 
     private void regesterPwd() {
         mCurrentPwd = mRegesterPwd.getText().toString().trim();
-        if(checkPwdIsOk(mCurrentPwd)){
+        if (checkPwdIsOk(mCurrentPwd)) {
             stepNum++;
             mVp.setCurrentItem(mVp.getCurrentItem() + 1);
         }
     }
 
-    private boolean checkPwdIsOk(String pwd){
-        if (pwd.length()<6){
-            ToastUtils.showTasty(this,"密码长度不能小于6位",TastyToast.ERROR);
+    private boolean checkPwdIsOk(String pwd) {
+        if (pwd.length() < 6) {
+            ToastUtils.showTasty(this, "密码长度不能小于6位", TastyToast.ERROR);
             return false;
         }
 
-        if (!pwd.matches(".*[a-zA-Z].*")){
-            ToastUtils.showTasty(this,"密码必须包含字母",TastyToast.ERROR);
+        if (!pwd.matches(".*[a-zA-Z].*")) {
+            ToastUtils.showTasty(this, "密码必须包含字母", TastyToast.ERROR);
             return false;
         }
 
-        if (!pwd.matches(".*[0-9].*")){
-            ToastUtils.showTasty(this,"密码必须包含数字",TastyToast.ERROR);
+        if (!pwd.matches(".*[0-9].*")) {
+            ToastUtils.showTasty(this, "密码必须包含数字", TastyToast.ERROR);
             return false;
         }
         return true;
     }
 
     private void checkOldPwd() {
-        String mainKey = mMkd.query();
-        String oldPwd = Md5Utils.encodeTimes(
-                MyConstants.ADD_SALT + mOldPwd.getText().toString().trim() + MyConstants.ADD_SALT);
-        if (TextUtils.equals(mainKey, oldPwd)) {
+        String oldPwd = PasswordManager.getInstance().getEncyptPassword(mOldPwd.getText().toString().trim());
+        String password = PasswordManager.getInstance().getPassword();
+        if (TextUtils.equals(password, oldPwd)) {
             stepNum++;
             mVp.setCurrentItem(mVp.getCurrentItem() + 1);
         } else {
-            ToastUtils.showTasty(RegesterActivity.this,"密码错误", TastyToast.ERROR);
+            ToastUtils.showTasty(RegesterActivity.this, "密码错误", TastyToast.ERROR);
         }
     }
 
@@ -376,7 +301,7 @@ public class RegesterActivity extends BaseActivity {
         super.onStart();
         EventBus.getDefault().register(this);
         mIsFinishGuide = SpfUtils.getBoolean(RegesterActivity.this, MyConstants.IS_FINISH_GUIDE, false);
-        if (!mIsFinishGuide){
+        if (!mIsFinishGuide) {
             visibleCount++;
         }
     }
@@ -385,7 +310,7 @@ public class RegesterActivity extends BaseActivity {
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-        if (!mIsFinishGuide){
+        if (!mIsFinishGuide) {
             visibleCount--;
         }
     }

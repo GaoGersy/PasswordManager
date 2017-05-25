@@ -5,21 +5,13 @@ import android.os.Bundle;
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.PasswordShowAdapter;
 import com.gersion.superlock.base.BaseFragment;
-import com.gersion.superlock.bean.PasswordBean;
-import com.gersion.superlock.bean.UpdateBean;
-import com.gersion.superlock.controller.MessageEvent;
-import com.gersion.superlock.dao.PasswordDao;
+import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.OnItemClickListener;
-import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
-import com.sdsmdg.tastytoast.TastyToast;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,9 +19,8 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
     public static final String TOTAL_COUNT = "total_count";
-    private PasswordDao mDao;
     private PasswordShowAdapter mPasswordShowAdapter;
-    private List<PasswordBean> mDataList = new ArrayList<>();
+    private List<DbBean> mDataList = new ArrayList<>();
     private SmartRecycleView mSmartRecycleView;
     /**
      * 当Item移动的时候。
@@ -59,6 +50,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         mSmartRecycleView = findView(R.id.smartRecycleView);
+        DbManager.getInstance().onStart();
         init();
     }
 
@@ -107,36 +99,10 @@ public class HomeFragment extends BaseFragment {
 //        menuRecyclerView.setOnItemStateChangedListener(mOnItemStateChangedListener);
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(MessageEvent event) {
-        if (event.message.equals("ChangePwd")) {
-            ToastUtils.showTasty(getActivity(), "主密码修改成功", TastyToast.SUCCESS);
-        }
-        mDao.destory();
-        mDao = new PasswordDao(getActivity());
-        initData();
-        if (event != null) {
-            EventBus.getDefault().removeStickyEvent(event);
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         DbManager.getInstance().destroy();
-//        mDao.destory();
     }
 
     //初始化数据
@@ -146,10 +112,10 @@ public class HomeFragment extends BaseFragment {
 
     private void getDataFromDB() {
 //        for (int i = 0; i < 20; i++) {
-//            PasswordBean bean = new PasswordBean();
+//            DbBean bean = new DbBean();
 //            bean.setIndex(i);
 //            bean.setAddress("地址" + i);
-//            bean.setCreateTime(TimeUtils.getCurrentTimeInString());
+//            bean.setCreateTime(TimeUtils.getCurrentTimeInLong());
 //            bean.setName("名称" + i);
 //            bean.setNotes("备注" + i);
 //            bean.setPwd("密码" + i);
@@ -162,9 +128,9 @@ public class HomeFragment extends BaseFragment {
 //            DbManager.getInstance().add(bean,i);
 //        }
 
-        final List<PasswordBean> passwordBeans = DbManager.getInstance().load();
+        final List<DbBean> passwordBeans = DbManager.getInstance().load();
         mDataList.addAll(passwordBeans);
-        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
+//        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
 //        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
 //            @Override
 //            public PasswordBean onUpdate() {
