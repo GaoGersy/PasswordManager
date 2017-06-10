@@ -11,8 +11,6 @@ import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
 
-import net.sqlcipher.database.SQLiteDatabase;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import io.realm.Realm;
@@ -60,7 +58,6 @@ public class SuperLockApplication extends Application {
         Realm.init(this);
         PasswordManager.getInstance().init(this,1);
         DbManager.getInstance().init(this,1);
-        SQLiteDatabase.loadLibs(this);
         CrashReport.initCrashReport(getApplicationContext(), "83a16f6a72", false);
         CalligraphyConfig.
                 initDefault(new CalligraphyConfig.Builder()

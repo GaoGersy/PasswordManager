@@ -40,7 +40,7 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initData(savedInstanceState);
-        setClickListener();
+        initListener();
     }
 
     protected abstract int getLayoutView();
@@ -49,7 +49,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initData(Bundle bundle);
 
-    protected abstract void setClickListener();
+    protected abstract void initListener();
 
     protected <T extends View> T findView(int id){
         return (T) view.findViewById(id);

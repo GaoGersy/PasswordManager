@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@color/bgContent"
+        android:background="@color/bg_ontent"
         android:baselineAligned="false"
         android:elevation="5dp"
         app:cardCornerRadius="5dp"
@@ -14,21 +14,43 @@
             android:layout_height="match_parent"
             android:padding="10dp"
             >
-        <ImageView
-                android:src="@mipmap/wx"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <com.dingmouren.paletteimageview.PaletteImageView
+                android:id="@+id/piv_icon"
+                app:cornerRadis="10dp"
+                app:paletteSrc="@mipmap/yellow"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 />
         <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
             <TextView
+                    android:layout_weight="1"
                     android:id="@+id/tv_title"
                     android:text="名称"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/content_list_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/tv_name"
+                    android:text="名称"
+                    android:textSize="@dimen/content_list_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            <TextView
+                    android:layout_weight="1"
+                    android:id="@+id/tv_password"
+                    android:text="名称"
+                    android:textSize="@dimen/content_list_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />

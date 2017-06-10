@@ -45,8 +45,6 @@ public class BaseActivity extends AppCompatActivity {
 //    }
 
     private boolean shouldLockSceen(Activity activity) {
-
-
         // no enough timeout
         long passedTime = System.currentTimeMillis() - lastActive;
         if (lastActive > 0 && passedTime <= lockTimeOut) {

@@ -163,6 +163,13 @@ public final class DbManager {
         return dbPasswordBean;
     }
 
+    public DbBean queryById(long id) {
+        DbBean dbPasswordBean = mRealm.where(DbBean.class)
+                .equalTo("id", id)
+                .findFirst();
+        return dbPasswordBean;
+    }
+
     public void delete(DbBean bean) {
         if (bean.getId() < 0) {
             throw new IllegalArgumentException("非法参数: PasswordBean的id不正确");

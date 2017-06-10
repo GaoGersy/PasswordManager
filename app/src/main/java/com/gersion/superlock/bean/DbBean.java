@@ -1,5 +1,7 @@
 package com.gersion.superlock.bean;
 
+import java.io.Serializable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -8,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by a3266 on 2017/5/20.
  */
 
-public class DbBean extends RealmObject implements Comparable<DbBean> {
+public class DbBean extends RealmObject implements Serializable {
     @PrimaryKey
     private long id;
     private String number;
@@ -140,15 +142,15 @@ public class DbBean extends RealmObject implements Comparable<DbBean> {
 //            this.updateHistorys = bean.getUpdateHistorys();
     }
 
-    @Override
-    public int compareTo(DbBean bean) {//按照从小到大排列
-        if (bean.index > index) {
-            return -1;
-        } else if (bean.index < index) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+//    @Override
+//    public int compareTo(DbBean bean) {//按照从小到大排列
+//        if (bean.index > index) {
+//            return -1;
+//        } else if (bean.index < index) {
+//            return 1;
+//        } else {
+//            return 0;
+//        }
+//    }
 
 }

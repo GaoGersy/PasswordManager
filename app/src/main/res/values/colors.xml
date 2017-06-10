@@ -5,9 +5,20 @@
     <color name="colorAccent">#29A1D3</color>
     <color name="background_card">#2E3138</color>
     <color name="theme_accent">#29A1D3</color>
-    <color name="gray">#20202B</color>
+    <color name="guide_bg">#20202B</color>
     <color name="material_white">#f9f9f9</color>
     <color name="app_theme_color">#888888</color>
     <color name="transpant">#00000000</color>
-    <color name="bgContent">#fff</color>
+    <color name="bg_ontent">#fff</color>
+    <color name="divider">#cdcdcd</color>
+    <color name="gray_80">#808080</color>
+    <color name="gray_a0">#a0a0a0</color>
+    <color name="gray_b0">#b0b0b0</color>
+    <color name="gray_c0">#c0c0c0</color>
+    <color name="gray_d0">#d0d0d0</color>
+    <color name="gray_e0">#e0e0e0</color>
+    <color name="gray_f0">#f0f0f0</color>
+    <color name="gray_f1">#E9EAEA</color>
+    <color name="gray_77">#777777</color>
+    <color name="light_gray">#F2F3F5</color>
 </resources>

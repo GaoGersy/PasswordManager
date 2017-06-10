@@ -1,13 +1,20 @@
 package com.gersion.superlock.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.gersion.superlock.R;
-import com.gersion.superlock.adapter.PasswordShowAdapter;
+import com.gersion.superlock.activity.DetailActivity;
+import com.gersion.superlock.adapter.ContentListAdapter;
+import com.gersion.superlock.animator.EasyTransition;
+import com.gersion.superlock.animator.EasyTransitionOptions;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.OnItemClickListener;
+import com.gersion.superlock.utils.ImageLoader;
 import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -19,7 +26,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
     public static final String TOTAL_COUNT = "total_count";
-    private PasswordShowAdapter mPasswordShowAdapter;
+    private ContentListAdapter mPasswordShowAdapter;
     private List<DbBean> mDataList = new ArrayList<>();
     private SmartRecycleView mSmartRecycleView;
     /**
@@ -41,6 +48,7 @@ public class HomeFragment extends BaseFragment {
         }
 
     };
+    private ImageView mIvBg;
 
     @Override
     protected int getLayoutView() {
@@ -50,6 +58,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         mSmartRecycleView = findView(R.id.smartRecycleView);
+        mIvBg = findView(R.id.iv_bg);
+        ImageLoader.getInstance().loadResBlurImage(R.mipmap.yellow,mIvBg);
         DbManager.getInstance().onStart();
         init();
     }
@@ -60,13 +70,19 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected void setClickListener() {
-
+    protected void initListener() {
+        mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view,int position) {
+                DbBean dbBean = mDataList.get(position);
+                startTrainsition(view,dbBean);
+            }
+        });
     }
 
     private void init() {
         SwipeMenuRecyclerView menuRecyclerView = mSmartRecycleView.getRecyclerView();
-        mPasswordShowAdapter = new PasswordShowAdapter(menuRecyclerView, mDataList);
+        mPasswordShowAdapter = new ContentListAdapter(menuRecyclerView, mDataList);
         mSmartRecycleView
                 .setAutoRefresh(true)
                 .setAdapter(mPasswordShowAdapter)
@@ -87,12 +103,6 @@ public class HomeFragment extends BaseFragment {
 
         // 触摸拖拽的代码在Adapter中：SwipeMenuRecyclerView#startDrag(ViewHolder);
 //        mDragAdapter.setOnItemClickListener(onItemClickListener);
-        mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-
-            }
-        });
         menuRecyclerView.setLongPressDragEnabled(true); // 开启拖拽。
         menuRecyclerView.setItemViewSwipeEnabled(false); // 开启滑动删除。
         menuRecyclerView.setOnItemMoveListener(onItemMoveListener);// 监听拖拽，更新UI。
@@ -120,15 +130,18 @@ public class HomeFragment extends BaseFragment {
 //            bean.setNotes("备注" + i);
 //            bean.setPwd("密码" + i);
 //            mDataList.add(bean);
-//            UpdateBean updateBean = new UpdateBean();
-//            updateBean.setPassword("aaaa");
-//            updateBean.setUpdateTime(System.currentTimeMillis());
 //            bean.setUpdateHistorys(new RealmList<UpdateBean>());
-//            bean.getUpdateHistorys().add(updateBean);
+//            for (int j=0;j<5;j++){
+//                UpdateBean updateBean = new UpdateBean();
+//                updateBean.setPassword("aaaa"+j);
+//                updateBean.setUpdateTime(System.currentTimeMillis());
+//                bean.getUpdateHistorys().add(updateBean);
+//            }
 //            DbManager.getInstance().add(bean,i);
 //        }
 
         final List<DbBean> passwordBeans = DbManager.getInstance().load();
+        mDataList.clear();
         mDataList.addAll(passwordBeans);
 //        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
 //        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
@@ -149,65 +162,19 @@ public class HomeFragment extends BaseFragment {
         mSmartRecycleView.handleData(mDataList);
     }
 
-//    private void initHandle(int i) {
-//        mList = mDao.query();
-//        for (; i < mList.size(); i++) {
-//            Keyer keyer = mList.get(i);
-//            final ChildView childView = new ChildView();
-//            childView.init(getActivity(), keyer);
-//
-//            int size = UIUtils.dp2Px(150);
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
-//            params.topMargin = 20;
-//            params.leftMargin = 20;
-//            params.rightMargin = 20;
-//            childView.viewPager.setLayoutParams(params);
-//            mHandler.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mLlContainer.addView(childView.viewPager);
-//                }
-//            });
-//        }
-//    }
-//
-//    private void addView(Keyer keyer) {
-//        ChildView childView = new ChildView();
-//        childView.init(getActivity(), keyer);
-//
-//        int size = UIUtils.dp2Px(150);
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size);
-//        params.topMargin = 20;
-//        params.leftMargin = 20;
-//        params.rightMargin = 20;
-//        childView.viewPager.setLayoutParams(params);
-//        mLlContainer.addView(childView.viewPager);
-//    }
-//
-//    private void initHandle() {
-//        mLlContainer.removeAllViews();
-//        Observable.just(mDao.query())
-//                .flatMap(new Func1<List<Keyer>, Observable<Keyer>>() {
-//                    @Override
-//                    public Observable<Keyer> call(List<Keyer> keyers) {
-//                        return Observable.from(keyers);
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<Keyer>() {
-//                    @Override
-//                    public void call(Keyer keyer) {
-//                        Logger.d(keyer.number +"");
-//                        addView(keyer);
-//                        mTotal_count++;
-//                    }
-//                });
-//    }
-//
-//    //初始化事件监听
-//    private void initEvent() {
-//    }
+    private void startTrainsition(View view, DbBean bean){
+        Intent intent = DetailActivity.getDetailIntent(getActivity(), bean.getId());
+
+        EasyTransitionOptions options =
+                EasyTransitionOptions.makeTransitionOptions(
+                        getActivity(),
+                        view.findViewById(R.id.piv_icon),
+                        view.findViewById(R.id.tv_title));
+//                        findViewById(R.id.v_top_card));
+
+        EasyTransition.startActivity(intent, options);
+    }
+
 //
 //
 //    public void paowuxian(View view) {

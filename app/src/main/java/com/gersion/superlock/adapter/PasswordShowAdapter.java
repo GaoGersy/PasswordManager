@@ -162,7 +162,7 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
             mFcContainer.toggle(false);
             registerToggle(mPosition);
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(getAdapterPosition());
+                mOnItemClickListener.onItemClick(v,getAdapterPosition());
             }
         }
 

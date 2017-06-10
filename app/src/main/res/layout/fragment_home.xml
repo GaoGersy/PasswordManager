@@ -3,6 +3,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+    <ImageView
+            android:id="@+id/iv_bg"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     <com.gersion.superlock.view.smartRecycleView.SmartRecycleView
             android:id="@+id/smartRecycleView"
             android:layout_width="match_parent"

@@ -17,9 +17,9 @@ import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.nineoldandroids.view.ViewHelper;
 
-import java.util.List;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import java.util.List;
 
 public class GuideActivity extends AppCompatActivity implements OnPageChangeListener {
 

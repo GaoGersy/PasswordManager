@@ -78,6 +78,19 @@ public class UIUtils {
         return px;
     }
 
+    public static int dp2Px(float dp) {
+        //dp和px相互转换的公式
+        //公式一:px/dp = density
+        //公式二:px/(ppi/160) = dp
+        /*
+           480x800  ppi=240    1.5
+           1280x720 ppi = 320   2
+         */
+        float density = getResources().getDisplayMetrics().density;
+        int px = (int) (dp * density + .5f);
+        return px;
+    }
+
     /**
      * px-->do
      *

@@ -15,11 +15,13 @@
  */
 package com.gersion.superlock.listener;
 
+import android.view.View;
+
 /**
  * Created by Yan Zhenjie on 2016/7/27.
  */
 public interface OnItemClickListener {
 
-    void onItemClick(int position);
+    void onItemClick(View view,int position);
 
 }

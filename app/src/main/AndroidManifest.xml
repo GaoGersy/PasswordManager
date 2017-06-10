@@ -28,11 +28,11 @@
             android:theme="@style/AppTheme">
 
         <!-- =====================================Activity==================================== -->
-        <!-- MainActivity -->
+        <!-- MainActivity
+                android:excludeFromRecents="true"-->
         <activity
                 android:name=".activity.SplashActivity"
-                android:theme="@style/SplashTheme"
-                android:excludeFromRecents="true">
+                android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -67,6 +67,7 @@
                 android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.AboutActivity"/>
+        <activity android:name=".activity.DetailActivity"/>
         <activity
                 android:name=".activity.MainActivity"
                 android:label="@string/title_activity_main2"
