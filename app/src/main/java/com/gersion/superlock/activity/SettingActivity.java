@@ -1,7 +1,6 @@
 package com.gersion.superlock.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,38 +37,22 @@ public class SettingActivity extends BaseActivity {
     LinearLayout mActivitySetting;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
-        initEvnet();
+    protected int setLayoutId() {
+        return R.layout.activity_setting;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        boolean isAutoLogin = SpfUtils.getBoolean(this, MyConstants.IS_AUTO_LOGIN, false);
-        setToggleButton(isAutoLogin, mTbAutoLogin);
-        boolean isLock = SpfUtils.getBoolean(this, MyConstants.IS_LOCK, true);
-        setToggleButton(isLock, mTbIsLock);
-        boolean isShowPwd = SpfUtils.getBoolean(this, MyConstants.IS_SHOW_PWD, true);
-        setToggleButton(isShowPwd, mTbShowPwd);
-        boolean isShowUpdateTime = SpfUtils.getBoolean(this, MyConstants.IS_SHOW_UPDATE_TIME, false);
-        setToggleButton(isShowUpdateTime, mTbShowUpdateTime);
-        if (!isLock) {
-            mTbAutoLogin.setEnabled(false);
-        }
+    protected void initView() {
+        ButterKnife.bind(this);
     }
 
-    private void setToggleButton(boolean isOpen, ToggleButton tb) {
-        if (isOpen) {
-            tb.setToggleOn();
-        } else {
-            tb.setToggleOff();
-        }
+    @Override
+    protected void initData() {
+
     }
 
-    private void initEvnet() {
+    @Override
+    protected void initListener() {
         mTbAutoLogin.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
@@ -122,6 +105,30 @@ public class SettingActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        boolean isAutoLogin = SpfUtils.getBoolean(this, MyConstants.IS_AUTO_LOGIN, false);
+        setToggleButton(isAutoLogin, mTbAutoLogin);
+        boolean isLock = SpfUtils.getBoolean(this, MyConstants.IS_LOCK, true);
+        setToggleButton(isLock, mTbIsLock);
+        boolean isShowPwd = SpfUtils.getBoolean(this, MyConstants.IS_SHOW_PWD, true);
+        setToggleButton(isShowPwd, mTbShowPwd);
+        boolean isShowUpdateTime = SpfUtils.getBoolean(this, MyConstants.IS_SHOW_UPDATE_TIME, false);
+        setToggleButton(isShowUpdateTime, mTbShowUpdateTime);
+        if (!isLock) {
+            mTbAutoLogin.setEnabled(false);
+        }
+    }
+
+    private void setToggleButton(boolean isOpen, ToggleButton tb) {
+        if (isOpen) {
+            tb.setToggleOn();
+        } else {
+            tb.setToggleOff();
+        }
     }
 
     @OnClick({R.id.tv_donation, R.id.tv_about})

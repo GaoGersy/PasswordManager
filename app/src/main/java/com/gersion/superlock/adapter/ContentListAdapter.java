@@ -134,8 +134,8 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
         public void setData(int position) {
             mPosition = position;
             DbBean passwordBean = mDatas.get(position);
-            mTvName.setText(passwordBean.getUpdateHistorys().get(0).getUpdateTime()+"");
-            mTvTitle.setText(passwordBean.getName());
+            mTvName.setText(passwordBean.getName());
+            mTvTitle.setText(passwordBean.getAddress());
             mTvPassword.setText(passwordBean.getPwd());
         }
 

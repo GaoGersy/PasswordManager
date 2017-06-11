@@ -1,12 +1,10 @@
 package com.gersion.superlock.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -65,26 +63,20 @@ public class RegesterActivity extends BaseActivity {
     private String mOriginalPwd;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_regester);
-        initView();
-
-        initData();
-
-        initEvent();
-
+    protected int setLayoutId() {
+        return R.layout.activity_regester;
     }
 
     // 初始化控件
-    private void initView() {
+    @Override
+    protected void initView() {
         mVp = (NoTouchViewPager) findViewById(R.id.activity_regester_vp);
 
     }
 
     // 初始化数据
-    private void initData() {
+    @Override
+    protected void initData() {
         mList = new ArrayList<View>();
         mIsChangePwd = SpfUtils.getBoolean(this, MyConstants.IS_CHANGE_PWD, false);
         if (mIsChangePwd) {
@@ -95,6 +87,18 @@ public class RegesterActivity extends BaseActivity {
 
         RegesterAdapter adapter = new RegesterAdapter(mList);
         mVp.setAdapter(adapter);
+    }
+
+    @Override
+    protected void initListener() {
+        oldPwdGoClick();
+        regesterGoClick();
+        verifyGoClick();
+        if (mIsChangePwd) {
+            oldPwdTextChange();
+        }
+        verifyPwdTextChange();
+        regesterPwdTextChange();
     }
 
     // 初始化检查原密码的View
@@ -132,19 +136,6 @@ public class RegesterActivity extends BaseActivity {
         mVerifyTitle.setText("确认新密码");
         mVerifyBg.setBackgroundResource(R.mipmap.regester_verify_paine);
         mList.add(verifyView);
-    }
-
-    // 初始化事件监听
-    private void initEvent() {
-        oldPwdGoClick();
-        regesterGoClick();
-        verifyGoClick();
-        if (mIsChangePwd) {
-            oldPwdTextChange();
-        }
-        verifyPwdTextChange();
-        regesterPwdTextChange();
-
     }
 
     private void verifyPwdTextChange() {

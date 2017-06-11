@@ -9,7 +9,7 @@
         android:id="@+id/iv_icon"
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"
-        android:src="@mipmap/defaulticon"
+        android:src="@mipmap/wx"
         android:layout_width="60dp"
         android:layout_height="60dp"/>
 

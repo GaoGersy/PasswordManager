@@ -12,6 +12,7 @@ import com.orhanobut.logger.Logger;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -19,6 +20,7 @@ import io.realm.Sort;
 public final class DbManager {
     private Realm mRealm;
     private RealmConfiguration mRealmConfiguration;
+    private OnDataChangeListener mListener;
 
     private DbManager() {
     }
@@ -29,6 +31,15 @@ public final class DbManager {
 
     public void onStart(){
         mRealm = Realm.getInstance(mRealmConfiguration);
+        mRealm.addChangeListener(new RealmChangeListener<Realm>() {
+            @Override
+            public void onChange(Realm realm) {
+                if (mListener!=null){
+                    List<DbBean> list = load();
+                    mListener.onDataChange(list);
+                }
+            }
+        });
     }
     public Realm getRealm(){
         return mRealm;
@@ -233,8 +244,20 @@ public final class DbManager {
         return mRealm.where(DbBean.class).findAllSorted("index", Sort.ASCENDING);
     }
 
+    public void addChangeListener(RealmChangeListener listener){
+        mRealm.addChangeListener(listener);
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener listener){
+        mListener = listener;
+    }
+
     private static class InstanceHolder {
         private static final DbManager INSTANCE = new DbManager();
+    }
+
+    public interface OnDataChangeListener{
+        void onDataChange(List<DbBean> list);
     }
 
     public interface OnUpdateCallback{

@@ -123,12 +123,12 @@ public class SmartRecycleView extends RelativeLayout {
         } else {
             if (isFirstLoad) {
                 isFirstLoad = false;
-                setViewStatus(ViewStatus.SUCCESS);
             }
             if (data.size() == 0) {
                 setViewStatus(ViewStatus.NO_DATA);
                 refreshEnable(false);
             } else {
+                setViewStatus(ViewStatus.SUCCESS);
                 currentPage = firstPage + 1;
                 mAdapter.setNewData(data);
                 if (data.size() >= mPageSize) {

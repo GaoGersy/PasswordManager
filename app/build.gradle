@@ -75,6 +75,7 @@ dependencies {
     compile 'com.yanzhenjie:recyclerview-swipe:1.0.4'
     testCompile 'junit:junit:4.12'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    compile 'com.yinglan.alphatabs:library:1.0.8'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.zhy:autolayout:1.4.5'

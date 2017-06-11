@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -20,6 +19,8 @@ import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.utils.ImageLoader;
+import com.gersion.superlock.utils.ToastUtils;
+import com.gersion.superlock.view.TitleView;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
 
 import butterknife.BindView;
@@ -27,14 +28,12 @@ import butterknife.ButterKnife;
 
 public class DetailActivity extends BaseActivity {
 
-    @BindView(R.id.title_bar)
-    TextView mTitleBar;
     @BindView(R.id.v_top_card)
     View mVTopCard;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.iv_add)
-    ImageView mIvAdd;
+    @BindView(R.id.iv_del)
+    ImageView mIvDel;
     @BindView(R.id.smartRecycleView)
     SmartRecycleView mSmartRecycleView;
     @BindView(R.id.layout_about)
@@ -47,21 +46,24 @@ public class DetailActivity extends BaseActivity {
     TextView mTvPassword;
     @BindView(R.id.iv_bg)
     ImageView mIvBg;
+    @BindView(R.id.titleView)
+    TitleView mTitleView;
     private LinearLayout layoutAbout;
-    private ImageView ivAdd;
     private boolean finishEnter;
+    private long mId;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+    protected int setLayoutId() {
+        return R.layout.activity_detail;
+    }
+
+    @Override
+    protected void initView() {
         ButterKnife.bind(this);
-        ImageLoader.getInstance().loadResBlurImage(R.mipmap.yellow,mIvBg);
+        ImageLoader.getInstance().loadResBlurImage(R.mipmap.yellow, mIvBg);
         initSmartRecycler();
         initData();
         long transitionDuration = 500;
-        if (null != savedInstanceState)
-            transitionDuration = 0;
 
         finishEnter = false;
         EasyTransition.enter(
@@ -75,7 +77,6 @@ public class DetailActivity extends BaseActivity {
                         initOtherViews();
                     }
                 });
-
     }
 
     private void initSmartRecycler() {
@@ -88,13 +89,26 @@ public class DetailActivity extends BaseActivity {
                 .setLayoutManger(SmartRecycleView.LayoutManagerType.LINEAR_LAYOUT);
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         Intent intent = getIntent();
-        long id = intent.getLongExtra("id", -1);
-        if (id != -1) {
-            DbBean dbBean = DbManager.getInstance().queryById(id);
+        mId = intent.getLongExtra("id", -1);
+        if (mId != -1) {
+            DbBean dbBean = DbManager.getInstance().queryById(mId);
             updateViews(dbBean);
         }
+    }
+
+    @Override
+    protected void initListener() {
+        mIvDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbManager.getInstance().deleteById(mId);
+                showToast("删除成功");
+                finish();
+            }
+        });
     }
 
     private void updateViews(DbBean dbBean) {
@@ -120,11 +134,10 @@ public class DetailActivity extends BaseActivity {
                 .alpha(1)
                 .translationY(0);
 
-        ivAdd = (ImageView) findViewById(R.id.iv_add);
-        ivAdd.setVisibility(View.VISIBLE);
-        ivAdd.setScaleX(0);
-        ivAdd.setScaleY(0);
-        ivAdd.animate()
+        mIvDel.setVisibility(View.VISIBLE);
+        mIvDel.setScaleX(0);
+        mIvDel.setScaleY(0);
+        mIvDel.animate()
                 .setDuration(200)
                 .scaleX(1)
                 .scaleY(1);
@@ -139,9 +152,7 @@ public class DetailActivity extends BaseActivity {
     }
 
     private void startBackAnim() {
-        // forbidden scrolling
-        // start our anim
-        ivAdd.animate()
+        mIvDel.animate()
                 .setDuration(200)
                 .scaleX(0)
                 .scaleY(0);
@@ -157,5 +168,12 @@ public class DetailActivity extends BaseActivity {
                         EasyTransition.exit(DetailActivity.this, 500, new DecelerateInterpolator());
                     }
                 });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(getLayoutView(), container, false);
+        view = inflater.inflate(setLayoutId(), container, false);
         initView();
         return view;
     }
@@ -43,7 +43,7 @@ public abstract class BaseFragment extends Fragment {
         initListener();
     }
 
-    protected abstract int getLayoutView();
+    protected abstract int setLayoutId();
 
     protected abstract void initView();
 

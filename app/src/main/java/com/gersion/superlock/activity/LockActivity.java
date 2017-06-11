@@ -13,14 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
-import com.gersion.superlock.base.BaseActivity;
+import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.sdsmdg.tastytoast.TastyToast;
 
-public class LockActivity extends BaseActivity implements View.OnClickListener {
+public class LockActivity extends BaseLifeActivity implements View.OnClickListener {
 
     public static String IS_FIRST_TIME = "is_first_time";
     private boolean isfirstTime;

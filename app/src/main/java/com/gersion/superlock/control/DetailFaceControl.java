@@ -47,23 +47,23 @@ public class DetailFaceControl extends BaseDetailControl {
     }
 
     private void setIcon(String name){
-        if (matching(name,"腾讯")||matching(name,"QQ")||matching(name,"qq")){
-            mIcon.setImageResource(R.mipmap.qq);
-        }else if (matching(name,"京东")||matching(name,"jingdong")||matching(name,"jindong")||matching(name,"JinDong")){
-            mIcon.setImageResource(R.mipmap.jd);
-        }else if (matching(name,"淘宝")||matching(name,"支付宝")||matching(name,"阿里巴巴")||matching(name,"taobao")){
-            mIcon.setImageResource(R.mipmap.tb);
-        }else if (matching(name,"网易")||matching(name,"wangyi")||matching(name,"易信")||matching(name,"yixing")){
-            mIcon.setImageResource(R.mipmap.wy);
-        }else if (matching(name,"百度")||matching(name,"爱奇艺")||matching(name,"iQiYi")||matching(name,"aiqiyi")){
-            mIcon.setImageResource(R.mipmap.bd);
-        }else if (matching(name,"美团")||matching(name,"meituan")){
-            mIcon.setImageResource(R.mipmap.mt);
-        }else if (matching(name,"微信")||matching(name,"WeiXin")||matching(name,"weixin")){
-            mIcon.setImageResource(R.mipmap.wx);
-        }else if (matching(name,"豆瓣")||matching(name,"doubang")||matching(name,"DouBang")){
-            mIcon.setImageResource(R.mipmap.db);
-        }
+//        if (matching(name,"腾讯")||matching(name,"QQ")||matching(name,"qq")){
+//            mIcon.setImageResource(R.mipmap.qq);
+//        }else if (matching(name,"京东")||matching(name,"jingdong")||matching(name,"jindong")||matching(name,"JinDong")){
+//            mIcon.setImageResource(R.mipmap.jd);
+//        }else if (matching(name,"淘宝")||matching(name,"支付宝")||matching(name,"阿里巴巴")||matching(name,"taobao")){
+//            mIcon.setImageResource(R.mipmap.tb);
+//        }else if (matching(name,"网易")||matching(name,"wangyi")||matching(name,"易信")||matching(name,"yixing")){
+//            mIcon.setImageResource(R.mipmap.wy);
+//        }else if (matching(name,"百度")||matching(name,"爱奇艺")||matching(name,"iQiYi")||matching(name,"aiqiyi")){
+//            mIcon.setImageResource(R.mipmap.bd);
+//        }else if (matching(name,"美团")||matching(name,"meituan")){
+//            mIcon.setImageResource(R.mipmap.mt);
+//        }else if (matching(name,"微信")||matching(name,"WeiXin")||matching(name,"weixin")){
+//            mIcon.setImageResource(R.mipmap.wx);
+//        }else if (matching(name,"豆瓣")||matching(name,"doubang")||matching(name,"DouBang")){
+//            mIcon.setImageResource(R.mipmap.db);
+//        }
     }
 
     private boolean matching(String name,String criteria){

@@ -26,6 +26,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
     public static final String TOTAL_COUNT = "total_count";
+    public static int mTotalCount = -1;
     private ContentListAdapter mPasswordShowAdapter;
     private List<DbBean> mDataList = new ArrayList<>();
     private SmartRecycleView mSmartRecycleView;
@@ -37,7 +38,9 @@ public class HomeFragment extends BaseFragment {
         public boolean onItemMove(int fromPosition, int toPosition) {
             Collections.swap(mDataList, fromPosition, toPosition);
             mPasswordShowAdapter.notifyItemMoved(fromPosition, toPosition);
+            DbManager.getInstance().setOnDataChangeListener(null);
             DbManager.getInstance().swap(fromPosition,toPosition);
+            DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
             return true;
         }
 
@@ -51,7 +54,7 @@ public class HomeFragment extends BaseFragment {
     private ImageView mIvBg;
 
     @Override
-    protected int getLayoutView() {
+    protected int setLayoutId() {
         return R.layout.fragment_home;
     }
 
@@ -78,7 +81,19 @@ public class HomeFragment extends BaseFragment {
                 startTrainsition(view,dbBean);
             }
         });
+
+        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
     }
+
+    DbManager.OnDataChangeListener dataChangeListener = new DbManager.OnDataChangeListener() {
+        @Override
+        public void onDataChange(List<DbBean> list) {
+            mDataList.clear();
+            mDataList.addAll(list);
+            mTotalCount = mDataList.size();
+            mSmartRecycleView.onRefresh(mDataList);
+        }
+    };
 
     private void init() {
         SwipeMenuRecyclerView menuRecyclerView = mSmartRecycleView.getRecyclerView();
@@ -143,6 +158,7 @@ public class HomeFragment extends BaseFragment {
         final List<DbBean> passwordBeans = DbManager.getInstance().load();
         mDataList.clear();
         mDataList.addAll(passwordBeans);
+        mTotalCount = mDataList.size();
 //        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
 //        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
 //            @Override

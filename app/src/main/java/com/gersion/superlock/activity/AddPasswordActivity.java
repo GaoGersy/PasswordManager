@@ -5,16 +5,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.AnticipateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
@@ -23,7 +22,7 @@ import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.utils.ToastUtils;
-import com.gersion.superlock.utils.UIUtils;
+import com.gersion.superlock.view.TitleView;
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyItemDialogListener;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -41,42 +40,53 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     EditText mCetvPassword;
     @BindView(R.id.tv_commit)
     TextView mTvCommit;
-    @BindView(R.id.tv_noteKey)
-    TextView mTvNoteKey;
-    @BindView(R.id.cv_notes)
-    CardView mCvNotes;
     @BindView(R.id.et_notes)
     TextInputEditText mEtNotes;
-    @BindView(R.id.activity_add_password)
-    FrameLayout mActivityAddPassword;
-    @BindView(R.id.cv_info)
-    CardView mCvInfo;
     @BindView(R.id.selector)
     TextView mSelector;
-    private boolean isOpen = false;
+    @BindView(R.id.titleView)
+    TitleView mTitleView;
+    @BindView(R.id.activity_add_password)
+    LinearLayout mActivityAddPassword;
     private int mTotalCount;
-    private int mDistance;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_password);
-        ButterKnife.bind(this);
-        initView();
-        initData();
-        initEvent();
+    public static void startIntent(Activity activity, int totalCount) {
+        Intent intent = new Intent(activity, AddPasswordActivity.class);
+        intent.putExtra(HomeFragment.TOTAL_COUNT, totalCount);
+        activity.startActivity(intent);
     }
 
-    //初始化控件
-    private void initView() {
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_add_password;
+    }
+
+    @Override
+    protected void initView() {
+        ButterKnife.bind(this);
+        mTitleView.setTitleText("添加密码")
+                .setSearchVisiable(false)
+                .setAddVisiable(false);
+
         mCetvLocation.requestFocus();
     }
 
-    //初始化数据
-    private void initData() {
-        mDistance = UIUtils.dp2Px(40);
-        Intent intent = getIntent();
-        mTotalCount = intent.getIntExtra(HomeFragment.TOTAL_COUNT,-1);
+    @Override
+    protected void initData() {
+        mTotalCount = HomeFragment.mTotalCount;
+        mTotalCount--;
+    }
+
+    @Override
+    protected void initListener() {
+        mTvCommit.setOnClickListener(this);
+        mSelector.setOnClickListener(this);
+        mTitleView.setOnBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void performAnimator(final View view, int y, int dely) {
@@ -107,9 +117,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
 
     //初始化监听事件
     private void initEvent() {
-        mTvCommit.setOnClickListener(this);
-        mTvNoteKey.setOnClickListener(this);
-        mSelector.setOnClickListener(this);
+
 //        mEtNotes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
 //            public void onFocusChange(View v, final boolean hasFocus) {
@@ -139,11 +147,11 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.tv_noteKey:
-                if (isOpen) {
-                    closeNotes();
-                } else {
-                    openNotes();
-                }
+//                if (isOpen) {
+//                    closeNotes();
+//                } else {
+//                    openNotes();
+//                }
                 break;
             case R.id.selector:
                 CharSequence[] words = {
@@ -163,7 +171,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onItemClick(CharSequence charSequence, int i) {
                         String text = charSequence.toString();
-                        if(text.equals("未知")){
+                        if (text.equals("未知")) {
                             text = "";
                         }
                         mCetvLocation.setText(text);
@@ -186,7 +194,10 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
             dbBean.setCreateTime(System.currentTimeMillis());
             dbBean.setName(name);
             dbBean.setNotes(notes);
-            dbBean.setIndex(mTotalCount+1);
+            dbBean.setPwd(pwd);
+            mTotalCount++;
+            dbBean.setIndex(mTotalCount);
+            dbBean.setId(mTotalCount);
             DbManager.getInstance().add(dbBean);
             ToastUtils.showTasty(AddPasswordActivity.this, "添加成功", TastyToast.SUCCESS);
             mCetvLocation.setText("");
@@ -204,7 +215,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         animator.setDuration(20);
         animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.start();
-        ToastUtils.showTasty(this,"信息不能为空",TastyToast.WARNING);
+        ToastUtils.showTasty(this, "信息不能为空", TastyToast.WARNING);
     }
 
 
@@ -219,31 +230,36 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         animatorSet.start();
     }
 
-
-    private void openNotes() {
-        isOpen = true;
-        mTvNoteKey.setText("密码信息");
-        ObjectAnimator animatorNotes = ObjectAnimator.ofFloat(mCvNotes, "translationY", mDistance);
-        ObjectAnimator animatorInfo = ObjectAnimator.ofFloat(mCvInfo, "translationY",  -mCvInfo.getHeight()+mDistance);
-        AnimatorSet set = new AnimatorSet();
-        set.playTogether(animatorInfo,animatorNotes);
-        set.setDuration(500);
-        set.setInterpolator(new OvershootInterpolator());
-        set.start();
-        mEtNotes.requestFocus();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
-    private void closeNotes() {
-        isOpen = false;
-        mTvNoteKey.setText("备注");
-        ObjectAnimator animatorNotes = ObjectAnimator.ofFloat(mCvNotes, "translationY", 0);
-        ObjectAnimator animatorInfo = ObjectAnimator.ofFloat(mCvInfo, "translationY",  0);
-        AnimatorSet set = new AnimatorSet();
-        set.playTogether(animatorInfo,animatorNotes);
-        set.setDuration(500);
-        set.setInterpolator(new AnticipateInterpolator());
-        set.start();
-        mCetvPassword.requestFocus();
-    }
+
+//    private void openNotes() {
+//        isOpen = true;
+//        ObjectAnimator animatorNotes = ObjectAnimator.ofFloat(mCvNotes, "translationY", mDistance);
+//        ObjectAnimator animatorInfo = ObjectAnimator.ofFloat(mCvInfo, "translationY",  -mCvInfo.getHeight()+mDistance);
+//        AnimatorSet set = new AnimatorSet();
+//        set.playTogether(animatorInfo,animatorNotes);
+//        set.setDuration(500);
+//        set.setInterpolator(new OvershootInterpolator());
+//        set.start();
+//        mEtNotes.requestFocus();
+//    }
+//
+//    private void closeNotes() {
+//        isOpen = false;
+//        ObjectAnimator animatorNotes = ObjectAnimator.ofFloat(mCvNotes, "translationY", 0);
+//        ObjectAnimator animatorInfo = ObjectAnimator.ofFloat(mCvInfo, "translationY",  0);
+//        AnimatorSet set = new AnimatorSet();
+//        set.playTogether(animatorInfo,animatorNotes);
+//        set.setDuration(500);
+//        set.setInterpolator(new AnticipateInterpolator());
+//        set.start();
+//        mCetvPassword.requestFocus();
+//    }
 
 }
