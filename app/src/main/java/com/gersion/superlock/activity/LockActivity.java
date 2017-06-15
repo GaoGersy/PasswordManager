@@ -1,15 +1,21 @@
 package com.gersion.superlock.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
@@ -22,12 +28,31 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LockActivity extends BaseLifeActivity implements View.OnClickListener {
 
     public static String IS_FIRST_TIME = "is_first_time";
+    @BindView(R.id.activity_login_pwd)
+    EditText mLoginPwd;
+    @BindView(R.id.layout_username)
+    TextInputLayout mLayoutUsername;
+    @BindView(R.id.activity_login_go)
+    ImageView mLoginGo;
+    @BindView(R.id.iv_finger)
+    ImageView mIvFinger;
+    @BindView(R.id.btn_cancel)
+    Button mBtnCancel;
+    @BindView(R.id.btn_password)
+    Button mBtnPassword;
+    @BindView(R.id.activity_main)
+    FrameLayout mActivityMain;
+    @BindView(R.id.fl_pwd_container)
+    FrameLayout mFlPwdContainer;
+    @BindView(R.id.rl_finger_container)
+    RelativeLayout mRlFingerContainer;
     private boolean isfirstTime;
-    private EditText mLoginPwd;
-    private ImageView mLoginGo;
     private boolean mIsAutoLogin;
 
     @Override
@@ -35,9 +60,9 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         ImmersionBar.with(this).init();
         initFingerPrint();
-        initView();
         initData();
         initEvent();
     }
@@ -58,14 +83,9 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
                 }
             });
         } else {
-
+            mRlFingerContainer.setVisibility(View.GONE);
+            mFlPwdContainer.setVisibility(View.VISIBLE);
         }
-    }
-
-    // 初始化控件
-    private void initView() {
-        mLoginPwd = (EditText) findViewById(R.id.activity_login_pwd);
-        mLoginGo = (ImageView) findViewById(R.id.activity_login_go);
     }
 
     @Override
@@ -85,6 +105,19 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
                     login();
                 }
                 return false;
+            }
+        });
+        mBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        mBtnPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch2Pwd();
             }
         });
         final int length = SpfUtils.getInt(LockActivity.this, MyConstants.LENGTH, 0);
@@ -113,6 +146,19 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
                 }
             }
         });
+    }
+
+    private void switch2Pwd() {
+        mRlFingerContainer.animate()
+                .alpha(0)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mRlFingerContainer.setVisibility(View.GONE);
+                        mFlPwdContainer.setVisibility(View.VISIBLE);
+                        mLoginPwd.requestFocus();
+                    }
+                }).setDuration(500).start();
     }
 
     // 初始化数据

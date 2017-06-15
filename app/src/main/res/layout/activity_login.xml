@@ -6,6 +6,7 @@
         android:background="#20202B"
         >
     <FrameLayout
+            android:id="@+id/fl_pwd_container"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -86,6 +87,7 @@
         </RelativeLayout>
     </FrameLayout>
     <RelativeLayout
+            android:id="@+id/rl_finger_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
@@ -111,18 +113,18 @@
                 android:text="取消"
                 android:layout_marginBottom="10dp"
                 android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 />
         <Button
+                android:id="@+id/btn_password"
                 android:text="使用密码登录"
                 android:layout_above="@id/btn_cancel"
                 android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 />
-        
+
     </RelativeLayout>
 </FrameLayout>
