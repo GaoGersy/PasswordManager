@@ -10,6 +10,8 @@ import com.gersion.superlock.db.PasswordManager;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.wei.android.lib.fingerprintidentify.FingerprintIdentify;
+import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -32,6 +34,7 @@ public class SuperLockApplication extends Application {
 
     //主线程的handler
     public static Handler mHandler;
+    public static FingerprintIdentify mFingerprintIdentify;
 
     /**
      * 得到上下文对象
@@ -64,9 +67,20 @@ public class SuperLockApplication extends Application {
                         .setDefaultFontPath("fonts/NotoSansHans.otf")
                         .setFontAttrId(R.attr.fontPath)
                         .build());
+        initLogger();
+        mFingerprintIdentify = new FingerprintIdentify(getApplicationContext(), new BaseFingerprint.FingerprintIdentifyExceptionListener() {
+            @Override
+            public void onCatchException(Throwable exception) {
+                Logger.d(exception.getMessage());
+            }
+        });
         //初始化主线程的一个handler
         mHandler = new Handler();
         super.onCreate();
+
+    }
+
+    private void initLogger() {
         Logger
                 .init("Gersy")                 // defaulticon PRETTYLOGGER or use just init()
                 .methodCount(2)                 // defaulticon 2

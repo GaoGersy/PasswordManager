@@ -58,6 +58,7 @@ dependencies {
     compile(name: 'paletteimageview', ext: 'aar')
     compile 'com.jakewharton:butterknife:8.6.0'
     compile 'com.facebook.rebound:rebound:0.3.8'
+    compile 'com.wei.android.lib:fingerprintidentify:1.1.5'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'

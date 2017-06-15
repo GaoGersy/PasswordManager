@@ -35,6 +35,7 @@ public class TitleView extends RelativeLayout {
         mIvSearch = (ImageView) findViewById(R.id.iv_search);
         mIvAdd = (ImageView) findViewById(R.id.iv_add);
         mRightText = (TextView) findViewById(R.id.right_text);
+        mIvAdd.setRotation(45);
     }
 
     public ImageView getBack() {

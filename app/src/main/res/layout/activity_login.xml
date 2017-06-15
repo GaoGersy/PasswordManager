@@ -1,76 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/activity_main"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#20202B">
-
-    <LinearLayout
-        android:layout_marginLeft="5dp"
-        android:layout_width="240dp"
-        android:layout_height="270dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="30dp"
-        android:background="@mipmap/shadow" />
-
-    <RelativeLayout
-        android:layout_width="200dp"
-        android:layout_height="240dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:background="@mipmap/login_paine" >
-
-        <TextView
-            android:textSize="17sp"
-            android:layout_marginTop="13dp"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="登录系统"
-            android:textColor="#E3E7F2" />
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#20202B"
+        >
+    <FrameLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
         <LinearLayout
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical" >
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/layout_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/activity_login_pwd"
-                android:textCursorDrawable="@drawable/color_courser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_width="240dp"
+                android:layout_height="270dp"
                 android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:hint="请输入密码"
-                android:inputType="textPassword"
-                android:paddingTop="1dp"
-                android:imeOptions="actionGo"
-                android:textColorHint="#A2ABBE"
-                android:textAppearance="?android:attr/textAppearanceLargeInverse"
-                android:maxLines="1"
-                android:textColor="#A2ABBE"
-                android:textSize="15sp" />
-            </android.support.design.widget.TextInputLayout>
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="30dp"
+                android:background="@mipmap/shadow"
+                />
 
-        </LinearLayout>
+        <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="240dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="50dp"
+                android:background="@mipmap/login_paine"
+                >
 
+            <TextView
+                    android:textSize="17sp"
+                    android:layout_marginTop="13dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="登录系统"
+                    android:textColor="#E3E7F2"
+                    />
+
+            <LinearLayout
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical"
+                    >
+                <android.support.design.widget.TextInputLayout
+                        android:id="@+id/layout_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                    <EditText
+                            android:id="@+id/activity_login_pwd"
+                            android:textCursorDrawable="@drawable/color_courser"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:hint="请输入密码"
+                            android:inputType="textPassword"
+                            android:paddingTop="1dp"
+                            android:imeOptions="actionGo"
+                            android:textColorHint="#A2ABBE"
+                            android:textAppearance="?android:attr/textAppearanceLargeInverse"
+                            android:maxLines="1"
+                            android:textColor="#A2ABBE"
+                            android:textSize="15sp"
+                            />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/activity_login_go"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_done"
+                    />
+        </RelativeLayout>
+    </FrameLayout>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
         <ImageView
-            android:visibility="gone"
-            android:id="@+id/activity_login_go"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
-            android:src="@drawable/ic_done" />
-    </RelativeLayout>
+                android:id="@+id/iv_finger"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/finger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        <TextView
+                android:layout_below="@id/iv_finger"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:text="按指纹解锁"
+                android:textSize="16sp"
+                android:textColor="@color/app_theme_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        <Button
+                android:id="@+id/btn_cancel"
+                android:text="取消"
+                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                />
+        <Button
+                android:text="使用密码登录"
+                android:layout_above="@id/btn_cancel"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                />
+        
+    </RelativeLayout>
 </FrameLayout>

@@ -18,7 +18,9 @@ import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
 import com.sdsmdg.tastytoast.TastyToast;
+import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 
 public class LockActivity extends BaseLifeActivity implements View.OnClickListener {
 
@@ -33,10 +35,31 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
-
+        ImmersionBar.with(this).init();
+        initFingerPrint();
         initView();
         initData();
         initEvent();
+    }
+
+    private void initFingerPrint() {
+        if (!SuperLockApplication.mFingerprintIdentify.isFingerprintEnable()) {
+            SuperLockApplication.mFingerprintIdentify.startIdentify(3, new BaseFingerprint.FingerprintIdentifyListener() {
+                @Override
+                public void onSucceed() {
+                }
+
+                @Override
+                public void onNotMatch(int availableTimes) {
+                }
+
+                @Override
+                public void onFailed() {
+                }
+            });
+        } else {
+
+        }
     }
 
     // 初始化控件
@@ -105,7 +128,7 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
 //            ToastUtils.showTasty(LockActivity.this,"登录成功", TastyToast.SUCCESS);
             finish();
         } else {
-            ToastUtils.showTasty(this,"密码错误", TastyToast.ERROR);
+            ToastUtils.showTasty(this, "密码错误", TastyToast.ERROR);
             mLoginPwd.setText("");
         }
     }
