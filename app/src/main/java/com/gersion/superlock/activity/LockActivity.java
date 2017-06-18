@@ -2,15 +2,17 @@ package com.gersion.superlock.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -21,7 +23,9 @@ import android.widget.TextView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.db.PasswordManager;
+import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.MyConstants;
+import com.gersion.superlock.utils.SPManager;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
@@ -52,46 +56,76 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
     FrameLayout mFlPwdContainer;
     @BindView(R.id.rl_finger_container)
     RelativeLayout mRlFingerContainer;
+    @BindView(R.id.tv_notice)
+    TextView mTvNotice;
     private boolean isfirstTime;
     private boolean mIsAutoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         ImmersionBar.with(this).init();
-        initFingerPrint();
+//        initFingerPrint();
         initData();
         initEvent();
     }
 
+    BaseFingerprint.FingerprintIdentifyListener mFingerprintIdentifyListener = new BaseFingerprint.FingerprintIdentifyListener() {
+        @Override
+        public void onSucceed() {
+            mIvFinger.setImageResource(R.mipmap.success);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 300);
+        }
+
+        @Override
+        public void onNotMatch(int availableTimes) {
+            mTvNotice.setText("指纹不匹配，还可以尝试 " + availableTimes + " 次");
+            shake();
+        }
+
+        @Override
+        public void onFailed() {
+            mTvNotice.setText("指纹解锁已禁用，请 " + 15 + " 秒后重试");
+            SPManager.setLockedTime(SystemClock.currentThreadTimeMillis());
+            mIvFinger.setImageResource(R.mipmap.alert);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIvFinger.setImageResource(R.mipmap.finger);
+                    mTvNotice.setText("请轻触指纹感应器验证指纹");
+                    SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
+                }
+            },15000);
+        }
+    };
+
     private void initFingerPrint() {
-        if (!SuperLockApplication.mFingerprintIdentify.isFingerprintEnable()) {
-            SuperLockApplication.mFingerprintIdentify.startIdentify(3, new BaseFingerprint.FingerprintIdentifyListener() {
-                @Override
-                public void onSucceed() {
-                }
-
-                @Override
-                public void onNotMatch(int availableTimes) {
-                }
-
-                @Override
-                public void onFailed() {
-                }
-            });
+        if (SuperLockApplication.mFingerprintIdentify.isFingerprintEnable()) {
+            SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
         } else {
             mRlFingerContainer.setVisibility(View.GONE);
             mFlPwdContainer.setVisibility(View.VISIBLE);
         }
     }
 
+    private void shake(){
+        ObjectAnimator animator = AnimatorUtils.tada(mIvFinger,5);
+        animator.setRepeatCount(0);
+        animator.start();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         mIsAutoLogin = SpfUtils.getBoolean(this, MyConstants.IS_AUTO_LOGIN, false);
+        initFingerPrint();
     }
 
     // 初始化监听事件

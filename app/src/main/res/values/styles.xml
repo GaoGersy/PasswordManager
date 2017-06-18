@@ -93,4 +93,27 @@
         <item name="tbOffBorderColor">#DADBDA</item>
         <item name="tbBorderWidth">0dp</item>
     </style>
+
+    <style name="ButtonStyle">
+        <item name="android:layout_width">65dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/selector_btn_bg</item>
+    </style>
+
+    <style name="TextStyle">
+        <item name="android:layout_width">65dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#A5A6A8</item>
+    </style>
+
+    <declare-styleable name="ItemView">
+        <attr name="item_icon" format="reference"/>
+        <attr name="item_go_show" format="boolean"/>
+        <attr name="item_new_show" format="boolean"/>
+        <attr name="item_title" format="string"/>
+    </declare-styleable>
 </resources>

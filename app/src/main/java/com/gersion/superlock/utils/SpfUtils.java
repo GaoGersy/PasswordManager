@@ -117,6 +117,18 @@ public class SpfUtils {
         edit.putInt(key, value);
         edit.commit();
     }
+
+    public static long getLong(Context context, String key, int value) {
+        SharedPreferences spf = context.getSharedPreferences(ConstantsUtils.SP_FILE, Context.MODE_PRIVATE);
+        return spf.getLong(key, value);
+    }
+
+    public static void putLong(Context context,String key, long value){
+        SharedPreferences spf = context.getSharedPreferences(ConstantsUtils.SP_FILE, Context.MODE_PRIVATE);
+        Editor edit = spf.edit();
+        edit.putLong(key, value);
+        edit.commit();
+    }
     
 }
   

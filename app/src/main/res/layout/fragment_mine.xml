@@ -1,7 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
+        android:background="@color/gray_e0"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"
+                    android:padding="10dp">
+
+                <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/icon"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:padding="1px"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/icon" />
+
+                    <TextView
+                            android:layout_toRightOf="@id/icon"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/name"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="路人甲"
+                            android:textColor="@color/black"
+                            android:textSize="20sp" />
+
+                <ImageView
+                        android:id="@+id/code2d"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/code2d" />
+            </RelativeLayout>
+
+            <com.gersion.superlock.view.ItemView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/collection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:item_icon="@drawable/collection"
+                    app:item_title="收藏" />
+
+            <com.gersion.superlock.view.ItemView
+                    android:id="@+id/setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:item_icon="@drawable/settings"
+                    app:item_title="设置" />
+
+            <com.gersion.superlock.view.ItemView
+                    android:id="@+id/about"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:item_icon="@drawable/about"
+                    app:item_title="关于" />
+            <com.gersion.superlock.view.ItemView
+                    android:id="@+id/share"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:item_icon="@mipmap/share"
+                    app:item_title="分享" />
+
+            <com.gersion.superlock.view.ItemView
+                    android:id="@+id/exit"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:item_go_show="false"
+                    app:item_icon="@drawable/exit"
+                    app:item_title="退出" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

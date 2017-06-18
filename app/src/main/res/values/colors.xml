@@ -9,7 +9,7 @@
     <color name="material_white">#f9f9f9</color>
     <color name="app_theme_color">#888888</color>
     <color name="transpant">#00000000</color>
-    <color name="bg_ontent">#fff</color>
+    <color name="white">#fff</color>
     <color name="font_color">#151515</color>
     <color name="divider">#cdcdcd</color>
     <color name="gray_80">#808080</color>

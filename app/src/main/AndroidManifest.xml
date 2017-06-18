@@ -56,8 +56,7 @@
 
         <!-- LockActivity -->
         <activity
-                android:name=".activity.LockActivity"
-                android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
+                android:name=".activity.LockActivity"/>
         <!-- =====================================Receiver==================================== -->
 
 
