@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 
-/**
- * Created by ruifeng on 2016/12/17.
- */
 public class ItemView extends RelativeLayout {
 
     private View mView;

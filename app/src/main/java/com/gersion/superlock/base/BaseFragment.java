@@ -56,7 +56,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void toActivity(Class<?> clazz) {
-        toActivity(clazz);
+        toActivity(clazz,null);
     }
 
     public void toActivity(Class<?> clazz, Bundle bundle) {
@@ -64,7 +64,7 @@ public abstract class BaseFragment extends Fragment {
         if (bundle != null) {
             intent.putExtras(bundle);
         }
-        startActivity(intent,bundle);
+        startActivity(intent);
     }
 
     public void toActivityForResult(Class<?> clazz, int requestCode) {

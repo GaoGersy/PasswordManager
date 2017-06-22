@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="12dp"
+        >
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="12dp"
+            >
+
+        <FrameLayout
+                android:visibility="gone"
+                android:id="@+id/ll_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+            <ImageView
+                    android:id="@+id/iv_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="2dp"
+                    />
+        </FrameLayout>
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ll_icon"
+                android:text="adsfasd"
+                android:textColor="@color/font_black"
+                android:textSize="16sp"
+                />
+
+        <ImageView
+                android:id="@+id/iv_go"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/go"
+                />
+
+        <com.suke.widget.SwitchButton
+                android:visibility="gone"
+                android:id="@+id/switchButton"
+                android:layout_marginRight="2dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+    </RelativeLayout>
+
+    <TextView
+            android:id="@+id/devider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray_c0"
+            />
+
+</LinearLayout>
