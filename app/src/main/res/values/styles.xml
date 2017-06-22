@@ -116,4 +116,12 @@
         <attr name="item_new_show" format="boolean"/>
         <attr name="item_title" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="SettingView">
+        <attr name="setting_icon" format="reference"/>
+        <attr name="setting_go_show" format="boolean"/>
+        <attr name="setting_switch_show" format="boolean"/>
+        <attr name="setting_title" format="string"/>
+        <attr name="setting_divider_show" format="boolean"/>
+    </declare-styleable>
 </resources>

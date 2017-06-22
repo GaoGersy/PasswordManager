@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="DialogUtils-">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/f57ea27734900a237f7330a109933682a1ad848c/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/f57ea27734900a237f7330a109933682a1ad848c/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/0d284fa49497ec9249a9a582eb55f362679dce14/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/0d284fa49497ec9249a9a582eb55f362679dce14/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

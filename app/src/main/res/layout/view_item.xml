@@ -40,8 +40,8 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/ll_icon"
             android:text="adsfasd"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textColor="@color/font_black"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/iv_go"
