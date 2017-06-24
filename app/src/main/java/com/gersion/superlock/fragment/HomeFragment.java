@@ -62,7 +62,7 @@ public class HomeFragment extends BaseFragment {
     protected void initView() {
         mSmartRecycleView = findView(R.id.smartRecycleView);
         mIvBg = findView(R.id.iv_bg);
-        ImageLoader.getInstance().loadResBlurImage(R.mipmap.yellow,mIvBg);
+//        ImageLoader.getInstance().loadResBlurImage(R.mipmap.yellow,mIvBg);
         DbManager.getInstance().onStart();
         init();
     }
@@ -107,7 +107,6 @@ public class HomeFragment extends BaseFragment {
                 .setRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh(int page) {
-                        //TODO
                         initData();
                     }
 

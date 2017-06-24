@@ -11,12 +11,12 @@ android {
             storePassword 'hpw3kojn3DdJ'
         }
     }
-    compileSdkVersion 24
+    compileSdkVersion 25
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.gersion.superpasswordlock"
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         resConfigs "zh"

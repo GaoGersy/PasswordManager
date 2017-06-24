@@ -105,7 +105,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
 
     @Override
     public List<DbBean> getData() {
-        return null;
+        return mDatas;
     }
 
     class DefaultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnTouchListener {
@@ -134,9 +134,9 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
         public void setData(int position) {
             mPosition = position;
             DbBean passwordBean = mDatas.get(position);
-            mTvName.setText(passwordBean.getName());
+            mTvName.setText("用户名："+passwordBean.getName());
             mTvTitle.setText(passwordBean.getAddress());
-            mTvPassword.setText(passwordBean.getPwd());
+            mTvPassword.setText("密码："+passwordBean.getPwd());
         }
 
         @Override

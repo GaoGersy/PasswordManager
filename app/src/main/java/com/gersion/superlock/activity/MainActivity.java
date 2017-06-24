@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
         mTitleView.setOnSearchListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                GlobalSearchActivity.start(MainActivity.this);
             }
         });
 

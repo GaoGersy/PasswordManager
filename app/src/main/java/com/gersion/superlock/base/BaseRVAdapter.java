@@ -14,11 +14,11 @@ import java.util.List;
 /**
  * @作者 Gersy
  */
-public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter implements OnItemClickListener {
+public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter {
     protected List<T> mData = new ArrayList<>();
     protected BaseViewHolder mViewHolder;
     private int mPosition;
-    protected OnItemClickListener mListener;
+//    protected OnItemClickListener mListener;
     public Context mContext;
 
     public BaseRVAdapter(List<T> data) {
@@ -57,7 +57,6 @@ public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter implements O
         mContext = parent.getContext();
         View view =  LayoutInflater.from(mContext).inflate(setResourseId(), parent,false);
         mViewHolder = setViewHolder(view);
-        mViewHolder.setOnItemClickListener(this);
         return mViewHolder;
     }
 
@@ -65,7 +64,9 @@ public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter implements O
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         mPosition = position;
         BaseViewHolder<T> holder1 = (BaseViewHolder<T>) holder;
-        holder1.setData(mData.get(position));
+        if (mData.size()>0) {
+            holder1.setData(mData.get(position));
+        }
     }
 
     @Override
@@ -77,14 +78,14 @@ public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter implements O
 
     protected abstract int setResourseId();
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener = listener;
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        if (mListener!=null) {
-            mListener.onItemClick(view, position);
-        }
-    }
+//    public void setOnItemClickListener(OnItemClickListener listener){
+//        mListener = listener;
+//    }
+//
+//    @Override
+//    public void onItemClick(View view, int position) {
+//        if (mListener!=null) {
+//            mListener.onItemClick(view, position);
+//        }
+//    }
 }
