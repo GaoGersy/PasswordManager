@@ -105,7 +105,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
 
     @Override
     public List<DbBean> getData() {
-        return null;
+        return mDatas;
     }
 
     class DefaultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnTouchListener {

@@ -107,7 +107,6 @@ public class HomeFragment extends BaseFragment {
                 .setRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh(int page) {
-                        //TODO
                         initData();
                     }
 

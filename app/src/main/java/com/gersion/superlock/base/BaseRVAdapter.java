@@ -55,7 +55,7 @@ public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter implements O
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view =  LayoutInflater.from(mContext).inflate(setResourseId(), parent,false);
+        View view =  LayoutInflater.from(mContext).inflate(setResourseId(), parent,true);
         mViewHolder = setViewHolder(view);
         mViewHolder.setOnItemClickListener(this);
         return mViewHolder;
@@ -65,7 +65,9 @@ public abstract class BaseRVAdapter<T> extends RecyclerView.Adapter implements O
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         mPosition = position;
         BaseViewHolder<T> holder1 = (BaseViewHolder<T>) holder;
-        holder1.setData(mData.get(position));
+        if (mData.size()>0) {
+            holder1.setData(mData.get(position));
+        }
     }
 
     @Override

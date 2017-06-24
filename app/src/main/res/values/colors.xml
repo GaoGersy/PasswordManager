@@ -23,4 +23,5 @@
     <color name="gray_77">#777777</color>
     <color name="light_gray">#F2F3F5</color>
     <color name="font_black">#151515</color>
+    <color name="global_bg">#9000</color>
 </resources>

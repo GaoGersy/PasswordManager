@@ -41,6 +41,13 @@
         <attr name="editTextBg" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="SearchView">
+        <attr name="search_hint_color" format="color" />
+        <attr name="search_hint" format="string|reference" />
+        <attr name="search_text_size" format="dimension" />
+        <attr name="search_background" format="color" />
+    </declare-styleable>
+
     <declare-styleable name="Croller">
         <attr name="progress" format="integer" />
         <attr name="label" format="string" />

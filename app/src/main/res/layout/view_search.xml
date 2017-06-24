@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/font_color"
+        android:gravity="center"
+        android:id="@+id/ll_container"
+        >
+
+    <ImageView
+            android:src="@mipmap/back"
+            android:id="@+id/iv_back"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            >
+        <ImageView
+                android:id="@+id/iv_clear"
+                android:src="@mipmap/add"
+                android:padding="5dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                />
+        <EditText
+                android:layout_toLeftOf="@id/iv_clear"
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:hint="搜索"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray_b0"
+                android:background="@color/font_color"
+                />
+
+        <View
+                android:layout_marginBottom="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@drawable/shape_et_line"/>
+    </RelativeLayout>
+
+</LinearLayout>

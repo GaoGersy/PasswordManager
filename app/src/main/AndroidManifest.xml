@@ -81,6 +81,11 @@
             <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
         </activity>
+        <activity android:name=".activity.GlobalSearchActivity"
+                android:configChanges="keyboardHidden|orientation"
+                android:screenOrientation="portrait"
+                android:theme="@style/global_search_bg"
+                android:windowSoftInputMode="stateUnspecified"/>
     </application>
 
 </manifest>
