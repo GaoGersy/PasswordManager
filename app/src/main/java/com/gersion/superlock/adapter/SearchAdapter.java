@@ -22,8 +22,6 @@ import java.util.List;
 
 public class SearchAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<DbBean> {
 
-    private List<DbBean> mDatas;
-
     private OnItemClickListener mOnItemClickListener;
 
     public SearchAdapter(List<DbBean> data) {
@@ -36,7 +34,7 @@ public class SearchAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<D
 
     @Override
     public int getItemCount() {
-        return mDatas == null ? 0 : mDatas.size();
+        return mData == null ? 0 : mData.size();
     }
 
     @Override
@@ -56,37 +54,36 @@ public class SearchAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<D
 
     @Override
     public void setNewData(List<DbBean> data) {
-        mDatas = data;
+        mData = data;
         notifyDataSetChanged();
     }
 
     @Override
     public void addData(List<DbBean> data) {
-        mDatas.addAll(data);
+        mData.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
     public void removeAll(List<DbBean> data) {
-        mDatas.removeAll(data);
+        mData.removeAll(data);
         notifyDataSetChanged();
     }
 
     @Override
     public void remove(DbBean data) {
-        mDatas.remove(data);
+        mData.remove(data);
         notifyDataSetChanged();
     }
 
     @Override
     public List<DbBean> getData() {
-        return mDatas;
+        return mData;
     }
 
     class SeachViewHolder extends BaseViewHolder<DbBean> implements View.OnClickListener {
 
         private TextView mTvPassword;
-        OnItemClickListener mOnItemClickListener;
         private TextView mTvName;
         private TextView mTvTitle;
 
@@ -108,9 +105,9 @@ public class SearchAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<D
 
         @Override
         public void setData(DbBean dbBean) {
-            mTvName.setText(dbBean.getName());
+            mTvName.setText("用户名："+dbBean.getName());
             mTvTitle.setText(dbBean.getAddress());
-            mTvPassword.setText(dbBean.getPwd());
+            mTvPassword.setText("密码："+dbBean.getPwd());
         }
 
         @Override

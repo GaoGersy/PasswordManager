@@ -77,6 +77,8 @@ public class DetailActivity extends BaseActivity {
                         initOtherViews();
                     }
                 });
+        mTitleView.setTitleText("密码详情");
+        mTitleView.setSearchVisiable(false);
     }
 
     private void initSmartRecycler() {
@@ -107,6 +109,19 @@ public class DetailActivity extends BaseActivity {
                 DbManager.getInstance().deleteById(mId);
                 showToast("删除成功");
                 finish();
+            }
+        });
+        mTitleView.setOnBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        mTitleView.setOnAddListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(AddPasswordActivity.class);
             }
         });
     }
@@ -170,10 +185,4 @@ public class DetailActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

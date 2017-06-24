@@ -46,6 +46,8 @@ public class SettingActivity extends BaseActivity {
     protected void initView() {
         ButterKnife.bind(this);
         mTitleView.setTitleText("设置");
+        mTitleView.setAddVisiable(false)
+                .setSearchVisiable(false);
     }
 
     @Override
