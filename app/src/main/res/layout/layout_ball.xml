@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@android:color/transparent"
+        >
+    <FrameLayout
+            android:id="@+id/fl_tool_container"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/shape_circle_bg"
+            >
+        <TextView
+                android:id="@+id/tv_name"
+                android:text="名称"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="top|center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/shape_circle_bg_btn"
+                />
+        <TextView
+                android:id="@+id/tv_password"
+                android:text="密码"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="bottom|center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/shape_circle_bg_btn"
+                />
+        <TextView
+                android:id="@+id/tv_select"
+                android:text="选择"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center|left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/shape_circle_bg_btn"
+                />
+
+    </FrameLayout>
+    <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|center"
+            >
+        <ImageView
+                android:id="@+id/img_bg"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/icon_bg"
+                android:layout_gravity="center"
+                />
+
+        <ImageView
+                android:id="@+id/img_ball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="0.5"
+                android:background="@drawable/icon_ball"
+                />
+
+        <ImageView
+                android:id="@+id/img_big_ball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_big_ball"
+                android:visibility="invisible"
+                />
+    </FrameLayout>
+
+</FrameLayout>

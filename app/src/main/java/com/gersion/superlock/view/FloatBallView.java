@@ -1,4 +1,4 @@
-package com.gersion.floattools.view;
+package com.gersion.superlock.view;
 
 
 import android.animation.ValueAnimator;
@@ -9,27 +9,19 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.gersion.floattools.FloatWindowManager;
-import com.gersion.floattools.R;
-import com.gersion.floattools.utils.ScreenUtils;
-import com.gersion.floattools.utils.SpfUtils;
+import com.gersion.superlock.R;
+import com.gersion.superlock.service.FloatWindowManager;
+import com.gersion.superlock.utils.ScreenUtils;
+import com.gersion.superlock.utils.SpfUtils;
 import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Field;
-import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * Created by wangxiandeng on 2016/11/25.
@@ -76,6 +68,7 @@ public class FloatBallView extends FrameLayout {
     private Vibrator mVibrator;
     private long[] mPattern = {0, 100};
     private View mView;
+    private FrameLayout mFlToolContainer;
 
     public FloatBallView(Context context) {
 
@@ -95,6 +88,7 @@ public class FloatBallView extends FrameLayout {
         mImgBall = (ImageView) findViewById(R.id.img_ball);
         mImgBigBall = (ImageView) findViewById(R.id.img_big_ball);
         mImgBg = (ImageView) findViewById(R.id.img_bg);
+        mFlToolContainer = (FrameLayout) findViewById(R.id.fl_tool_container);
 
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
         mCurrentMode = MODE_NONE;
@@ -103,11 +97,19 @@ public class FloatBallView extends FrameLayout {
         mOffsetToParent = dip2px(25);
         mOffsetToParentY = mStatusBarHeight + mOffsetToParent;
 
+        mFlToolContainer.setVisibility(GONE);
         mImgBigBall.post(new Runnable() {
             @Override
             public void run() {
                 mBigBallX = mImgBigBall.getX();
                 mBigBallY = mImgBigBall.getY();
+            }
+        });
+
+        mFlToolContainer.post(new Runnable() {
+            @Override
+            public void run() {
+                mFlToolContainer.setTranslationX(dip2px(100-17.5f));
             }
         });
 
@@ -124,6 +126,7 @@ public class FloatBallView extends FrameLayout {
                         mLastDownTime = System.currentTimeMillis();
                         mLastDownX = event.getX();
                         mLastDownY = event.getY();
+                        mFlToolContainer.setVisibility(VISIBLE);
                         postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -172,7 +175,7 @@ public class FloatBallView extends FrameLayout {
 //                                FloatWindowManager.addCoverView(getContext());
 //                            }
                         } else {
-                            saveValue();
+//                            saveValue();
                         }
                         mImgBall.setVisibility(VISIBLE);
                         mImgBigBall.setVisibility(INVISIBLE);
@@ -285,32 +288,32 @@ public class FloatBallView extends FrameLayout {
                 break;
 
         }
-        CoverView coverView = FloatWindowManager.getCoverView();
-        if (coverView != null) {
-            coverView.setViewAlpha(mAlpha);
-        }
-        setColor(coverView, type);
+//        CoverView coverView = FloatWindowManager.getCoverView();
+//        if (coverView != null) {
+//            coverView.setViewAlpha(mAlpha);
+//        }
+//        setColor(coverView, type);
         mImgBigBall.setX(mBigBallX);
         mImgBigBall.setY(mBigBallY);
     }
 
-    private void setColor(CoverView coverView, String type) {
-        if (coverView == null){
-            return;
-        }
-        switch (type) {
-            case "red":
-                coverView.setRedColor(mRed);
-                break;
-            case "blue":
-                coverView.setBlueColor(mBlue);
-                break;
-            case "green":
-                coverView.setGreenColor(mGreen);
-                break;
-        }
-
-    }
+//    private void setColor(CoverView coverView, String type) {
+//        if (coverView == null){
+//            return;
+//        }
+//        switch (type) {
+//            case "red":
+//                coverView.setRedColor(mRed);
+//                break;
+//            case "blue":
+//                coverView.setBlueColor(mBlue);
+//                break;
+//            case "green":
+//                coverView.setGreenColor(mGreen);
+//                break;
+//        }
+//
+//    }
 
     private void updateColorValue(String type, int value) {
         if (value > 0 && !isBaseLine) {
@@ -337,28 +340,28 @@ public class FloatBallView extends FrameLayout {
         }
     }
 
-    private void saveValue() {
-        CoverView coverView = FloatWindowManager.getCoverView();
-        if (coverView == null) {
-            return;
-        }
-        switch (mCurrentMode) {
-            case MODE_LEFT:
-                coverView.saveGreenColor();
-                break;
-            case MODE_RIGHT:
-                coverView.saveBlueColor();
-                break;
-            case MODE_DOWN:
-                coverView.saveAlpha();
-                break;
-            case MODE_UP:
-                coverView.saveRedColor();
-                break;
-
-        }
-        mImgBall.setAlpha(0.05f);
-    }
+//    private void saveValue() {
+//        CoverView coverView = FloatWindowManager.getCoverView();
+//        if (coverView == null) {
+//            return;
+//        }
+//        switch (mCurrentMode) {
+//            case MODE_LEFT:
+//                coverView.saveGreenColor();
+//                break;
+//            case MODE_RIGHT:
+//                coverView.saveBlueColor();
+//                break;
+//            case MODE_DOWN:
+//                coverView.saveAlpha();
+//                break;
+//            case MODE_UP:
+//                coverView.saveRedColor();
+//                break;
+//
+//        }
+//        mImgBall.setAlpha(0.05f);
+//    }
 
     public void setLayoutParams(WindowManager.LayoutParams params) {
         mLayoutParams = params;
@@ -404,32 +407,33 @@ public class FloatBallView extends FrameLayout {
         }else{
             return false;
         }
-        Observable.just("")
-                .timer(200, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
-                    @Override
-                    public void call(Long aLong) {
-                        clickCount++;
-                        if (clickCount == 2 && !doubleClick) {
-                            if (isAddCoverView) {
-                                isAddCoverView = false;
-                                FloatWindowManager.removeCoverView(getContext());
-                            } else {
-                                isAddCoverView = true;
-                                FloatWindowManager.addCoverView(getContext());
-                            }
-                        }
-                    }
-                });
-        if (clickCount == 0) {
-            doubleClick = true;
-            Toast.makeText(getContext(), "双击了", Toast.LENGTH_SHORT).show();
-            return true;
-        } else {
-            doubleClick = false;
-            return false;
-        }
+//        Observable.just("")
+//                .timer(200, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long aLong) {
+//                        clickCount++;
+//                        if (clickCount == 2 && !doubleClick) {
+//                            if (isAddCoverView) {
+//                                isAddCoverView = false;
+//                                FloatWindowManager.removeCoverView(getContext());
+//                            } else {
+//                                isAddCoverView = true;
+//                                FloatWindowManager.addCoverView(getContext());
+//                            }
+//                        }
+//                    }
+//                });
+//        if (clickCount == 0) {
+//            doubleClick = true;
+//            Toast.makeText(getContext(), "双击了", Toast.LENGTH_SHORT).show();
+//            return true;
+//        } else {
+//            doubleClick = false;
+//            return false;
+//        }
+        return true;
     }
 
     private void translationAnimator(final int currentPosition, final int toPosition) {

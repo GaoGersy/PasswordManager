@@ -1,4 +1,4 @@
-package com.gersion.floattools;
+package com.gersion.superlock.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.gersion.superlock.service.FloatWindowManager;
 
 /**
  * Created by wangxiandeng on 2016/11/25.

@@ -1,14 +1,14 @@
-package com.gersion.floattools;
+package com.gersion.superlock.service;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import com.gersion.floattools.view.CoverView;
-import com.gersion.floattools.view.FloatBallView;
+import com.gersion.superlock.view.FloatBallView;
 
 /**
  * Created by wangxiandeng on 2016/11/25.
@@ -18,7 +18,7 @@ public class FloatWindowManager {
     private static FloatBallView mBallView;
 
     private static WindowManager mWindowManager;
-    private static CoverView mCoverView;
+    private static View mCoverView;
 
 
     public static void addBallView(Context context) {
@@ -48,19 +48,19 @@ public class FloatWindowManager {
             WindowManager windowManager = getWindowManager(context);
             int screenWidth = windowManager.getDefaultDisplay().getWidth();
             int screenHeight = windowManager.getDefaultDisplay().getHeight();
-            mCoverView = new CoverView(context);
-            LayoutParams params = new LayoutParams();
-            params.x = screenWidth;
-            params.y = screenHeight / 2;
-            params.width = LayoutParams.MATCH_PARENT;
-            params.height = LayoutParams.MATCH_PARENT;
-            params.gravity = Gravity.LEFT | Gravity.TOP;
-            params.type = LayoutParams.TYPE_PHONE;
-            params.format = PixelFormat.RGBA_8888;
-            params.flags = LayoutParams.FLAG_NOT_TOUCHABLE| LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
-                    | LayoutParams.FLAG_NOT_FOCUSABLE| LayoutParams.FLAG_FULLSCREEN;
-            mCoverView.setLayoutParams(params);
-            windowManager.addView(mCoverView,params);
+//            mCoverView = new CoverView(context);
+//            LayoutParams params = new LayoutParams();
+//            params.x = screenWidth;
+//            params.y = screenHeight / 2;
+//            params.width = LayoutParams.MATCH_PARENT;
+//            params.height = LayoutParams.MATCH_PARENT;
+//            params.gravity = Gravity.LEFT | Gravity.TOP;
+//            params.type = LayoutParams.TYPE_PHONE;
+//            params.format = PixelFormat.RGBA_8888;
+//            params.flags = LayoutParams.FLAG_NOT_TOUCHABLE| LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+//                    | LayoutParams.FLAG_NOT_FOCUSABLE| LayoutParams.FLAG_FULLSCREEN;
+//            mCoverView.setLayoutParams(params);
+//            windowManager.addView(mCoverView,params);
         }
     }
 
@@ -68,7 +68,7 @@ public class FloatWindowManager {
         if (mBallView != null&&mCoverView!=null) {
             WindowManager windowManager =  getWindowManager(context);
             windowManager.removeView(mBallView);
-            windowManager.removeView(mCoverView);
+//            windowManager.removeView(mCoverView);
             mBallView = null;
             mCoverView = null;
         }
@@ -77,14 +77,14 @@ public class FloatWindowManager {
     public static void removeCoverView(Context context) {
         if (mCoverView!=null) {
             WindowManager windowManager = getWindowManager(context);
-            windowManager.removeView(mCoverView);
+//            windowManager.removeView(mCoverView);
             mCoverView = null;
         }
     }
 
-    public static CoverView getCoverView(){
-        return mCoverView;
-    }
+//    public static CoverView getCoverView(){
+//        return mCoverView;
+//    }
 
     private static WindowManager getWindowManager(Context context) {
         if (mWindowManager == null) {
