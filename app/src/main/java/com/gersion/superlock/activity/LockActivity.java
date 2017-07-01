@@ -60,7 +60,6 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
     @BindView(R.id.tv_notice)
     TextView mTvNotice;
     private boolean isfirstTime;
-    private boolean mIsAutoLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +124,6 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
     @Override
     public void onStart() {
         super.onStart();
-        mIsAutoLogin = SpfUtils.getBoolean(this, MyConstants.IS_AUTO_LOGIN, false);
         initFingerPrint();
     }
 
@@ -172,7 +170,7 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (mIsAutoLogin) {
+                if (ConfigManager.getInstance().isAutoLogin()) {
                     String pwd = mLoginPwd.getText().toString().trim();
                     if (pwd.length() == ConfigManager.getInstance().getPwdLength()) {
                         login();

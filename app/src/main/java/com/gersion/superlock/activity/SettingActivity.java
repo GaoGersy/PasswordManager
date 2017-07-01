@@ -69,7 +69,7 @@ public class SettingActivity extends BaseActivity {
         mPwdShow.setSwitchStatus(ConfigManager.getInstance().isShowPwd());
         mAutoLogin.setSwitchStatus(ConfigManager.getInstance().isAutoLogin());
         mUpdateTimeShow.setSwitchStatus(ConfigManager.getInstance().isShowUpdateTime());
-        mAutoLogin.setEnableEffect(ConfigManager.getInstance().isAutoLogin());
+        mAutoLogin.setEnableEffect(ConfigManager.getInstance().isLock());
         mFloatBall.setSwitchStatus(ConfigManager.getInstance().isEnableFloatBall());
     }
 
