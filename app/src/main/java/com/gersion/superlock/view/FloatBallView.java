@@ -1,6 +1,8 @@
 package com.gersion.superlock.view;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Service;
 import android.content.Context;
@@ -13,9 +15,13 @@ import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.service.FloatWindowManager;
+import com.gersion.superlock.utils.ClipBoardUtils;
 import com.gersion.superlock.utils.ScreenUtils;
 import com.gersion.superlock.utils.SpfUtils;
 import com.orhanobut.logger.Logger;
@@ -56,6 +62,7 @@ public class FloatBallView extends FrameLayout {
     private float mTouchSlop;
     private int mStatusBarHeight;
     private Service mService;
+    private Context mContext;
     private int mCurrentMode;
     private int mAlpha;
     private int mRed;
@@ -69,11 +76,17 @@ public class FloatBallView extends FrameLayout {
     private long[] mPattern = {0, 100};
     private View mView;
     private FrameLayout mFlToolContainer;
+    private TextView mTvName;
+    private TextView mTvPassword;
+    private TextView mTvList;
+    private OnMenuClickListener mListener;
+    private DbBean mDbBean;
+    private FrameLayout mFlContainer;
 
     public FloatBallView(Context context) {
-
         super(context);
         mService = (Service) context;
+        mContext = context;
         mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         mWindowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         mRed = SpfUtils.getInt(getContext(), "red");
@@ -89,6 +102,10 @@ public class FloatBallView extends FrameLayout {
         mImgBigBall = (ImageView) findViewById(R.id.img_big_ball);
         mImgBg = (ImageView) findViewById(R.id.img_bg);
         mFlToolContainer = (FrameLayout) findViewById(R.id.fl_tool_container);
+        mFlContainer = (FrameLayout) findViewById(R.id.fl_container);
+        mTvName = (TextView) findViewById(R.id.tv_name);
+        mTvPassword = (TextView) findViewById(R.id.tv_password);
+        mTvList = (TextView) findViewById(R.id.tv_select);
 
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
         mCurrentMode = MODE_NONE;
@@ -97,7 +114,6 @@ public class FloatBallView extends FrameLayout {
         mOffsetToParent = dip2px(25);
         mOffsetToParentY = mStatusBarHeight + mOffsetToParent;
 
-        mFlToolContainer.setVisibility(GONE);
         mImgBigBall.post(new Runnable() {
             @Override
             public void run() {
@@ -106,10 +122,42 @@ public class FloatBallView extends FrameLayout {
             }
         });
 
-        mFlToolContainer.post(new Runnable() {
+//        mFlToolContainer.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mFlToolContainer.setTranslationX(dip2px(100 - 17.5f));
+//            }
+//        });
+
+        mTvList.setOnClickListener(new OnClickListener() {
             @Override
-            public void run() {
-                mFlToolContainer.setTranslationX(dip2px(100-17.5f));
+            public void onClick(View v) {
+                FloatWindowManager.changeSelectListViewStatus(getContext());
+                changeFloastBallstatus();
+            }
+        });
+
+        mTvName.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDbBean != null) {
+                    ClipBoardUtils.copy(mContext, mDbBean.getName());
+                    Toast.makeText(mContext, "用户名已经复制到剪贴板", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(mContext, "先去选择一条密码吧", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        mTvPassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDbBean != null) {
+                    ClipBoardUtils.copy(mContext, mDbBean.getPwd());
+                    Toast.makeText(mContext, "密码已经复制到剪贴板", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(mContext, "先去选择一条密码吧", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -126,7 +174,6 @@ public class FloatBallView extends FrameLayout {
                         mLastDownTime = System.currentTimeMillis();
                         mLastDownX = event.getX();
                         mLastDownY = event.getY();
-                        mFlToolContainer.setVisibility(VISIBLE);
                         postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -159,21 +206,16 @@ public class FloatBallView extends FrameLayout {
                         if (mIsLongTouch) {
                             mIsLongTouch = false;
                         } else if (isDoubleClick(event)) {
-                            if (!isInMiddle) {
-                                isInMiddle = true;
-                                translationAnimator( mLayoutParams.x, ScreenUtils.getScreenWidth(getContext()) / 2-(mView.getWidth()/2));
-                            }else{
-                                isInMiddle = false;
-                                translationAnimator(mLayoutParams.x, ScreenUtils.getScreenWidth(getContext()));
-                            }
+                            changeFloastBallstatus();
                         } else if (isClick(event)) {
 //                            if (isAddCoverView) {
 //                                isAddCoverView = false;
-//                                FloatWindowManager.removeCoverView(getContext());
+//                                FloatWindowManager.removeSelectListView(getContext());
 //                            } else {
 //                                isAddCoverView = true;
-//                                FloatWindowManager.addCoverView(getContext());
+//                                FloatWindowManager.addSelectListView(getContext());
 //                            }
+                            FloatWindowManager.changeSelectListViewStatus(getContext());
                         } else {
 //                            saveValue();
                         }
@@ -187,7 +229,32 @@ public class FloatBallView extends FrameLayout {
         });
     }
 
+    private void changeFloastBallstatus() {
+        if (!isInMiddle) {
+            isInMiddle = true;
+            openFloatBall();
+        } else {
+            isInMiddle = false;
+            closeFloatBall();
+        }
+    }
+
+    public void openFloatBall(){
+        translationAnimator(mLayoutParams.x, ScreenUtils.getScreenWidth(getContext()) / 2 - (mView.getWidth() / 2));
+    }
+
+    public void closeFloatBall(){
+        translationAnimator(mLayoutParams.x, ScreenUtils.getScreenWidth(getContext()));
+    }
+
+    public void setPwdData(DbBean dbBean) {
+        mDbBean = dbBean;
+        ClipBoardUtils.copy(mContext,mDbBean.getName());
+        Toast.makeText(mContext, "用户名已复制到剪贴板", Toast.LENGTH_LONG).show();
+    }
+
     boolean isInMiddle = false;
+
     /**
      * 移除悬浮球
      */
@@ -403,8 +470,8 @@ public class FloatBallView extends FrameLayout {
     private boolean isDoubleClick(MotionEvent event) {
         if (isClick(event)) {
             clickCount--;
-            Logger.d("单击了 = " +clickCount);
-        }else{
+            Logger.d("单击了 = " + clickCount);
+        } else {
             return false;
         }
 //        Observable.just("")
@@ -417,10 +484,10 @@ public class FloatBallView extends FrameLayout {
 //                        if (clickCount == 2 && !doubleClick) {
 //                            if (isAddCoverView) {
 //                                isAddCoverView = false;
-//                                FloatWindowManager.removeCoverView(getContext());
+//                                FloatWindowManager.removeSelectListView(getContext());
 //                            } else {
 //                                isAddCoverView = true;
-//                                FloatWindowManager.addCoverView(getContext());
+//                                FloatWindowManager.addSelectListView(getContext());
 //                            }
 //                        }
 //                    }
@@ -438,15 +505,30 @@ public class FloatBallView extends FrameLayout {
 
     private void translationAnimator(final int currentPosition, final int toPosition) {
         ValueAnimator animator = ValueAnimator.ofFloat(currentPosition, toPosition);
-        animator.setDuration(1000);
-        animator.setInterpolator(new OvershootInterpolator());
+        animator.setDuration(300);
         animator.start();
+        if (currentPosition < toPosition) {
+            mFlToolContainer.setVisibility(GONE);
+            mLayoutParams.y = mLayoutParams.y+dip2px(75);
+        } else {
+            mFlToolContainer.setVisibility(VISIBLE);
+            mLayoutParams.y = mLayoutParams.y-dip2px(75);
+        }
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float animatedValue = (Float) animation.getAnimatedValue();
                 mLayoutParams.x = (int) animatedValue;
+
                 mWindowManager.updateViewLayout(FloatBallView.this, mLayoutParams);
+            }
+
+        });
+
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
             }
         });
     }
@@ -472,6 +554,18 @@ public class FloatBallView extends FrameLayout {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, dip, getContext().getResources().getDisplayMetrics()
         );
+    }
+
+    public interface OnMenuClickListener {
+        void onPassword();
+
+        void onName();
+
+        void onList();
+    }
+
+    public void setOnMenuClickListener(OnMenuClickListener listener) {
+        mListener = listener;
     }
 
 }

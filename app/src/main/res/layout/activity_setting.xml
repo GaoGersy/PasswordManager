@@ -45,6 +45,15 @@
             app:setting_divider_show="false"
             />
     <com.gersion.superlock.view.SettingView
+            android:id="@+id/float_ball"
+            android:layout_marginTop="10dp"
+            app:setting_title="悬浮球功能"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:setting_switch_show="true"
+            app:setting_divider_show="false"
+            />
+    <com.gersion.superlock.view.SettingView
             android:layout_marginTop="10dp"
             android:id="@+id/donation"
             app:setting_title="捐赠"
@@ -54,109 +63,4 @@
             app:setting_divider_show="false"
             />
 
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="60dp"-->
-    <!--android:background="#2E2E39"-->
-    <!--android:gravity="center"-->
-    <!--android:text="设置"-->
-    <!--android:textColor="#C9D1E3"-->
-    <!--android:textSize="18sp"-->
-    <!--/>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_margin="10dp"-->
-    <!--android:orientation="vertical"-->
-    <!--&gt;-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--&gt;-->
-
-    <!--<TextView-->
-    <!--android:drawableLeft="@drawable/ic_assignment_ind_purple_200_24dp"-->
-    <!--style="@style/settingStyle"-->
-    <!--android:text="输入密码后自动登录"-->
-    <!--/>-->
-
-    <!--<com.gersion.superlock.view.ToggleButton-->
-    <!--android:id="@+id/tb_auto_login"-->
-    <!--style="@style/toggleButtonStyle"-->
-    <!--/>-->
-    <!--</RelativeLayout>-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--&gt;-->
-
-    <!--<TextView-->
-    <!--android:drawableLeft="@drawable/ic_lock_purple_200_24dp"-->
-    <!--style="@style/settingStyle"-->
-    <!--android:text="开启程序锁"-->
-    <!--/>-->
-
-    <!--<com.gersion.superlock.view.ToggleButton-->
-    <!--android:id="@+id/tb_is_lock"-->
-    <!--style="@style/toggleButtonStyle"-->
-    <!--/>-->
-    <!--</RelativeLayout>-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--&gt;-->
-
-    <!--<TextView-->
-    <!--android:drawableLeft="@drawable/ic_visibility_purple_200_24dp"-->
-    <!--style="@style/settingStyle"-->
-    <!--android:text="详情页密码显示为明文"-->
-    <!--/>-->
-
-    <!--<com.gersion.superlock.view.ToggleButton-->
-    <!--android:id="@+id/tb_show_pwd"-->
-    <!--style="@style/toggleButtonStyle"-->
-    <!--/>-->
-    <!--</RelativeLayout>-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--&gt;-->
-
-    <!--<TextView-->
-    <!--android:drawableLeft="@drawable/ic_picture_in_picture_alt_purple_200_24dp"-->
-    <!--style="@style/settingStyle"-->
-    <!--android:text="显示密码的更新时间"-->
-    <!--/>-->
-
-    <!--<com.gersion.superlock.view.ToggleButton-->
-    <!--android:id="@+id/tb_show_update_time"-->
-    <!--style="@style/toggleButtonStyle"-->
-    <!--/>-->
-    <!--</RelativeLayout>-->
-
-    <!--<TextView-->
-    <!--android:drawableLeft="@drawable/ic_monetization_on_purple_200_24dp"-->
-    <!--android:id="@+id/tv_donation"-->
-    <!--style="@style/settingStyle"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--android:text="捐赠"-->
-    <!--/>-->
-
-    <!--<TextView-->
-    <!--android:drawableLeft="@drawable/ic_help_purple_200_24dp"-->
-    <!--android:id="@+id/tv_about"-->
-    <!--style="@style/settingStyle"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--android:text="关于"-->
-    <!--/>-->
-    <!--</LinearLayout>-->
 </LinearLayout>

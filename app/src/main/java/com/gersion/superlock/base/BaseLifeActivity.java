@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 
 import com.gersion.superlock.activity.LockActivity;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 
@@ -74,9 +75,7 @@ public class BaseLifeActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
-        boolean isLock = SpfUtils.getBoolean(this, MyConstants.IS_LOCK, true);
-        if (isLock && shouldLockSceen(this) && (!(this instanceof LockActivity))) {
+        if (ConfigManager.getInstance().isLock() && shouldLockSceen(this) && (!(this instanceof LockActivity))) {
             Intent intent = new Intent(this,
                     LockActivity.class);
             startActivity(intent);

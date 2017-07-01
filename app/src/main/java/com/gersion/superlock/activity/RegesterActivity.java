@@ -16,6 +16,7 @@ import com.gersion.superlock.adapter.RegesterAdapter;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.controller.MessageEvent;
 import com.gersion.superlock.db.PasswordManager;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
@@ -227,16 +228,14 @@ public class RegesterActivity extends BaseActivity {
                 PasswordManager.getInstance().updatePassword(verifyPwd);
             } else {
                 PasswordManager.getInstance().addPassword(verifyPwd);
-                SpfUtils.putBoolean(this, MyConstants.IS_FINISH_GUIDE, true);
+                ConfigManager.getInstance().setFinishGuide(true);
                 startActivity(new Intent(RegesterActivity.this, MainActivity.class));
             }
-            SpfUtils.putInt(this, MyConstants.LENGTH, verifyPwd.length());
-//                SpfUtils.putBoolean(RegesterActivity.this, MyConstants.IS_CHANGE_PWD, true);
+            ConfigManager.getInstance().setPwdLength(verifyPwd.length());
             finish();
         } else {
             ToastUtils.showTasty(RegesterActivity.this, "两次密码不一致", TastyToast.WARNING);
         }
-
     }
 
     private void regesterPwd() {

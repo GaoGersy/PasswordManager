@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 
@@ -28,9 +29,8 @@ public class SplashActivity extends Activity {
 
     //初始化数据
     private void initData() {
-        boolean isFinishGuide = SpfUtils.getBoolean(this, MyConstants.IS_FINISH_GUIDE, false);
         Intent intent;
-        if (isFinishGuide){
+        if (ConfigManager.getInstance().isFinishGuide()){
             intent = new Intent(this,MainActivity.class);
         }else{
             intent = new Intent(this,GuideActivity.class);

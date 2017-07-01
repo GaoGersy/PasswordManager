@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.gersion.superlock.service.FloatWindowManager;
+import com.gersion.superlock.utils.ConfigManager;
 
 /**
  * Created by wangxiandeng on 2016/11/25.
@@ -25,10 +25,11 @@ public class FloatBallService extends Service {
             if (data != null) {
                 int type = data.getInt("type");
                 if (type == TYPE_ADD) {
-                    FloatWindowManager.addCoverView(this);
                     FloatWindowManager.addBallView(this);
+                    ConfigManager.getInstance().setEnableFloatBall(true);
                 } else {
                     FloatWindowManager.removeBallView(this);
+                    ConfigManager.getInstance().setEnableFloatBall(false);
                 }
             }
         }
@@ -41,4 +42,8 @@ public class FloatBallService extends Service {
         return null;
     }
 
+    @Override
+    public boolean onUnbind(Intent intent) {
+        return super.onUnbind(intent);
+    }
 }

@@ -24,6 +24,7 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.AnimatorUtils;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SPManager;
 import com.gersion.superlock.utils.SpfUtils;
@@ -154,7 +155,6 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
                 switch2Pwd();
             }
         });
-        final int length = SpfUtils.getInt(LockActivity.this, MyConstants.LENGTH, 0);
 
         mLoginPwd.addTextChangedListener(new TextWatcher() {
 
@@ -174,7 +174,7 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
             public void afterTextChanged(Editable s) {
                 if (mIsAutoLogin) {
                     String pwd = mLoginPwd.getText().toString().trim();
-                    if (pwd.length() == length) {
+                    if (pwd.length() == ConfigManager.getInstance().getPwdLength()) {
                         login();
                     }
                 }

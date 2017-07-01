@@ -21,6 +21,8 @@ public interface MyConstants {
 
     //是否完成引导界面
     String IS_FINISH_GUIDE = "is_finish_guide";
+    //悬浮工具
+    String ENABLE_FLOAT_BALL = "enable_float_ball";
     //是否是更改主密码
     String IS_CHANGE_PWD = "is_change_pwd";
     //加密的时候加盐

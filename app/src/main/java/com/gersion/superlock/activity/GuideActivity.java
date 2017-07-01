@@ -13,6 +13,7 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.GuideFragmentAdapter;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.nineoldandroids.view.ViewHelper;
@@ -39,9 +40,7 @@ public class GuideActivity extends AppCompatActivity implements OnPageChangeList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
         initView();
-
         initData();
-//
         initEvent();
     }
     @Override
@@ -61,8 +60,7 @@ public class GuideActivity extends AppCompatActivity implements OnPageChangeList
     @Override
     protected void onStart() {
         super.onStart();
-        boolean isFinishGuide = SpfUtils.getBoolean(this, MyConstants.IS_FINISH_GUIDE, false);
-        if (isFinishGuide) {
+        if (ConfigManager.getInstance().isFinishGuide()) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }

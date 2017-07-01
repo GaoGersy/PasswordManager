@@ -12,6 +12,7 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.MainPagerAdapter;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.service.FloatBallService;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.view.TitleView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
 
@@ -34,7 +35,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        if (ConfigManager.getInstance().isEnableFloatBall()){
+            addBall();
+        }
     }
 
     @Override
@@ -49,16 +52,6 @@ public class MainActivity extends BaseActivity {
                 .setBackVisiable(false)
                 .setTitleText("密码列表");
 
-        if (Build.VERSION.SDK_INT >= 23) {
-
-            if (!Settings.canDrawOverlays(this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivityForResult(intent, 1);
-                Toast.makeText(this, "请先允许FloatTools出现在顶部", Toast.LENGTH_SHORT).show();
-            }
-        }
-        addBall();
     }
 
     private void addBall(){

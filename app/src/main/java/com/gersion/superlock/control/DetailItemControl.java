@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseDetailControl;
 import com.gersion.superlock.bean.Keyer;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SpfUtils;
 import com.hss01248.dialog.StyledDialog;
@@ -98,8 +99,7 @@ public class DetailItemControl extends BaseDetailControl implements View.OnClick
 
 
         mName.setText("用户名："+mKeyer.name);
-        boolean isShowUpdateTime = SpfUtils.getBoolean(mContext, MyConstants.IS_SHOW_UPDATE_TIME, false);
-        if (isShowUpdateTime){
+        if (ConfigManager.getInstance().isShowUpdateTime()){
             mTime.setVisibility(View.VISIBLE);
             if (TextUtils.isEmpty(mKeyer.updateTime)){
                 mTime.setText("上次更新时间：从未更新过");
@@ -112,8 +112,7 @@ public class DetailItemControl extends BaseDetailControl implements View.OnClick
     }
 
     private void setKeyType() {
-        boolean isShowPwd = SpfUtils.getBoolean(mContext, MyConstants.IS_SHOW_PWD, true);
-        if (isShowPwd){
+        if (ConfigManager.getInstance().isShowPwd()){
             mPassword.setText("密码："+mKeyer.pwd);
         }else{
             mPassword.setText("密码：********");

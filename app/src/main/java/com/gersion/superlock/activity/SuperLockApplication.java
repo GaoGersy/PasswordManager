@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.gersion.superlock.R;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.db.PasswordManager;
+import com.gersion.superlock.utils.ConfigManager;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -74,6 +75,7 @@ public class SuperLockApplication extends Application {
                 Logger.d(exception.getMessage());
             }
         });
+
         //初始化主线程的一个handler
         mHandler = new Handler();
         super.onCreate();
