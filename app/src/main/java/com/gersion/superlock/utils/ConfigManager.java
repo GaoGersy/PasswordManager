@@ -4,11 +4,17 @@ import android.content.Context;
 
 import com.gersion.superlock.activity.SuperLockApplication;
 
+import java.io.File;
+
 /**
  * Created by gersy on 2017/7/1.
  */
 
 public class ConfigManager {
+    private String mCreateLockDate;
+    private String mCreateDbDate;
+    private String mDestDbPath = SDCardUtils.getSDCardPath()+"/superPassword/db.realm";
+    private String mSrcDbPath ;
     private boolean mIsEnableFloatBall;
     private int mPwdLength;
     private boolean mIsChangePwd;
@@ -29,6 +35,9 @@ public class ConfigManager {
         mIsChangePwd = SpfUtils.getBoolean(mContext, MyConstants.IS_CHANGE_PWD, false);
         mIsFinishGuide = SpfUtils.getBoolean(mContext, MyConstants.IS_FINISH_GUIDE, false);
         mIsEnableFloatBall = SpfUtils.getBoolean(mContext, MyConstants.ENABLE_FLOAT_BALL, false);
+        mCreateLockDate = SpfUtils.getString(mContext, MyConstants.CREATE_LOCK_DATE);
+        mCreateDbDate = SpfUtils.getString(mContext, MyConstants.CREATE_DB_DATE);
+        mSrcDbPath = mContext.getFilesDir()+"/db.realm";
     }
 
     private static ConfigManager singleInstance = new ConfigManager();
@@ -44,6 +53,24 @@ public class ConfigManager {
     public void setPwdLength(int pwdLength) {
         mPwdLength = pwdLength;
         SpfUtils.putInt(mContext, MyConstants.LENGTH, pwdLength);
+    }
+
+    public String getCreateLockDate() {
+        return mCreateLockDate;
+    }
+
+    public void setCreateLockDate(String createLockDate) {
+        mCreateLockDate = createLockDate;
+        SpfUtils.putString(mContext,MyConstants.CREATE_LOCK_DATE, createLockDate);
+    }
+
+    public String getCreateDbDate() {
+        return mCreateDbDate;
+    }
+
+    public void setCreateDbDate(String createPwdDate) {
+        mCreateDbDate = createPwdDate;
+        SpfUtils.putString(mContext, MyConstants.CREATE_DB_DATE, createPwdDate);
     }
 
     public boolean isChangePwd() {
@@ -104,8 +131,17 @@ public class ConfigManager {
         return mIsEnableFloatBall;
     }
 
-    public void setEnableFloatBall(boolean enableFloatBall){
+    public void setEnableFloatBall(boolean enableFloatBall) {
         mIsEnableFloatBall = enableFloatBall;
         SpfUtils.putBoolean(mContext, MyConstants.ENABLE_FLOAT_BALL, enableFloatBall);
     }
+
+    public File getSrcDbFile() {
+        return new File(mSrcDbPath);
+    }
+
+    public File getDestDbFile() {
+        return new File(mDestDbPath);
+    }
+
 }

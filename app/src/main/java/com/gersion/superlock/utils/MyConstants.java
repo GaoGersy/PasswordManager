@@ -38,7 +38,12 @@ public interface MyConstants {
     String IS_SHOW_PWD = "is_show_pwd";
     //是否显示密码的更新时间
     String IS_SHOW_UPDATE_TIME = "is_show_update_time";
-    java.lang.String LENGTH = "length";
+    //密码长度
+    String LENGTH = "length";
+    //数据库路径
+    String DB_PATH = "db_path";
+    String CREATE_LOCK_DATE = "create_lock_date";
+    String CREATE_DB_DATE = "create_db_date";
     String TEST = "test";
 }
   
