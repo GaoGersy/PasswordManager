@@ -47,7 +47,17 @@
     <com.gersion.superlock.view.SettingView
             android:id="@+id/float_ball"
             android:layout_marginTop="10dp"
-            app:setting_title="悬浮球功能"
+            app:setting_title="悬浮球"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:setting_switch_show="true"
+            app:setting_divider_show="false"
+            />
+
+    <com.gersion.superlock.view.SettingView
+            android:id="@+id/finger_print"
+            android:layout_marginTop="10dp"
+            app:setting_title="指纹解锁"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:setting_switch_show="true"
@@ -57,6 +67,16 @@
             android:layout_marginTop="10dp"
             android:id="@+id/donation"
             app:setting_title="捐赠"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:setting_switch_show="false"
+            app:setting_divider_show="false"
+            />
+
+    <com.gersion.superlock.view.SettingView
+            android:layout_marginTop="10dp"
+            android:id="@+id/project_address"
+            app:setting_title="项目地址"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:setting_switch_show="false"

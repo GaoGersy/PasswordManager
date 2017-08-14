@@ -1,5 +1,7 @@
 package com.gersion.superlock.view.smartRecycleView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -272,24 +274,40 @@ public class SmartRecycleView extends RelativeLayout {
                 mFailedView.setVisibility(GONE);
                 mRecyclerView.setVisibility(GONE);
             } else if (status == ViewStatus.FAILED) {
-                mLoadingView.setVisibility(GONE);
                 mNoDataView.setVisibility(GONE);
                 mFailedView.setVisibility(VISIBLE);
                 mRecyclerView.setVisibility(GONE);
+                hideView(mLoadingView);
             } else if (status == ViewStatus.NO_DATA) {
-                mLoadingView.setVisibility(GONE);
                 mNoDataView.setVisibility(VISIBLE);
                 mFailedView.setVisibility(GONE);
                 mRecyclerView.setVisibility(GONE);
+                hideView(mLoadingView);
             } else if (status == ViewStatus.SUCCESS) {
-                mLoadingView.setVisibility(GONE);
                 mNoDataView.setVisibility(GONE);
                 mFailedView.setVisibility(GONE);
                 mRecyclerView.setVisibility(VISIBLE);
+                hideView(mLoadingView);
             }
         } catch (NullPointerException e) {
 
         }
+    }
+
+    private void hideView(final View view){
+        if (view.getVisibility()==GONE){
+            return;
+        }
+        view.animate()
+                .alpha(0)
+                .setDuration(500)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setVisibility(GONE);
+                    }
+                })
+                .start();
     }
 
     //数据请求失败调用

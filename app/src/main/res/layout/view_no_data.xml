@@ -16,8 +16,8 @@
             android:id="@+id/mTextNoData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textColor="@color/bg_white"
+            android:padding="6dp"
+            android:textColor="@color/gray_80"
             android:text="@string/loading_no_data"
             android:textSize="15sp"
             />

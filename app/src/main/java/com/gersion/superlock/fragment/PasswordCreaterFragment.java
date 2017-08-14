@@ -92,7 +92,6 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
 
     /**
      * 播放动画
-     *
      * @author Gers
      * @time 2016/8/10 16:28
      */

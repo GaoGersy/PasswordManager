@@ -13,9 +13,6 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.GuideFragmentAdapter;
-import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.MyConstants;
-import com.gersion.superlock.utils.SpfUtils;
 import com.nineoldandroids.view.ViewHelper;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -60,10 +57,12 @@ public class GuideActivity extends AppCompatActivity implements OnPageChangeList
     @Override
     protected void onStart() {
         super.onStart();
-        if (ConfigManager.getInstance().isFinishGuide()) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
+//        if (ConfigManager.getInstance().isFinishGuide()) {
+//            startActivity(new Intent(this, MainActivity.class));
+//            finish();
+//        }
+        startActivity(new Intent(this, RegesterActivity.class));
+        finish();
     }
 
     // 初始化数据

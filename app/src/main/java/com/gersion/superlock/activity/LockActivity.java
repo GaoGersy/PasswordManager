@@ -25,9 +25,7 @@ import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.SPManager;
-import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -107,7 +105,7 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
     };
 
     private void initFingerPrint() {
-        if (SuperLockApplication.mFingerprintIdentify.isFingerprintEnable()) {
+        if (ConfigManager.getInstance().isFingerPrint()) {
             SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
         } else {
             mRlFingerContainer.setVisibility(View.GONE);

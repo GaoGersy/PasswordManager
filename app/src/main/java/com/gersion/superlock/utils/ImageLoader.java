@@ -34,6 +34,26 @@ public class ImageLoader {
         return mInstance;
     }
 
+    public void loadCircleIcon(int resId,ImageView imageView) {
+        Glide
+                .with(imageView.getContext())
+                .load(resId)
+                .bitmapTransform(new CropCircleTransformation(imageView.getContext()))
+                .placeholder(R.drawable.pure_bg) //设置占位图
+                .error(R.drawable.pure_bg) //设置错误图片
+                .into(imageView);
+    }
+
+    public void loadBlurBg(int resId,ImageView imageView) {
+        Glide
+                .with(imageView.getContext())
+                .load(resId)
+                .placeholder(R.drawable.pure_bg) //设置占位图
+                .error(R.drawable.pure_bg) //设置错误图片
+                .bitmapTransform(new BlurTransformation(imageView.getContext(), 14, 5))
+                .into(imageView);
+    }
+
     public void loadResBlurImage(int resId,ImageView imageView) {
         Glide
                 .with(imageView.getContext())

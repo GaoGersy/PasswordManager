@@ -4,11 +4,22 @@ import android.content.Context;
 
 import com.gersion.superlock.activity.SuperLockApplication;
 
+import static com.gersion.superlock.utils.MyConstants.ENABLE_FLOAT_BALL;
+import static com.gersion.superlock.utils.MyConstants.FINGER_PRINT;
+import static com.gersion.superlock.utils.MyConstants.IS_AUTO_LOGIN;
+import static com.gersion.superlock.utils.MyConstants.IS_CHANGE_PWD;
+import static com.gersion.superlock.utils.MyConstants.IS_FINISH_GUIDE;
+import static com.gersion.superlock.utils.MyConstants.IS_LOCK;
+import static com.gersion.superlock.utils.MyConstants.IS_SHOW_PWD;
+import static com.gersion.superlock.utils.MyConstants.IS_SHOW_UPDATE_TIME;
+import static com.gersion.superlock.utils.MyConstants.LENGTH;
+
 /**
  * Created by gersy on 2017/7/1.
  */
 
 public class ConfigManager {
+    private boolean mFingerPrint;
     private boolean mIsEnableFloatBall;
     private int mPwdLength;
     private boolean mIsChangePwd;
@@ -16,19 +27,27 @@ public class ConfigManager {
     private boolean mIsLock;
     private boolean mIsShowPwd;
     private boolean mIsShowUpdateTime;
-    public boolean mIsFinishGuide;
-    public final Context mContext;
+    private boolean mIsFinishGuide;
+    private Context mContext;
 
     private ConfigManager() {
         mContext = SuperLockApplication.getContext();
-        mIsAutoLogin = SpfUtils.getBoolean(mContext, MyConstants.IS_AUTO_LOGIN, false);
-        mIsLock = SpfUtils.getBoolean(mContext, MyConstants.IS_LOCK, true);
-        mIsShowPwd = SpfUtils.getBoolean(mContext, MyConstants.IS_SHOW_PWD, true);
-        mIsShowUpdateTime = SpfUtils.getBoolean(mContext, MyConstants.IS_SHOW_UPDATE_TIME, false);
-        mPwdLength = SpfUtils.getInt(mContext, MyConstants.LENGTH, 0);
-        mIsChangePwd = SpfUtils.getBoolean(mContext, MyConstants.IS_CHANGE_PWD, false);
-        mIsFinishGuide = SpfUtils.getBoolean(mContext, MyConstants.IS_FINISH_GUIDE, false);
-        mIsEnableFloatBall = SpfUtils.getBoolean(mContext, MyConstants.ENABLE_FLOAT_BALL, false);
+        mIsLock = getBoolean(IS_LOCK, true);
+        mIsShowPwd = getBoolean(IS_SHOW_PWD, true);
+        mIsAutoLogin = getBoolean(IS_AUTO_LOGIN);
+        mIsShowUpdateTime = getBoolean(IS_SHOW_UPDATE_TIME);
+        mIsChangePwd = getBoolean(IS_CHANGE_PWD);
+        mIsFinishGuide = getBoolean(IS_FINISH_GUIDE);
+        mIsEnableFloatBall = getBoolean(ENABLE_FLOAT_BALL);
+        mFingerPrint = getBoolean(FINGER_PRINT);
+        mPwdLength = SpfUtils.getInt(mContext, LENGTH, 0);
+    }
+    private boolean getBoolean(String key) {
+        return SpfUtils.getBoolean(mContext, key,false);
+    }
+
+    private boolean getBoolean(String key, boolean defaultValue) {
+        return SpfUtils.getBoolean(mContext, key, defaultValue);
     }
 
     private static ConfigManager singleInstance = new ConfigManager();
@@ -43,7 +62,7 @@ public class ConfigManager {
 
     public void setPwdLength(int pwdLength) {
         mPwdLength = pwdLength;
-        SpfUtils.putInt(mContext, MyConstants.LENGTH, pwdLength);
+        SpfUtils.putInt(mContext, LENGTH, pwdLength);
     }
 
     public boolean isChangePwd() {
@@ -52,7 +71,7 @@ public class ConfigManager {
 
     public void setChangePwd(boolean changePwd) {
         mIsChangePwd = changePwd;
-        SpfUtils.putBoolean(mContext, MyConstants.IS_CHANGE_PWD, changePwd);
+        SpfUtils.putBoolean(mContext, IS_CHANGE_PWD, changePwd);
     }
 
     public boolean isAutoLogin() {
@@ -61,7 +80,7 @@ public class ConfigManager {
 
     public void setAutoLogin(boolean autoLogin) {
         mIsAutoLogin = autoLogin;
-        SpfUtils.putBoolean(mContext, MyConstants.IS_AUTO_LOGIN, autoLogin);
+        SpfUtils.putBoolean(mContext, IS_AUTO_LOGIN, autoLogin);
     }
 
     public boolean isLock() {
@@ -70,7 +89,7 @@ public class ConfigManager {
 
     public void setLock(boolean lock) {
         mIsLock = lock;
-        SpfUtils.putBoolean(mContext, MyConstants.IS_LOCK, lock);
+        SpfUtils.putBoolean(mContext, IS_LOCK, lock);
     }
 
     public boolean isShowPwd() {
@@ -79,7 +98,7 @@ public class ConfigManager {
 
     public void setShowPwd(boolean showPwd) {
         mIsShowPwd = showPwd;
-        SpfUtils.putBoolean(mContext, MyConstants.IS_SHOW_PWD, showPwd);
+        SpfUtils.putBoolean(mContext, IS_SHOW_PWD, showPwd);
     }
 
     public boolean isShowUpdateTime() {
@@ -88,7 +107,7 @@ public class ConfigManager {
 
     public void setShowUpdateTime(boolean showUpdateTime) {
         mIsShowUpdateTime = showUpdateTime;
-        SpfUtils.putBoolean(mContext, MyConstants.IS_SHOW_UPDATE_TIME, showUpdateTime);
+        SpfUtils.putBoolean(mContext, IS_SHOW_UPDATE_TIME, showUpdateTime);
     }
 
     public boolean isFinishGuide() {
@@ -97,7 +116,16 @@ public class ConfigManager {
 
     public void setFinishGuide(boolean finishGuide) {
         mIsFinishGuide = finishGuide;
-        SpfUtils.putBoolean(mContext, MyConstants.IS_FINISH_GUIDE, finishGuide);
+        SpfUtils.putBoolean(mContext, IS_FINISH_GUIDE, finishGuide);
+    }
+
+    public boolean isFingerPrint() {
+        return mFingerPrint;
+    }
+
+    public void setFingerPrint(boolean fingerPrint) {
+        mFingerPrint = fingerPrint;
+        SpfUtils.putBoolean(mContext, FINGER_PRINT, fingerPrint);
     }
 
     public boolean isEnableFloatBall() {
@@ -106,6 +134,6 @@ public class ConfigManager {
 
     public void setEnableFloatBall(boolean enableFloatBall){
         mIsEnableFloatBall = enableFloatBall;
-        SpfUtils.putBoolean(mContext, MyConstants.ENABLE_FLOAT_BALL, enableFloatBall);
+        SpfUtils.putBoolean(mContext, ENABLE_FLOAT_BALL, enableFloatBall);
     }
 }

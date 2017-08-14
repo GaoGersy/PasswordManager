@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/ll_icon"
-                android:text="adsfasd"
                 android:textColor="@color/font_black"
                 android:textSize="16sp"
                 />
@@ -69,7 +68,7 @@
             android:id="@+id/devider"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/gray_c0"
+            android:background="@color/gray_f0"
             />
 
 </LinearLayout>

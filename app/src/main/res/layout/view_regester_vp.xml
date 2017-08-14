@@ -1,66 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#20202B" >
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <LinearLayout
-        android:layout_width="240dp"
-        android:layout_height="270dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="30dp"
-        android:background="@mipmap/shadow" />
+            android:visibility="gone"
+            android:layout_width="240dp"
+            android:layout_height="270dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="30dp"
+            android:background="@mipmap/shadow"
+            />
 
-    <RelativeLayout
-        android:id="@+id/view_regester_bg"
-        android:layout_width="200dp"
-        android:layout_height="240dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:background="@mipmap/regester_verify_paine" >
+
+    <LinearLayout
+            android:id="@+id/view_regester_bg"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/shape_register"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            >
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                >
+            <ImageView
+                    android:visibility="gone"
+                    android:src="@mipmap/back"
+                    android:alpha="0.6"
+                    android:id="@+id/iv_pre"
+                    android:layout_marginLeft="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    />
+            <TextView
+                    android:layout_centerInParent="true"
+                    android:id="@+id/view_regester_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:padding="15dp"
+                    android:text="注册用户"
+                    android:textColor="#E3E7F2"
+                    android:textSize="17sp"
+                    />
+            <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/iv_next"
+                    android:src="@mipmap/next"
+                    android:alpha="0.6"
+                    android:layout_marginRight="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    />
+        </RelativeLayout>
+        <TextView
+                android:background="#55ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                />
+
+        <ImageView
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/iv_icon"
+                android:scaleType="fitXY"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                />
 
         <TextView
-            android:id="@+id/view_regester_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp"
-            android:text="注册用户"
-            android:textColor="#E3E7F2"
-            android:textSize="17sp" />
+                android:id="@+id/tv_name"
+                android:layout_below="@id/iv_icon"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:text="小明同学"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-        <LinearLayout
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="20dp"
-            android:orientation="vertical" >
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/layout_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <EditText
+        <EditText
                 android:id="@+id/view_regester_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="40dp"
                 android:hint="请输入密码"
                 android:imeOptions="actionGo"
                 android:paddingTop="1dp"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:textColorHint="#A2ABBE"
-                android:textColor="#A2ABBE"
                 android:textCursorDrawable="@drawable/color_courser"
-                android:textSize="15sp" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
+                android:textSize="15sp"
+                android:background="@drawable/shape_pwd_bg"
+                android:padding="7dp"
+                />
+        <TextView
+                android:visibility="gone"
+                android:text="下一步"
+                android:textColor="@color/white"
+                android:layout_gravity="bottom|right"
+                android:padding="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
-        <ImageView
+    </LinearLayout>
+    <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
             android:visibility="gone"
             android:id="@+id/view_regester_go"
             android:layout_width="wrap_content"
@@ -68,7 +128,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
-            android:src="@mipmap/go" />
-    </RelativeLayout>
+            android:src="@mipmap/go"
+            />
 
 </FrameLayout>

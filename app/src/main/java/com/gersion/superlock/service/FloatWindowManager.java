@@ -47,7 +47,6 @@ public class FloatWindowManager {
         int w = WindowManager.LayoutParams.MATCH_PARENT;
         int h = WindowManager.LayoutParams.MATCH_PARENT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //解决Android 7.1.1起不能再用Toast的问题（先解决crash）
             if (Build.VERSION.SDK_INT > 24) {
                 type = WindowManager.LayoutParams.TYPE_PHONE;
             } else {
@@ -98,7 +97,6 @@ public class FloatWindowManager {
         int w = WindowManager.LayoutParams.MATCH_PARENT;
         int h = WindowManager.LayoutParams.MATCH_PARENT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //解决Android 7.1.1起不能再用Toast的问题（先解决crash）
             if (Build.VERSION.SDK_INT > 24) {
                 type = WindowManager.LayoutParams.TYPE_PHONE;
             } else {

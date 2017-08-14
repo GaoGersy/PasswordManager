@@ -15,9 +15,9 @@
             android:id="@+id/mTextNoData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="6dp"
             android:gravity="center"
-            android:textColor="@color/bg_white"
+            android:textColor="@color/gray_80"
             android:text="@string/error_text"
             android:textSize="15sp"
             />

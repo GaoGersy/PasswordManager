@@ -11,6 +11,7 @@ import com.gersion.superlock.bean.UpdateBean;
 import com.gersion.superlock.utils.TimeUtils;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class HistoryDetialAdapter extends BaseRVAdapter<UpdateBean> implements I
 
     @Override
     public void setNewData(List<UpdateBean> data) {
-        mData = data;
+        mData = data==null?new ArrayList<UpdateBean>():data;
         notifyDataSetChanged();
     }
 

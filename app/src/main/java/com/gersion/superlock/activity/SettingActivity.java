@@ -7,7 +7,6 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -16,8 +15,6 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.service.FloatBallService;
 import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.MyConstants;
-import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.SettingView;
 import com.gersion.superlock.view.TitleView;
@@ -49,6 +46,11 @@ public class SettingActivity extends BaseActivity {
     LinearLayout mActivitySetting;
     @BindView(R.id.float_ball)
     SettingView mFloatBall;
+    @BindView(R.id.finger_print)
+    SettingView mFingerPrint;
+    @BindView(R.id.project_address)
+    SettingView mProjectAddress;
+    private ConfigManager mConfigManager;
 
     @Override
     protected int setLayoutId() {
@@ -65,12 +67,15 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mOpenLock.setSwitchStatus(ConfigManager.getInstance().isLock());
-        mPwdShow.setSwitchStatus(ConfigManager.getInstance().isShowPwd());
-        mAutoLogin.setSwitchStatus(ConfigManager.getInstance().isAutoLogin());
-        mUpdateTimeShow.setSwitchStatus(ConfigManager.getInstance().isShowUpdateTime());
-        mAutoLogin.setEnableEffect(ConfigManager.getInstance().isLock());
-        mFloatBall.setSwitchStatus(ConfigManager.getInstance().isEnableFloatBall());
+        mConfigManager = ConfigManager.getInstance();
+        mOpenLock.setSwitchStatus(mConfigManager.isLock());
+        mPwdShow.setSwitchStatus(mConfigManager.isShowPwd());
+        mAutoLogin.setSwitchStatus(mConfigManager.isAutoLogin());
+        mUpdateTimeShow.setSwitchStatus(mConfigManager.isShowUpdateTime());
+        mAutoLogin.setEnableEffect(mConfigManager.isLock());
+        mFloatBall.setSwitchStatus(mConfigManager.isEnableFloatBall());
+        mFingerPrint.setEnableEffect(isFringerEnable());
+        mFingerPrint.setSwitchStatus(mConfigManager.isFingerPrint());
     }
 
     @Override
@@ -80,7 +85,7 @@ public class SettingActivity extends BaseActivity {
             public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
                 String toast = isChecked ? "开启自动登录" : "关闭自动登录";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
-                ConfigManager.getInstance().setAutoLogin(isChecked);
+                mConfigManager.setAutoLogin(isChecked);
             }
         });
 
@@ -90,7 +95,7 @@ public class SettingActivity extends BaseActivity {
                 mAutoLogin.setEnableEffect(isChecked);
                 String toast = isChecked ? "开启程序锁" : "关闭程序锁";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
-                ConfigManager.getInstance().setLock(isChecked);
+                mConfigManager.setLock(isChecked);
             }
         });
 
@@ -99,7 +104,7 @@ public class SettingActivity extends BaseActivity {
             public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
                 String toast = isChecked ? "开启显示密码" : "关闭显示密码";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
-                ConfigManager.getInstance().setShowPwd(isChecked);
+                mConfigManager.setShowPwd(isChecked);
                 EventBus.getDefault().postSticky("ChangSwitch");
             }
         });
@@ -108,7 +113,28 @@ public class SettingActivity extends BaseActivity {
             public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
                 String toast = isChecked ? "开启显示更新时间" : "关闭显示更新时间";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
-                ConfigManager.getInstance().setShowUpdateTime(isChecked);
+                mConfigManager.setShowUpdateTime(isChecked);
+            }
+        });
+
+        mFingerPrint.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
+                    String toast = isChecked ? "开启指纹解锁" : "关闭指纹解锁";
+                    ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
+                    mConfigManager.setFingerPrint(isChecked);
+            }
+        });
+
+        mFingerPrint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isFringerEnable()) {
+                    mFingerPrint.setEnableEffect(true);
+                }else{
+                    mFingerPrint.setEnableEffect(false);
+                    ToastUtils.showTasty(SettingActivity.this, "抱歉，您的手机不支持指纹解锁功能！", TastyToast.ERROR);
+                }
             }
         });
 
@@ -117,7 +143,7 @@ public class SettingActivity extends BaseActivity {
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 String toast = isChecked ? "开启悬浮球" : "关闭悬浮球";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
-//                ConfigManager.getInstance().setEnableFloatBall(isChecked);
+//                mConfigManager.setEnableFloatBall(isChecked);
                 setFloatBall(isChecked);
             }
         });
@@ -128,6 +154,10 @@ public class SettingActivity extends BaseActivity {
                 toActivity(AboutActivity.class);
             }
         });
+    }
+
+    private boolean isFringerEnable() {
+        return SuperLockApplication.mFingerprintIdentify.isFingerprintEnable();
     }
 
 

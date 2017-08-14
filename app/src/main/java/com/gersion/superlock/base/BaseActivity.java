@@ -19,7 +19,7 @@ public abstract class BaseActivity extends BaseLifeActivity {
         setContentView(setLayoutId());
         initView();
         initData();
-        initListener();
+//        initListener();
     }
 
     @Override
