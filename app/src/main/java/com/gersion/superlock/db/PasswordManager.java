@@ -5,8 +5,8 @@ import android.text.TextUtils;
 
 import com.gersion.superlock.bean.PasswordBean;
 import com.gersion.superlock.utils.Aes;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.Md5Utils;
-import com.gersion.superlock.utils.SpfUtils;
 import com.gersion.superlock.utils.TimeUtils;
 
 import io.realm.Realm;
@@ -53,10 +53,10 @@ public final class PasswordManager {
     **/
     private byte[] getKey(Context appContext) {
         byte[] key = new byte[64];
-        mCreateDate = SpfUtils.getString(appContext, "createDate");
+        mCreateDate = ConfigManager.getInstance().getCreateLockDate();
         if (TextUtils.isEmpty(mCreateDate)) {
             mCreateDate = TimeUtils.getCurrentTimeInString();
-            SpfUtils.putString(appContext, "createDate", mCreateDate);
+            ConfigManager.getInstance().setCreateLockDate(mCreateDate);
         }
         mPasswordKey = Md5Utils.encodeWithTimes(mCreateDate, 66);
         String password = Md5Utils.encodeWithTimes(mCreateDate, 88);
