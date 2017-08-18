@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -17,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +25,7 @@ import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.ConfigManager;
+import com.gersion.superlock.utils.ImageLoader;
 import com.gersion.superlock.utils.SPManager;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
@@ -34,17 +35,15 @@ import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LockActivity extends BaseLifeActivity implements View.OnClickListener {
+public class LockActivity extends BaseLifeActivity{
 
     public static String IS_FIRST_TIME = "is_first_time";
     @BindView(R.id.activity_login_pwd)
     EditText mLoginPwd;
-    @BindView(R.id.layout_username)
-    TextInputLayout mLayoutUsername;
-    @BindView(R.id.activity_login_go)
-    ImageView mLoginGo;
-    @BindView(R.id.iv_finger)
-    ImageView mIvFinger;
+    //    @BindView(R.id.layout_username)
+//    TextInputLayout mLayoutUsername;
+//    @BindView(R.id.activity_login_go)
+//    ImageView mLoginGo;
     @BindView(R.id.btn_cancel)
     Button mBtnCancel;
     @BindView(R.id.btn_password)
@@ -57,6 +56,16 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
     RelativeLayout mRlFingerContainer;
     @BindView(R.id.tv_notice)
     TextView mTvNotice;
+    @BindView(R.id.iv_icon)
+    ImageView mIvIcon;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_next)
+    TextView mTvNext;
+    @BindView(R.id.view_regester_bg)
+    LinearLayout mViewRegesterBg;
+    @BindView(R.id.iv_finger)
+    ImageView mIvFinger;
     private boolean isfirstTime;
 
     @Override
@@ -100,21 +109,29 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
                     mTvNotice.setText("请轻触指纹感应器验证指纹");
                     SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
                 }
-            },15000);
+            }, 15000);
         }
     };
 
     private void initFingerPrint() {
-        if (ConfigManager.getInstance().isFingerPrint()) {
+        ConfigManager instance = ConfigManager.getInstance();
+        if (instance.isFingerPrint()) {
             SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
         } else {
             mRlFingerContainer.setVisibility(View.GONE);
             mFlPwdContainer.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().loadCircleIcon(R.drawable.pure_bg, mIvIcon);
+            mTvName.setText(instance.getUserName());
+            if (instance.isAutoLogin()){
+                mTvNext.setVisibility(View.GONE);
+            }else{
+                mTvNext.setVisibility(View.VISIBLE);
+            }
         }
     }
 
-    private void shake(){
-        ObjectAnimator animator = AnimatorUtils.tada(mIvFinger,5);
+    private void shake() {
+        ObjectAnimator animator = AnimatorUtils.tada(mIvFinger, 5);
         animator.setRepeatCount(0);
         animator.start();
     }
@@ -127,7 +144,6 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
 
     // 初始化监听事件
     private void initEvent() {
-        mLoginGo.setOnClickListener(this);
         //当手机输入法按下确认键的时候执行登录
         mLoginPwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -176,6 +192,13 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
                 }
             }
         });
+
+        mTvNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
+            }
+        });
     }
 
     private void switch2Pwd() {
@@ -219,12 +242,4 @@ public class LockActivity extends BaseLifeActivity implements View.OnClickListen
         finish();
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.activity_login_go:
-                login();
-                break;
-        }
-    }
 }

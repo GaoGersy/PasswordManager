@@ -54,19 +54,19 @@
         <!-- RegesterActivity -->
         <activity
                 android:name=".activity.RegesterActivity"
-                android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <!-- LockActivity -->
         <activity
-                android:name=".activity.LockActivity"/>
+                android:name=".activity.LockActivity"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="stateHidden|adjustPan"
+                />
         <!-- =====================================Receiver==================================== -->
 
 
         <!-- =====================================Service==================================== -->
-
-        <activity
-                android:name=".activity.MainActivity1"
-                android:launchMode="singleTask"/>
         <activity
                 android:name=".activity.AddPasswordActivity"
                 android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>

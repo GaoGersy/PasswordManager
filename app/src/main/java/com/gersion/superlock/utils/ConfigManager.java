@@ -4,6 +4,10 @@ import android.content.Context;
 
 import com.gersion.superlock.activity.SuperLockApplication;
 
+import java.io.File;
+
+import static com.gersion.superlock.utils.MyConstants.CREATE_DB_DATE;
+import static com.gersion.superlock.utils.MyConstants.CREATE_LOCK_DATE;
 import static com.gersion.superlock.utils.MyConstants.ENABLE_FLOAT_BALL;
 import static com.gersion.superlock.utils.MyConstants.FINGER_PRINT;
 import static com.gersion.superlock.utils.MyConstants.IS_AUTO_LOGIN;
@@ -13,6 +17,7 @@ import static com.gersion.superlock.utils.MyConstants.IS_LOCK;
 import static com.gersion.superlock.utils.MyConstants.IS_SHOW_PWD;
 import static com.gersion.superlock.utils.MyConstants.IS_SHOW_UPDATE_TIME;
 import static com.gersion.superlock.utils.MyConstants.LENGTH;
+import static com.gersion.superlock.utils.MyConstants.USER_NAME;
 
 /**
  * Created by gersy on 2017/7/1.
@@ -29,6 +34,7 @@ public class ConfigManager {
     private boolean mIsShowUpdateTime;
     private boolean mIsFinishGuide;
     private Context mContext;
+    private String mUserName;
 
     private ConfigManager() {
         mContext = SuperLockApplication.getContext();
@@ -41,6 +47,7 @@ public class ConfigManager {
         mIsEnableFloatBall = getBoolean(ENABLE_FLOAT_BALL);
         mFingerPrint = getBoolean(FINGER_PRINT);
         mPwdLength = SpfUtils.getInt(mContext, LENGTH, 0);
+        mUserName = SpfUtils.getString(mContext, USER_NAME);
     }
     private boolean getBoolean(String key) {
         return SpfUtils.getBoolean(mContext, key,false);
@@ -135,5 +142,38 @@ public class ConfigManager {
     public void setEnableFloatBall(boolean enableFloatBall){
         mIsEnableFloatBall = enableFloatBall;
         SpfUtils.putBoolean(mContext, ENABLE_FLOAT_BALL, enableFloatBall);
+    }
+
+    public String getCreateDbDate() {
+        return SpfUtils.getString(mContext, CREATE_DB_DATE);
+    }
+
+    public void setCreateDbDate(String createDate) {
+        SpfUtils.putString(mContext,CREATE_DB_DATE,createDate);
+    }
+
+    public String getCreateLockDate() {
+        return  SpfUtils.getString(mContext, CREATE_LOCK_DATE);
+    }
+
+    public void setCreateLockDate(String createDate) {
+        SpfUtils.putString(mContext,CREATE_LOCK_DATE,createDate);
+    }
+
+    public File getSrcDbFile() {
+        return null;
+    }
+
+    public File getDestDbFile() {
+        return null;
+    }
+
+    public String getUserName() {
+        return mUserName;
+    }
+
+    public void setUserName(String userName) {
+        mUserName = userName;
+        SpfUtils.putString(mContext,USER_NAME,userName);
     }
 }

@@ -24,4 +24,9 @@
     <color name="light_gray">#F2F3F5</color>
     <color name="font_black">#151515</color>
     <color name="global_bg">#9000</color>
+    <color name="title">#090e17</color>
+
+    <color name="password_bg">#f8f9fb</color>
+    <color name="password_boarder">#f0f2f1</color>
+    <color name="confirm">#abc324</color>
 </resources>

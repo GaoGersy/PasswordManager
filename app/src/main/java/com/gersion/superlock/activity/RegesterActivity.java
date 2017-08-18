@@ -20,6 +20,7 @@ import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.ImageLoader;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.NoTouchViewPager;
+import com.gyf.barlibrary.ImmersionBar;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
@@ -51,6 +52,10 @@ public class RegesterActivity extends BaseActivity {
     //用来判断是不是第一次创建密码，第一次的时候会跳转到LockActivity,所以visibleCount多加了1;
     // 为了以后的页面能够正常进入后台能加密，所以onStop又必须减1
     private boolean mIsFinishGuide;
+    private String mUserName;
+    private TextView mTvName;
+    private TextView mTvRegisterName;
+    private ConfigManager mConfigManager;
 
     @Override
     protected int setLayoutId() {
@@ -60,6 +65,7 @@ public class RegesterActivity extends BaseActivity {
     // 初始化控件
     @Override
     protected void initView() {
+        ImmersionBar.with(this).fullScreen(false);
         mVp = (NoTouchViewPager) findViewById(R.id.activity_regester_vp);
         ImageView ivBg = (ImageView) findViewById(R.id.iv_bg);
         ImageLoader.getInstance().loadBlurBg(R.drawable.pure_bg, ivBg);
@@ -69,7 +75,9 @@ public class RegesterActivity extends BaseActivity {
     @Override
     protected void initData() {
         mList = new ArrayList<>();
-        mIsChangePwd = ConfigManager.getInstance().isChangePwd();
+        mConfigManager = ConfigManager.getInstance();
+        mUserName = mConfigManager.getUserName();
+        mIsChangePwd = mConfigManager.isChangePwd();
         if (mIsChangePwd) {
             addPagerView(OLD_PWD);
         }
@@ -124,75 +132,68 @@ public class RegesterActivity extends BaseActivity {
         ImageView ivIcon = (ImageView) view.findViewById(R.id.iv_icon);
         ImageLoader.getInstance().loadCircleIcon(R.drawable.pure_bg, ivIcon);
         TextView tvTitle = (TextView) view.findViewById(R.id.view_regester_title);
-        final ImageView ivNext = (ImageView) view.findViewById(R.id.iv_next);
-        ImageView ivPre = (ImageView) view.findViewById(R.id.iv_pre);
-        tvTitle.setText(getViewTitle(type));
+        final TextView tvNext = (TextView) view.findViewById(R.id.tv_next);
+        final TextView tvName = (TextView) view.findViewById(R.id.tv_name);
+        EditText editText = (EditText) view.findViewById(R.id.view_regester_pwd);
+        EditText userName = (EditText) view.findViewById(R.id.view_user_name);
 
-        ivNext.setOnClickListener(new OnClickListener() {
+        if (mUserName !=null){
+            tvName.setText(mUserName);
+        }
+
+        String title = null;
+        if (type == OLD_PWD) {
+            mOldPwd = editText;
+            title = "验证当前密码";
+        } else if (type == NEW_PWD) {
+            title = "创建新密码";
+            mRegesterPwd = editText;
+            mTvRegisterName = tvName;
+            userName.setVisibility(mIsChangePwd?View.GONE:View.VISIBLE);
+        } else if (type == VERIFY_PWD) {
+            title = "确认新密码";
+            mVerifyPwd = editText;
+            mTvName = tvName;
+            userName.setVisibility(View.GONE);
+        }
+
+        tvNext.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 onNext(type);
             }
         });
+        tvTitle.setText(title);
 
-        ivPre.setOnClickListener(new OnClickListener() {
+        userName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                onPre(type);
-            }
-        });
-
-
-        EditText editText = initPwdEdit(view, type);
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() > 0) {
-                    ivNext.setVisibility(View.VISIBLE);
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() > 0) {
+                    tvName.setText(s.toString());
                 } else {
-                    ivNext.setVisibility(View.GONE);
+                    tvName.setText("");
                 }
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
         });
 
-        setPreVisible(ivPre, type);
+        ivIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 选择头像
+            }
+        });
+
         mList.add(view);
-    }
-
-    private void setPreVisible(ImageView ivPre, int type) {
-        if (type == OLD_PWD) {
-            ivPre.setVisibility(View.GONE);
-        } else if (type == NEW_PWD) {
-            ivPre.setVisibility(mIsChangePwd ? View.VISIBLE : View.GONE);
-        } else if (type == VERIFY_PWD) {
-            ivPre.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private EditText initPwdEdit(View view, int type) {
-        EditText editText = (EditText) view.findViewById(R.id.view_regester_pwd);
-        if (type == OLD_PWD) {
-            mOldPwd = editText;
-        } else if (type == NEW_PWD) {
-            mRegesterPwd = editText;
-        } else if (type == VERIFY_PWD) {
-            mVerifyPwd = editText;
-        }
-        return editText;
-    }
-
-    private void onPre(int type) {
-        onBackPressed();
     }
 
     private void onNext(int type) {
@@ -203,17 +204,6 @@ public class RegesterActivity extends BaseActivity {
         } else if (type == VERIFY_PWD) {
             verifyPwd();
         }
-    }
-
-    private String getViewTitle(int type) {
-        if (type == OLD_PWD) {
-            return "验证当前密码";
-        } else if (type == NEW_PWD) {
-            return "创建新密码";
-        } else if (type == VERIFY_PWD) {
-            return "确认新密码";
-        }
-        return null;
     }
 
     private void verifyPwd() {
@@ -239,6 +229,9 @@ public class RegesterActivity extends BaseActivity {
         if (checkPwdIsOk(mCurrentPwd)) {
             stepNum++;
             mVp.setCurrentItem(mVp.getCurrentItem() + 1);
+            String userName = mTvRegisterName.getText().toString();
+            mConfigManager.setUserName(userName);
+            mTvName.setText(userName);
         }
     }
 
@@ -285,7 +278,7 @@ public class RegesterActivity extends BaseActivity {
     @Override
     public void onStart() {
         super.onStart();
-        mIsFinishGuide =ConfigManager.getInstance().isFinishGuide();
+        mIsFinishGuide = ConfigManager.getInstance().isFinishGuide();
         if (!mIsFinishGuide) {
             visibleCount++;
         }

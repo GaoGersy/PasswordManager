@@ -72,7 +72,6 @@ public class SettingActivity extends BaseActivity {
         mPwdShow.setSwitchStatus(mConfigManager.isShowPwd());
         mAutoLogin.setSwitchStatus(mConfigManager.isAutoLogin());
         mUpdateTimeShow.setSwitchStatus(mConfigManager.isShowUpdateTime());
-        mAutoLogin.setEnableEffect(mConfigManager.isLock());
         mFloatBall.setSwitchStatus(mConfigManager.isEnableFloatBall());
         mFingerPrint.setEnableEffect(isFringerEnable());
         mFingerPrint.setSwitchStatus(mConfigManager.isFingerPrint());

@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +18,8 @@ import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.ClipBoardUtils;
 import com.gersion.superlock.utils.PasswordUtils;
 import com.gersion.superlock.view.Croller;
+import com.gersion.superlock.view.TouchView;
+import com.gersion.superlock.view.TypeView;
 
 /**
  * Created by a3266 on 2017/6/11.
@@ -28,18 +29,18 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
     //是否是启动程序后第一次点击开始按钮的标志位
     boolean isFirst = true;
     private TextView mTvPassword;
-    private ImageView mIvCapital;
-    private ImageView mIvLower;
-    private ImageView mIvNumber;
     private boolean mIsCapital = false;
     private boolean mIsLower = false;
     private boolean mIsNumber = false;
     private boolean mIsChar = false;
     private int mLength = 6;
-    private ImageView mIvChars;
-    private ImageView mIvStart;
     private MyHandler handler;
     private Croller mCroller;
+    private TypeView mTySmall;
+    private TypeView mTyBig;
+    private TypeView mTyNum;
+    private TypeView mTySuper;
+    private TouchView mTouchView;
 
     @Override
     protected int setLayoutId() {
@@ -49,13 +50,16 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
     @Override
     protected void initView() {
         handler = new MyHandler();
-        mTvPassword = (TextView) findView(R.id.activity_main_key);
-        mIvCapital = (ImageView) findView(R.id.activity_main_btn_capital);
-        mIvLower = (ImageView) findView(R.id.activity_main_btn_lower);
-        mIvNumber = (ImageView) findView(R.id.activity_main_btn_number);
-        mIvChars = (ImageView) findView(R.id.activity_main_btn_char);
-        mIvStart = (ImageView) findView(R.id.activity_main_start);
+        mTvPassword = findView(R.id.activity_main_key);
+        mTySmall = findView(R.id.ty_small);
+        mTyBig = findView(R.id.ty_big);
+        mTyNum = findView(R.id.ty_num);
+        mTySuper = findView(R.id.ty_super);
         mCroller = findView(R.id.croller_pwd_length);
+        mTouchView = findView(R.id.touchView);
+
+        mTySmall.setSelected(true);
+        mTouchView.setEnabled(false);
     }
 
     @Override
@@ -69,13 +73,40 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
 
     @Override
     protected void initListener() {
-        mIvCapital.setOnClickListener(this);
-        mIvLower.setOnClickListener(this);
-        mIvNumber.setOnClickListener(this);
-        mIvChars.setOnClickListener(this);
-        mIvStart.setOnClickListener(this);
+        mTySmall.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+            @Override
+            public void onCheckChange(boolean selected) {
+                mIsLower = selected;
+                setProgress(selected);
+                checkButton();
+            }
+        });
+        mTyBig.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+            @Override
+            public void onCheckChange(boolean selected) {
+                mIsCapital = selected;
+                setProgress(selected);
+                checkButton();
+            }
+        });
+        mTyNum.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+            @Override
+            public void onCheckChange(boolean selected) {
+                mIsNumber = selected;
+                setProgress(selected);
+                checkButton();
+            }
+        });
+        mTySuper.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+            @Override
+            public void onCheckChange(boolean selected) {
+                mIsChar = selected;
+                setProgress(selected);
+                checkButton();
+            }
+        });
+
         mTvPassword.setOnClickListener(this);
-        mIvLower.setSelected(true);
         mCroller.setOnProgressChangedListener(new Croller.onProgressChangedListener() {
             @Override
             public void onProgressChanged(int progress) {
@@ -88,24 +119,37 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
                 mLength = progress;
             }
         });
+
+        mTouchView.setOnPressListener(new TouchView.OnPressListener() {
+            @Override
+            public void onPress() {
+                onStartCreate();
+            }
+
+            @Override
+            public void onRelease() {
+                onStopCreate();
+            }
+        });
     }
 
     /**
      * 播放动画
+     *
      * @author Gers
      * @time 2016/8/10 16:28
      */
     private void stopAnimator() {
         handler.stop();
-        mIvStart.setEnabled(false);
+        mTouchView.setEnable(false);
         final ObjectAnimator animator = ObjectAnimator.ofFloat(mTvPassword, "translationY", 300f);
-        animator.setDuration(1500);
+        animator.setDuration(1000);
         animator.setInterpolator(new BounceInterpolator());
 
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mIvStart.setEnabled(true);
+                mTouchView.setEnable(true);
             }
         });
 
@@ -118,13 +162,6 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
 
     }
 
-    private ObjectAnimator shake(View view) {
-        ObjectAnimator animator = AnimatorUtils.nope(view);
-        animator.setRepeatCount(0);
-        animator.start();
-        return animator;
-    }
-
     /**
      * 播放动画
      *
@@ -132,66 +169,30 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
      * @time 2016/8/10 16:28
      */
     private void playAnimator() {
-        mIvStart.setEnabled(false);
+        mTouchView.setEnable(false);
         ObjectAnimator animator = ObjectAnimator.ofFloat(mTvPassword, "translationY", 0);
-        animator.setDuration(1000);
+        animator.setDuration(300);
         animator.setInterpolator(new OvershootInterpolator());
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                mTouchView.setEnable(true);
                 handler.start();
-                mIvStart.setEnabled(true);
             }
         });
         animator.start();
     }
 
+    private ObjectAnimator shake(View view) {
+        ObjectAnimator animator = AnimatorUtils.nope(view);
+        animator.setRepeatCount(0);
+        animator.start();
+        return animator;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.activity_main_btn_capital:
-                mIsCapital = !mIsCapital;
-                mIvCapital.setSelected(!mIvCapital.isSelected());
-                setProgress(mIvCapital);
-                checkButton();
-                break;
-            case R.id.activity_main_btn_lower:
-                mIsLower = !mIsLower;
-                mIvLower.setSelected(!mIvLower.isSelected());
-                setProgress(mIvLower);
-                checkButton();
-                break;
-            case R.id.activity_main_btn_number:
-                mIsNumber = !mIsNumber;
-                mIvNumber.setSelected(!mIvNumber.isSelected());
-                setProgress(mIvNumber);
-                checkButton();
-                break;
-            case R.id.activity_main_btn_char:
-                mIsChar = !mIsChar;
-                mIvChars.setSelected(!mIvChars.isSelected());
-                setProgress(mIvChars);
-                checkButton();
-                break;
-            case R.id.activity_main_start:
-                //如果没有选择任何类型，就直接返回，不再执行下面的内容
-                if (!(mIsCapital || mIsLower || mIsNumber || mIsChar)) {
-                    Toast.makeText(getActivity(), "请至少选择一项密码包含的元素", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                mIvStart.setSelected(!mIvStart.isSelected());
-                if (isFirst) {
-                    isFirst = false;
-                    handler.start();
-                    return;
-                } else {
-                    if (mIvStart.isSelected()) {
-                        playAnimator();
-                    } else {
-                        stopAnimator();
-                    }
-                }
-                break;
             case R.id.activity_main_key:
                 //将生成的密码复制到剪贴板
                 ClipBoardUtils.copy(getActivity(), mTvPassword.getText().toString().trim());
@@ -201,18 +202,37 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
         }
     }
 
+    private void onStartCreate() {
+        if (!(mIsCapital || mIsLower || mIsNumber || mIsChar)) {
+            Toast.makeText(getActivity(), "请至少选择一项密码包含的元素", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        handler.start();
+//        if (isFirst) {
+//            isFirst = false;
+//            handler.start();
+//            return;
+//        } else {
+//            playAnimator();
+//        }
+    }
+
+    private void onStopCreate() {
+//        stopAnimator();
+        handler.stop();
+    }
+
     //如果开始按钮是选中的状态，所有的选择类型的按钮都为非选择状态，就停止，并将开始按钮置为非选择状态
     public void checkButton() {
-
-        if (!(mIsCapital || mIsLower || mIsNumber || mIsChar) && mIvStart.isSelected()) {
-            mIvStart.setSelected(false);
+        if (!(mIsCapital || mIsLower || mIsNumber || mIsChar) && mTouchView.isSelected()) {
+            mTouchView.setSelected(false);
             stopAnimator();
         }
     }
 
     //当某个按钮被点击时，如果当前进度条上的数字小于当前被选择的条目的数量，就让进度条加1
-    private void setProgress(View v) {
-        if (v.isSelected() && (mCroller.getProgress() < getTypeNum())) {
+    private void setProgress(boolean selected) {
+        if (selected && (mCroller.getProgress() < getTypeNum())) {
             mCroller.setProgress(mCroller.getProgress() + 1);
         }
     }
@@ -257,5 +277,17 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
             removeCallbacks(this);
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(handler);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(handler);
     }
 }

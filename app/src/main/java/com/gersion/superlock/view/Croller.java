@@ -44,8 +44,8 @@ public class Croller extends View {
     private float indicatorWidth = 7;
 
     private String label = "Label";
-    private int labelSize = 40;
-    private int progressTextSize = 20;
+    private float labelSize = 40f;
+    private float progressTextSize = 20f;
     private int labelColor = Color.WHITE;
     private int progressTextColor = Color.WHITE;
 
@@ -136,7 +136,8 @@ public class Croller extends View {
             } else if (attr == R.styleable.Croller_progress_secondary_color) {
                 setProgressSecondaryColor(a.getColor(attr, Color.parseColor("#111111")));
             } else if (attr == R.styleable.Croller_label_size) {
-                setLabelSize(a.getInteger(attr, 40));
+                float dimension = a.getDimension(attr, 40f);
+                setLabelSize(dimension);
             } else if (attr == R.styleable.Croller_label_color) {
                 setLabelColor(a.getColor(attr, Color.WHITE));
             } else if (attr == R.styleable.Croller_indicator_width) {
@@ -166,7 +167,7 @@ public class Croller extends View {
             }else if (attr == R.styleable.Croller_progress_text_color) {
                 setProgressTextColor(a.getColor(attr, Color.WHITE));
             }else if (attr == R.styleable.Croller_progress_text_size) {
-                setProgressTextSize(a.getInt(attr, 20));
+                setProgressTextSize(a.getDimension(attr, 20f));
             }
         }
         a.recycle();
@@ -421,11 +422,11 @@ public class Croller extends View {
         invalidate();
     }
 
-    public int getLabelSize() {
+    public float getLabelSize() {
         return labelSize;
     }
 
-    public void setLabelSize(int labelSize) {
+    public void setLabelSize(float labelSize) {
         this.labelSize = labelSize;
         invalidate();
     }
@@ -547,11 +548,11 @@ public class Croller extends View {
         invalidate();
     }
 
-    public int getProgressTextSize() {
+    public float getProgressTextSize() {
         return progressTextSize;
     }
 
-    public void setProgressTextSize(int progressTextSize) {
+    public void setProgressTextSize(float progressTextSize) {
         this.progressTextSize = progressTextSize;
         invalidate();
     }

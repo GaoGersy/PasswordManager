@@ -42,6 +42,12 @@ public interface MyConstants {
     String LENGTH = "length";
     //指纹解锁
     String FINGER_PRINT = "finger_print";
+    //用户名
+    String USER_NAME = "user_name";
+
+    String CREATE_DB_DATE = "create_db_date";
+
+    String CREATE_LOCK_DATE = "create_lock_date";
     String TEST = "test";
 }
   
