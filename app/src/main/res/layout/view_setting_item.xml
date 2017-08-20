@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@color/white"
+        android:background="#11ffffff"
         android:orientation="vertical"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/ll_icon"
-                android:textColor="@color/font_black"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 />
 
@@ -68,7 +68,7 @@
             android:id="@+id/devider"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/gray_f0"
+            android:background="@color/item_divider"
             />
 
 </LinearLayout>

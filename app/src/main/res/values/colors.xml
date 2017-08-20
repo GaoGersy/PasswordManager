@@ -10,7 +10,7 @@
     <color name="app_theme_color">#888888</color>
     <color name="transpant">#00000000</color>
     <color name="white">#fff</color>
-    <color name="font_color">#151515</color>
+    <color name="font_color">#fff</color>
     <color name="divider">#cdcdcd</color>
     <color name="gray_80">#808080</color>
     <color name="gray_a0">#a0a0a0</color>
@@ -28,5 +28,7 @@
 
     <color name="password_bg">#f8f9fb</color>
     <color name="password_boarder">#f0f2f1</color>
-    <color name="confirm">#abc324</color>
+    <color name="confirm">#a75190</color>
+    <color name="item_divider">#a75190</color>
+    <color name="item_bg">#11ffffff</color>
 </resources>

@@ -33,13 +33,27 @@ public class TouchView extends View {
         super(context, attrs);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.finger);
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.finger_print);
         mHeight = mBitmap.getHeight();
         mWidth = mBitmap.getWidth();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+//        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+//
+//        int width = MeasureSpec.getSize(widthMeasureSpec);
+//        int height = MeasureSpec.getSize(heightMeasureSpec);
+//
+//        if (widthMode == MeasureSpec.UNSPECIFIED
+//                || widthMode == MeasureSpec.AT_MOST) {
+//            widthMeasureSpec = MeasureSpec.makeMeasureSpec(mWidth, MeasureSpec.EXACTLY);
+//        }
+//        if (heightMode == MeasureSpec.UNSPECIFIED
+//                || heightMode == MeasureSpec.AT_MOST) {
+//            heightMeasureSpec = MeasureSpec.makeMeasureSpec(mHeight, MeasureSpec.EXACTLY);
+//        }
 //        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(mWidth, mHeight);
     }
@@ -47,7 +61,6 @@ public class TouchView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         canvas.drawBitmap(mBitmap, 0, 0, mPaint);
     }
 
@@ -76,7 +89,7 @@ public class TouchView extends View {
         mEnable = enable;
     }
 
-    public boolean isEnable(){
+    public boolean isEnable() {
         return mEnable;
     }
 

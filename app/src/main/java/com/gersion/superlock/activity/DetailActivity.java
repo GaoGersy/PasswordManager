@@ -60,7 +60,6 @@ public class DetailActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        ImageLoader.getInstance().loadResBlurImage(R.mipmap.yellow, mIvBg);
         initSmartRecycler();
         initData();
         long transitionDuration = 500;

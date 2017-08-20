@@ -147,6 +147,13 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
+        mTitleView.setOnBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         mDonation.setItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

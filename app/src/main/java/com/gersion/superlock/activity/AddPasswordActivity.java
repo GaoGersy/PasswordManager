@@ -4,11 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -21,6 +18,7 @@ import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.fragment.HomeFragment;
+import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.TitleView;
 import com.hss01248.dialog.StyledDialog;
@@ -41,7 +39,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.tv_commit)
     TextView mTvCommit;
     @BindView(R.id.et_notes)
-    TextInputEditText mEtNotes;
+    EditText mEtNotes;
     @BindView(R.id.selector)
     TextView mSelector;
     @BindView(R.id.titleView)
@@ -49,6 +47,20 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.activity_add_password)
     LinearLayout mActivityAddPassword;
     private int mTotalCount;
+
+    CharSequence[] words = {
+            "未知",
+            "腾讯",
+            "淘宝",
+            "百度",
+            "京东",
+            "微信",
+            "小米",
+            "美团",
+            "人人网",
+            "网易",
+            "新浪"
+    };
 
     public static void startIntent(Activity activity, int totalCount) {
         Intent intent = new Intent(activity, AddPasswordActivity.class);
@@ -115,30 +127,6 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         animator.start();
     }
 
-    //初始化监听事件
-    private void initEvent() {
-
-//        mEtNotes.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, final boolean hasFocus) {
-//                //添加布局改变的监听
-//                mActivityAddPassword.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//                    @Override
-//                    public void onGlobalLayout() {
-//                        //移除监听
-//                        mActivityAddPassword.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                        if (hasFocus){
-//                            //移动列表到最后一行
-//                            ViewCompat.animate(mCvInfo).translationY(-mTvCommit.getHeight()).setDuration(500).start();
-//                        }else{
-//                            ViewCompat.animate(mCvInfo).translationY(0).setDuration(500).start();
-//                        }
-//                    }
-//                });
-//            }
-//        });
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -146,27 +134,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
                 addItem();
 
                 break;
-            case R.id.tv_noteKey:
-//                if (isOpen) {
-//                    closeNotes();
-//                } else {
-//                    openNotes();
-//                }
-                break;
             case R.id.selector:
-                CharSequence[] words = {
-                        "未知",
-                        "腾讯",
-                        "淘宝",
-                        "百度",
-                        "京东",
-                        "微信",
-                        "小米",
-                        "美团",
-                        "人人网",
-                        "网易",
-                        "新浪"
-                };
                 StyledDialog.buildMdSingleChoose(this, "选择密码位置", 0, words, new MyItemDialogListener() {
                     @Override
                     public void onItemClick(CharSequence charSequence, int i) {
@@ -210,10 +178,8 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void shakeAnimator() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mTvCommit, "translationX", 0, 15);
-        animator.setRepeatCount(3);
-        animator.setDuration(20);
-        animator.setRepeatMode(ValueAnimator.REVERSE);
+        ObjectAnimator animator = AnimatorUtils.nope(mTvCommit);
+        animator.setRepeatCount(0);
         animator.start();
         ToastUtils.showTasty(this, "信息不能为空", TastyToast.WARNING);
     }
@@ -229,37 +195,4 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         animatorSet.setInterpolator(new OvershootInterpolator(2));
         animatorSet.start();
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
-
-
-//    private void openNotes() {
-//        isOpen = true;
-//        ObjectAnimator animatorNotes = ObjectAnimator.ofFloat(mCvNotes, "translationY", mDistance);
-//        ObjectAnimator animatorInfo = ObjectAnimator.ofFloat(mCvInfo, "translationY",  -mCvInfo.getHeight()+mDistance);
-//        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(animatorInfo,animatorNotes);
-//        set.setDuration(500);
-//        set.setInterpolator(new OvershootInterpolator());
-//        set.start();
-//        mEtNotes.requestFocus();
-//    }
-//
-//    private void closeNotes() {
-//        isOpen = false;
-//        ObjectAnimator animatorNotes = ObjectAnimator.ofFloat(mCvNotes, "translationY", 0);
-//        ObjectAnimator animatorInfo = ObjectAnimator.ofFloat(mCvInfo, "translationY",  0);
-//        AnimatorSet set = new AnimatorSet();
-//        set.playTogether(animatorInfo,animatorNotes);
-//        set.setDuration(500);
-//        set.setInterpolator(new AnticipateInterpolator());
-//        set.start();
-//        mCetvPassword.requestFocus();
-//    }
-
 }

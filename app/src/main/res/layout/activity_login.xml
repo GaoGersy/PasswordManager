@@ -3,7 +3,7 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#0f1727"
+        android:background="@drawable/bg"
         >
     <FrameLayout
             android:id="@+id/fl_pwd_container"
@@ -25,6 +25,7 @@
                 >
 
             <TextView
+                    android:visibility="gone"
                     android:background="#55ffffff"
                     android:layout_width="match_parent"
                     android:layout_height="1px"
@@ -58,6 +59,8 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:textSize="15sp"
+                    android:textColor="@color/confirm"
+                    android:textColorHint="@color/confirm"
                     android:background="@drawable/shape_pwd_bg"
                     android:padding="10dp"
                     />

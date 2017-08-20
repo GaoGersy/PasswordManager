@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import com.gersion.superlock.R;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.db.PasswordManager;
+import com.gersion.superlock.utils.RudenessScreenHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -61,7 +62,7 @@ public class SuperLockApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        resetDensity();
+//        resetDensity();
     }
 
     public void resetDensity(){
@@ -75,7 +76,8 @@ public class SuperLockApplication extends Application {
     public void onCreate() {
         //初始化上下文
         mContext = getApplicationContext();
-        resetDensity();
+//        resetDensity();
+        new RudenessScreenHelper(this, 750).activate();
         Realm.init(this);
         PasswordManager.getInstance().init(this,1);
         DbManager.getInstance().init(this,1);
