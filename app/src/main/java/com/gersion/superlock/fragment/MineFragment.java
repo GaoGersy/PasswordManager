@@ -7,7 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.activity.AboutActivity;
+import com.gersion.superlock.activity.DonationActivity;
 import com.gersion.superlock.activity.SettingActivity;
+import com.gersion.superlock.activity.WebActivity;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.FileUtils;
@@ -38,6 +41,8 @@ public class MineFragment extends BaseFragment {
     private ItemView mExit;
     private ItemView mBackup;
     private ItemView mRecovery;
+    private ItemView mDonation;
+    private View mProjectAddress;
 
     @Override
     protected int setLayoutId() {
@@ -56,6 +61,10 @@ public class MineFragment extends BaseFragment {
         mExit = findView(R.id.exit);
         mBackup = findView(R.id.backup);
         mRecovery = findView(R.id.recovery);
+        mDonation = findView(R.id.donation);
+        mProjectAddress = findView(R.id.project_address);
+
+        mName.setText(ConfigManager.getInstance().getUserName());
     }
 
     @Override
@@ -83,6 +92,39 @@ public class MineFragment extends BaseFragment {
                 recoveryDB();
             }
         });
+        mDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(DonationActivity.class);
+            }
+        });
+        mProjectAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(WebActivity.class);
+            }
+        });
+
+        mAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(AboutActivity.class);
+            }
+        });
+
+        mExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exit();
+            }
+        });
+
+    }
+
+    private void exit() {
+        getActivity().finish();
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
     //备份数据库文件
@@ -169,49 +211,5 @@ public class MineFragment extends BaseFragment {
         }
         return isSaved;
     }
-
-//    private boolean backupSqlData() {
-//        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
-//        if (!sdCardEnable) {
-//            ToastUtils.showTasty(getActivity(), "没有SD卡，备份工作无法继续进行", TastyToast.WARNING);
-//            return false;
-//        }
-//
-//        File sqlPath = ConfigManager.getInstance().getDbFile();
-//        if (!sqlPath.exists()) {
-//            ToastUtils.showTasty(getActivity(), "还没有任何数据，不需要备份", TastyToast.WARNING);
-//            return false;
-//        }
-//
-//        if (SDCardUtils.getSDCardAllSize() < sqlPath.length()) {
-//            ToastUtils.showTasty(getActivity(), "SD卡剩余容量不足，无法备份", TastyToast.WARNING);
-//            return false;
-//        }
-//
-//        boolean isSaved = false;
-//        try {
-//            FileInputStream fis = new FileInputStream(sqlPath);
-//            String path = SDCardUtils.getSDCardPath() + "biabia.db";
-//            File file = new File(path);
-//            if (file.exists()) {
-//                file.delete();
-//            }
-//            byte[] buffer = new byte[1];
-//            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-//            BufferedInputStream bis = new BufferedInputStream(fis);
-//            int len;
-//            while ((len = bis.read(buffer)) != -1) {
-//                bos.write(buffer);
-//            }
-//            bis.close();
-//            bos.close();
-//            isSaved = true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//
-//        }
-//        return isSaved;
-//    }
 
 }

@@ -67,8 +67,6 @@ public class RegesterActivity extends BaseActivity {
     protected void initView() {
         ImmersionBar.with(this).fullScreen(false);
         mVp = (NoTouchViewPager) findViewById(R.id.activity_regester_vp);
-        ImageView ivBg = (ImageView) findViewById(R.id.iv_bg);
-        ImageLoader.getInstance().loadBlurBg(R.drawable.pure_bg, ivBg);
     }
 
     // 初始化数据

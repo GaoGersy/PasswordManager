@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,7 +42,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.et_notes)
     EditText mEtNotes;
     @BindView(R.id.selector)
-    TextView mSelector;
+    ImageView mSelector;
     @BindView(R.id.titleView)
     TitleView mTitleView;
     @BindView(R.id.activity_add_password)

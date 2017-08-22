@@ -64,6 +64,7 @@
             app:setting_divider_show="false"
             />
     <com.gersion.superlock.view.SettingView
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:id="@+id/donation"
             app:setting_title="捐赠"
@@ -74,6 +75,7 @@
             />
 
     <com.gersion.superlock.view.SettingView
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:id="@+id/project_address"
             app:setting_title="项目地址"

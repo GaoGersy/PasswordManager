@@ -36,17 +36,16 @@ public class ItemView extends RelativeLayout {
         int iconId = a.getResourceId(R.styleable.ItemView_item_icon, R.drawable.settings);
         boolean isGoShow = a.getBoolean(R.styleable.ItemView_item_go_show, true);
         boolean isNewShow = a.getBoolean(R.styleable.ItemView_item_new_show, false);
+        boolean isShowDivider = a.getBoolean(R.styleable.ItemView_item_show_divider, true);
         String title = a.getString(R.styleable.ItemView_item_title);
         tv_title.setText(title);
-        if (isGoShow) {
-            mGo.setVisibility(VISIBLE);
-        } else {
-            mGo.setVisibility(GONE);
-        }
-        if (isNewShow) {
-            mNew.setVisibility(VISIBLE);
-        } else {
-            mNew.setVisibility(GONE);
+        mGo.setVisibility(isGoShow?VISIBLE:GONE);
+        mNew.setVisibility(isNewShow?VISIBLE:GONE);
+        tv_divide.setVisibility(isShowDivider?VISIBLE:GONE);
+        if (isShowDivider){
+
+        }else{
+
         }
 
         if ("退出".equals(title)) {

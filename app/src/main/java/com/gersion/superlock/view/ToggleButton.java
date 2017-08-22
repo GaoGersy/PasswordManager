@@ -91,9 +91,10 @@ public class ToggleButton extends View{
 	}
 
 	public void setup(AttributeSet attrs) {
-		paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paint = new Paint();
 		paint.setStyle(Style.FILL);
 		paint.setStrokeCap(Cap.ROUND);
+		paint.setAntiAlias(true);
 		
 		springSystem = SpringSystem.create();
 		spring = springSystem.createSpring();
@@ -247,7 +248,7 @@ public class ToggleButton extends View{
 
 	
 	@Override
-	public void draw(Canvas canvas) {
+	public void onDraw(Canvas canvas) {
 		//
 		rect.set(0, 0, getWidth(), getHeight());
 		paint.setColor(borderColor);

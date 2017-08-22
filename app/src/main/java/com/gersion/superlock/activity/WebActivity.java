@@ -4,23 +4,28 @@ import android.view.View;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
+import com.gersion.superlock.view.RefreshWebView;
 import com.gersion.superlock.view.TitleView;
 
-public class AboutActivity extends BaseActivity {
 
+public class WebActivity extends BaseActivity {
+
+    private RefreshWebView mRefreshWebView;
     private TitleView mTitleView;
 
     @Override
     protected int setLayoutId() {
-        return R.layout.activity_about;
+        return R.layout.activity_web;
     }
 
     @Override
     protected void initView() {
+        mRefreshWebView = (RefreshWebView) findViewById(R.id.refreshWebView);
         mTitleView = (TitleView) findViewById(R.id.titleView);
-        mTitleView.setAddVisiable(false);
+        mRefreshWebView.loadUrl("https://github.com/GaoGersy/PasswordManager");
         mTitleView.setSearchVisiable(false);
-        mTitleView.setTitleText("关于");
+        mTitleView.setAddVisiable(false);
+        mTitleView.setTitleText("项目地址");
     }
 
     @Override

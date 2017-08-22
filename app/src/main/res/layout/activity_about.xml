@@ -6,7 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#20202B">
+    android:background="@drawable/bg">
+    <com.gersion.superlock.view.TitleView
+            android:id="@+id/titleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
 
     <TextView
         android:padding="10dp"

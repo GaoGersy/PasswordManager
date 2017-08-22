@@ -19,7 +19,6 @@
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:padding="20pt"
                     android:background="#11ffffff">
 
@@ -58,16 +57,36 @@
                     android:id="@+id/collection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:item_icon="@drawable/collection"
                     app:item_title="收藏" />
 
             <com.gersion.superlock.view.ItemView
                     android:id="@+id/setting"
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_icon="@drawable/settings"
+                    app:item_show_divider="false"
                     app:item_title="设置" />
+
+            <com.gersion.superlock.view.ItemView
+                    android:id="@+id/backup"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:item_icon="@mipmap/share"
+                    app:item_title="备份到存储卡" />
+
+            <com.gersion.superlock.view.ItemView
+                    android:id="@+id/recovery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:item_icon="@mipmap/share"
+                    app:item_show_divider="false"
+                    app:item_title="从存储卡恢复" />
 
             <com.gersion.superlock.view.ItemView
                     android:id="@+id/about"
@@ -82,24 +101,22 @@
                     android:layout_height="wrap_content"
                     android:visibility="visible"
                     app:item_icon="@mipmap/share"
+                    app:item_show_divider="false"
                     app:item_title="分享" />
 
             <com.gersion.superlock.view.ItemView
-                    android:id="@+id/backup"
+                    android:id="@+id/donation"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    app:item_icon="@mipmap/share"
-                    app:item_title="备份到存储卡" />
-
+                    app:item_title="捐赠" />
             <com.gersion.superlock.view.ItemView
-                    android:id="@+id/recovery"
+                    android:id="@+id/project_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="visible"
-                    app:item_icon="@mipmap/share"
-                    app:item_title="从存储卡恢复" />
+                    app:item_show_divider="false"
+                    app:item_title="项目地址" />
 
             <com.gersion.superlock.view.ItemView
                     android:id="@+id/exit"

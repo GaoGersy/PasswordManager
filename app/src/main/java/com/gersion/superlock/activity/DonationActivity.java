@@ -6,13 +6,14 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.view.TitleView;
 
-public class AboutActivity extends BaseActivity {
+
+public class DonationActivity extends BaseActivity {
 
     private TitleView mTitleView;
 
     @Override
     protected int setLayoutId() {
-        return R.layout.activity_about;
+        return R.layout.activity_donation;
     }
 
     @Override
@@ -20,7 +21,7 @@ public class AboutActivity extends BaseActivity {
         mTitleView = (TitleView) findViewById(R.id.titleView);
         mTitleView.setAddVisiable(false);
         mTitleView.setSearchVisiable(false);
-        mTitleView.setTitleText("关于");
+        mTitleView.setTitleText("加一下好友吧");
     }
 
     @Override

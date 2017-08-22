@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -45,9 +44,9 @@ public class LockActivity extends BaseLifeActivity{
 //    @BindView(R.id.activity_login_go)
 //    ImageView mLoginGo;
     @BindView(R.id.btn_cancel)
-    Button mBtnCancel;
+    TextView mBtnCancel;
     @BindView(R.id.btn_password)
-    Button mBtnPassword;
+    TextView mBtnPassword;
     @BindView(R.id.activity_main)
     FrameLayout mActivityMain;
     @BindView(R.id.fl_pwd_container)
@@ -67,6 +66,7 @@ public class LockActivity extends BaseLifeActivity{
     @BindView(R.id.iv_finger)
     ImageView mIvFinger;
     private boolean isfirstTime;
+    private ConfigManager mInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,15 +114,15 @@ public class LockActivity extends BaseLifeActivity{
     };
 
     private void initFingerPrint() {
-        ConfigManager instance = ConfigManager.getInstance();
-        if (instance.isFingerPrint()) {
+        mInstance = ConfigManager.getInstance();
+        if (mInstance.isFingerPrint()) {
             SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
         } else {
             mRlFingerContainer.setVisibility(View.GONE);
             mFlPwdContainer.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().loadCircleIcon(R.drawable.pure_bg, mIvIcon);
-            mTvName.setText(instance.getUserName());
-            if (instance.isAutoLogin()){
+            mTvName.setText(mInstance.getUserName());
+            if (mInstance.isAutoLogin()){
                 mTvNext.setVisibility(View.GONE);
             }else{
                 mTvNext.setVisibility(View.VISIBLE);
@@ -210,6 +210,8 @@ public class LockActivity extends BaseLifeActivity{
                         mRlFingerContainer.setVisibility(View.GONE);
                         mFlPwdContainer.setVisibility(View.VISIBLE);
                         mLoginPwd.requestFocus();
+                        ImageLoader.getInstance().loadCircleIcon(R.drawable.pure_bg, mIvIcon);
+                        mTvName.setText(mInstance.getUserName());
                     }
                 }).setDuration(500).start();
     }

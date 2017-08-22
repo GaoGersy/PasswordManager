@@ -49,7 +49,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="2dp"
-                android:src="@drawable/go"
+                android:src="@mipmap/arrow_right_p"
                 />
 
         <com.suke.widget.SwitchButton

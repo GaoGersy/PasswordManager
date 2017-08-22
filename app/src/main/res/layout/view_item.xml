@@ -59,7 +59,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="7dp"
-                android:src="@drawable/go"
+                android:src="@mipmap/arrow_right_p"
                 />
 
     </RelativeLayout>

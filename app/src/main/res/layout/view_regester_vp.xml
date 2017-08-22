@@ -4,7 +4,6 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/title"
         >
     <TextView
             android:layout_centerInParent="true"
@@ -13,10 +12,10 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="注册用户"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:textColor="#E3E7F2"
             android:textSize="17sp"
-            android:background="#1a2944"
             />
     <LinearLayout
             android:id="@+id/view_regester_bg"

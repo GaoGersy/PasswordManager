@@ -115,6 +115,7 @@
         <attr name="item_go_show" format="boolean"/>
         <attr name="item_new_show" format="boolean"/>
         <attr name="item_title" format="string"/>
+        <attr name="item_show_divider" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="SettingView">

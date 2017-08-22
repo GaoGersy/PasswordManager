@@ -4,13 +4,8 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg"
         >
-    <ImageView
-            android:id="@+id/iv_bg"
-            android:scaleType="fitXY"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
     <com.gersion.superlock.view.NoTouchViewPager
             android:id="@+id/activity_regester_vp"
             android:layout_width="match_parent"
