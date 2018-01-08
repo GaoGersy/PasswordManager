@@ -3,7 +3,7 @@ package com.gersion.superlock.utils;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.gersion.superlock.activity.SuperLockApplication;
+import com.gersion.superlock.app.SuperLockApplication;
 
 
 /**

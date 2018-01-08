@@ -1,12 +1,10 @@
 package com.gersion.superlock.db;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.Md5Utils;
-import com.gersion.superlock.utils.TimeUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -30,53 +28,63 @@ public final class DbManager {
     }
 
     public void onStart(){
-        mRealm = Realm.getInstance(mRealmConfiguration);
-        mRealm.addChangeListener(new RealmChangeListener<Realm>() {
-            @Override
-            public void onChange(Realm realm) {
-                if (mListener!=null){
-                    List<DbBean> list = load();
-                    mListener.onDataChange(list);
+        init();
+        if (mRealmConfiguration!=null){
+            mRealm = Realm.getInstance(mRealmConfiguration);
+            mRealm.addChangeListener(new RealmChangeListener<Realm>() {
+                @Override
+                public void onChange(Realm realm) {
+                    if (mListener!=null){
+                        List<DbBean> list = load();
+                        mListener.onDataChange(list);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     public Realm getRealm(){
         return mRealm;
     }
 
+    public void init() {
+        if (mRealmConfiguration==null){
+            init(1);
+        }
+    }
+
     /**
-     * @param appContext
      * @param dbVersion
      */
-    public void init(Context appContext, long dbVersion) {
-        byte[] key = getKey(appContext);
-        mRealmConfiguration = new RealmConfiguration.Builder()
-                .name("db.realm")
-                .encryptionKey(key)
-                .schemaVersion(dbVersion)
-                .deleteRealmIfMigrationNeeded()
-                .build();
+    public void init(long dbVersion) {
+        byte[] key = getKey();
+        if (key!=null) {
+            mRealmConfiguration = new RealmConfiguration.Builder()
+                    .name("db.realm")
+                    .encryptionKey(key)
+                    .schemaVersion(dbVersion)
+                    .deleteRealmIfMigrationNeeded()
+                    .build();
+        }
     }
 
     /*
     * ~~ 时间：2017/5/25 21:30 ~~
     * 生成加密Key
     **/
-    private byte[] getKey(Context appContext) {
+    private byte[] getKey() {
         byte[] key = new byte[64];
-        String createDate = ConfigManager.getInstance().getCreateDbDate();
-        if (TextUtils.isEmpty(createDate)){
-            createDate = TimeUtils.getCurrentTimeInString();
-            ConfigManager.getInstance().setCreateDbDate(createDate);
+        String superPassword = ConfigManager.getInstance().getSuperPassword();
+        if (!TextUtils.isEmpty(superPassword)){
+            String password = Md5Utils.encodeWithTimes(superPassword,2);
+            char[] chars = password.toCharArray();
+            int length = chars.length;
+            for (int i = 0; i < length; i++) {
+                key[i] = (byte) chars[i];
+            }
+            return key;
         }
-        String password = Md5Utils.encodeTimes(createDate);
-        char[] chars = password.toCharArray();
-        int length = chars.length;
-        for (int i = 0; i < length; i++) {
-            key[i] = (byte) chars[i];
-        }
-        return key;
+
+        return null;
     }
 
     /**

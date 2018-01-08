@@ -2,7 +2,7 @@ package com.gersion.superlock.utils;
 
 import android.content.Context;
 
-import com.gersion.superlock.activity.SuperLockApplication;
+import com.gersion.superlock.app.SuperLockApplication;
 
 import java.io.File;
 
@@ -17,6 +17,7 @@ import static com.gersion.superlock.utils.MyConstants.IS_LOCK;
 import static com.gersion.superlock.utils.MyConstants.IS_SHOW_PWD;
 import static com.gersion.superlock.utils.MyConstants.IS_SHOW_UPDATE_TIME;
 import static com.gersion.superlock.utils.MyConstants.LENGTH;
+import static com.gersion.superlock.utils.MyConstants.SUPER_PASSWORD;
 import static com.gersion.superlock.utils.MyConstants.USER_NAME;
 
 /**
@@ -35,6 +36,7 @@ public class ConfigManager {
     private boolean mIsFinishGuide;
     private Context mContext;
     private String mUserName;
+    private String mSuperPassword;
 
     private ConfigManager() {
         mContext = SuperLockApplication.getContext();
@@ -48,6 +50,7 @@ public class ConfigManager {
         mFingerPrint = getBoolean(FINGER_PRINT);
         mPwdLength = SpfUtils.getInt(mContext, LENGTH, 0);
         mUserName = SpfUtils.getString(mContext, USER_NAME);
+        mSuperPassword = SpfUtils.getString(mContext, SUPER_PASSWORD);
     }
     private boolean getBoolean(String key) {
         return SpfUtils.getBoolean(mContext, key,false);
@@ -158,6 +161,15 @@ public class ConfigManager {
 
     public void setCreateLockDate(String createDate) {
         SpfUtils.putString(mContext,CREATE_LOCK_DATE,createDate);
+    }
+
+    public String getSuperPassword() {
+        return mSuperPassword;
+    }
+
+    public void setSuperPassword(String superPassword) {
+        mSuperPassword = superPassword;
+        SpfUtils.putString(mContext,SUPER_PASSWORD,superPassword);
     }
 
     public File getSrcDbFile() {

@@ -3,14 +3,12 @@ package com.gersion.superlock.service;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
 import com.gersion.superlock.bean.DbBean;
-import com.gersion.superlock.view.FloatBallView;
+import com.gersion.superlock.view.FloatBall;
 import com.gersion.superlock.view.SelectListView;
 import com.orhanobut.logger.Logger;
 
@@ -19,7 +17,7 @@ import com.orhanobut.logger.Logger;
  */
 
 public class FloatWindowManager {
-    private static FloatBallView mBallView;
+    private static FloatBall mBallView;
 
     private static WindowManager mWindowManager;
     private static SelectListView mSelectListView;
@@ -29,6 +27,7 @@ public class FloatWindowManager {
 
 
     public static void addBallView(Context context) {
+        Logger.d(context);
         if (mBallView == null) {
             WindowManager windowManager = getWindowManager(context);
             int screenWidth = windowManager.getDefaultDisplay().getWidth();
@@ -40,7 +39,7 @@ public class FloatWindowManager {
     }
 
     private static void initFloatBallParams(Context context, int screenWidth, int screenHeight) {
-        mBallView = new FloatBallView(context);
+        mBallView = new FloatBall(context);
 //        mFloatBallparams = new LayoutParams();
         int flags = 0;
         int type = 0;
@@ -77,7 +76,7 @@ public class FloatWindowManager {
             mSelectListView.setOnItemSelectedListener(new SelectListView.OnItemSelectedListener() {
                 @Override
                 public void onItemSeleted(DbBean bean) {
-                    mBallView.setPwdData(bean);
+//                    mBallView.setPwdData(bean);
                 }
             });
 

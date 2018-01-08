@@ -45,6 +45,8 @@ public interface MyConstants {
     //用户名
     String USER_NAME = "user_name";
 
+    String SUPER_PASSWORD = "super_password";
+
     String CREATE_DB_DATE = "create_db_date";
 
     String CREATE_LOCK_DATE = "create_lock_date";

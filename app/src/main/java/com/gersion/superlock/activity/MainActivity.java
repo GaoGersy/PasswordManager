@@ -78,7 +78,12 @@ public class MainActivity extends BaseActivity {
         mTitleView.setOnAddListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toActivity(AddPasswordActivity.class);
+                String superPassword = ConfigManager.getInstance().getSuperPassword();
+                if (superPassword==null){
+                    toActivity(SetSuperPasswordActivity.class);
+                }else {
+                    toActivity(AddPasswordActivity.class);
+                }
             }
         });
 

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.service.FloatBallService;
 import com.gersion.superlock.utils.ConfigManager;
@@ -166,7 +167,6 @@ public class SettingActivity extends BaseActivity {
         return SuperLockApplication.mFingerprintIdentify.isFingerprintEnable();
     }
 
-
     private void checkBallPermission() {
         if (Build.VERSION.SDK_INT >= 23) {
 
@@ -186,7 +186,6 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void setFloatBall(boolean enable) {
-
         int type = enable ? FloatBallService.TYPE_ADD : FloatBallService.TYPE_DEL;
         Intent intent = new Intent(SettingActivity.this, FloatBallService.class);
         stopService(intent);

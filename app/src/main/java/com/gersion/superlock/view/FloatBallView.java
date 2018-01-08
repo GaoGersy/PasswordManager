@@ -6,20 +6,22 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Vibrator;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.activity.SettingActivity;
 import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.service.FloatBallService;
 import com.gersion.superlock.service.FloatWindowManager;
 import com.gersion.superlock.utils.ClipBoardUtils;
 import com.gersion.superlock.utils.ScreenUtils;
@@ -158,6 +160,10 @@ public class FloatBallView extends FrameLayout {
                 } else {
                     Toast.makeText(mContext, "先去选择一条密码吧", Toast.LENGTH_LONG).show();
                 }
+                FloatBallService service = (FloatBallService) mContext;
+                Intent intent = new Intent(service,SettingActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                service.startActivity(intent);
             }
         });
 

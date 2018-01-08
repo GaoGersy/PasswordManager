@@ -13,6 +13,7 @@ import com.gersion.superlock.activity.SettingActivity;
 import com.gersion.superlock.activity.WebActivity;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.utils.ConfigManager;
+import com.gersion.superlock.utils.EmailUtil;
 import com.gersion.superlock.utils.FileUtils;
 import com.gersion.superlock.utils.SDCardUtils;
 import com.gersion.superlock.utils.ToastUtils;
@@ -155,6 +156,7 @@ public class MineFragment extends BaseFragment {
 
     //恢复数据库文件
     public void recoveryDB(){
+
         boolean sdCardEnable = SDCardUtils.isSDCardEnable();
         if (!sdCardEnable) {
             ToastUtils.showTasty(getActivity(), "没有SD卡，无法读取备份的文件", TastyToast.WARNING);
@@ -172,6 +174,26 @@ public class MineFragment extends BaseFragment {
         if (success){
             ToastUtils.showTasty(activity, "恢复成功", TastyToast.SUCCESS);
         }
+    }
+
+    public void sendMail(final String toMail, final String title,
+                         final String body, final String path){
+        new Thread(new Runnable() {
+            public void run() {
+                EmailUtil emailUtil = new EmailUtil();
+                try {
+
+                    String account = "cmmailserver@canmou123.com";
+                    String password = "CANmou123";
+                    // String authorizedPwd = "vxosxkgtwrtxvoqz";
+                    emailUtil.sendMail(toMail, account, "smtp.mxhichina.com",
+                            account, password, title, body, path);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private boolean loadSqlData() {

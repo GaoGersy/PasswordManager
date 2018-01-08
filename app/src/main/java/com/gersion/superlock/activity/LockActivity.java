@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.utils.AnimatorUtils;

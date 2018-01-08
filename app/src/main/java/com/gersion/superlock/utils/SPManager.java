@@ -1,6 +1,6 @@
 package com.gersion.superlock.utils;
 
-import com.gersion.superlock.activity.SuperLockApplication;
+import com.gersion.superlock.app.SuperLockApplication;
 
 /**
  * Created by a3266 on 2017/6/16.
