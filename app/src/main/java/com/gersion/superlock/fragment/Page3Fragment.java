@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
-import com.gersion.superlock.activity.RegesterActivity;
+import com.gersion.superlock.activity.RegisterActivity;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.PasswordUtils;
 import com.gersion.superlock.utils.SpfUtils;
@@ -81,7 +81,7 @@ public class Page3Fragment extends Fragment implements View.OnClickListener {
         set.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                startActivity(new Intent(getActivity(), RegesterActivity.class));
+                startActivity(new Intent(getActivity(), RegisterActivity.class));
                 getActivity().finish();
 
                 saveRandomKey();

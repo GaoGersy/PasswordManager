@@ -46,9 +46,9 @@
                 android:name=".activity.GuideActivity"
                 android:theme="@style/AppTheme.FullScreen"/>
 
-        <!-- RegesterActivity -->
+        <!-- RegisterActivity -->
         <activity
-                android:name=".activity.RegesterActivity"
+                android:name=".activity.RegisterActivity"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="stateHidden|adjustPan"/>
 
@@ -97,6 +97,8 @@
         <activity android:name=".activity.ImportOldDataActivity">
         </activity>
         <activity android:name=".activity.BackupDataActivity">
+        </activity>
+        <activity android:name=".activity.CreatePasswordActivity">
         </activity>
     </application>
 

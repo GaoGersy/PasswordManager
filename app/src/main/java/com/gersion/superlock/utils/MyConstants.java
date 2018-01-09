@@ -47,9 +47,29 @@ public interface MyConstants {
 
     String SUPER_PASSWORD = "super_password";
 
+    String PATTERN_STRING = "pattern_string";
+
+    String APP_PASSWORD = "app_password";
+
+    String LOCK_TYPE = "lock_type";
+
+    String SUPER_PASSWORD_SETED = "super_password_seted";
+
     String CREATE_DB_DATE = "create_db_date";
 
     String CREATE_LOCK_DATE = "create_lock_date";
     String TEST = "test";
+
+    interface LockMode{
+        int MODE_INIT=0;//初始设置
+        int MODE_LOCK=1;//锁屏
+        int MODE_RESET=2;//重置密码
+    }
+
+    interface LockType{
+        int TYPE_PIN=0;//pin
+        int TYPE_PATTERN=1;//图案
+        int TYPE_FINGER_PRINT=2;//指纹
+    }
 }
   

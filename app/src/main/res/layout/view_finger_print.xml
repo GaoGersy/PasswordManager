@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:visibility="visible"
+        android:id="@+id/rl_finger_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        >
+    <LinearLayout
+            android:layout_marginBottom="50dp"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+        <TextView
+                android:layout_marginTop="10dp"
+                android:text="使用指纹解锁"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/gray_d0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        <TextView
+                android:id="@+id/tv_notice"
+                android:layout_marginTop="5dp"
+                android:text="请轻触指纹感应器验证指纹"
+                android:textSize="18sp"
+                android:textColor="@color/gray_e0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        <ImageView
+                android:id="@+id/iv_finger"
+                android:clickable="false"
+                android:src="@mipmap/finger"
+                android:layout_marginBottom="150dp"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                />
+
+    </LinearLayout>
+    <TextView
+            android:id="@+id/btn_cancel"
+            android:text="取消"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_pwd_bg"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            />
+    <TextView
+            android:layout_marginBottom="20dp"
+            android:id="@+id/btn_other_type"
+            android:text="使用其它方式登录"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_pwd_bg"
+            android:layout_above="@id/btn_cancel"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+</RelativeLayout>

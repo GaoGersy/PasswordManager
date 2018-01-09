@@ -78,6 +78,7 @@ public class DetailActivity extends BaseActivity {
                 });
         mTitleView.setTitleText("密码详情");
         mTitleView.setSearchVisiable(false);
+        mTitleView.setAddVisiable(false);
     }
 
     private void initSmartRecycler() {

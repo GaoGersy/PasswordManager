@@ -169,10 +169,11 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
             dbBean.setId(mTotalCount);
             DbManager.getInstance().add(dbBean);
             ToastUtils.showTasty(AddPasswordActivity.this, "添加成功", TastyToast.SUCCESS);
-            mCetvLocation.setText("");
-            mCetvName.setText("");
-            mCetvPassword.setText("");
-            mEtNotes.setText("");
+            finish();
+//            mCetvLocation.setText("");
+//            mCetvName.setText("");
+//            mCetvPassword.setText("");
+//            mEtNotes.setText("");
         } else {
             shakeAnimator();
         }

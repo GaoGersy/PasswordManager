@@ -14,7 +14,6 @@ import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.OnItemClickListener;
-import com.gersion.superlock.utils.ImageLoader;
 import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -62,7 +61,6 @@ public class HomeFragment extends BaseFragment {
     protected void initView() {
         mSmartRecycleView = findView(R.id.smartRecycleView);
         mIvBg = findView(R.id.iv_bg);
-//        ImageLoader.getInstance().loadResBlurImage(R.mipmap.yellow,mIvBg);
         DbManager.getInstance().onStart();
         init();
     }
@@ -241,7 +239,7 @@ public class HomeFragment extends BaseFragment {
 //                startActivity(intent);
 //                break;
 //            case R.id.fab_sheet_item_change_pwd:
-//                startActivity(new Intent(getActivity(), RegesterActivity.class));
+//                startActivity(new Intent(getActivity(), RegisterActivity.class));
 ////                mActivity.finish();
 //                break;
 //            case R.id.fab_sheet_item_backup:

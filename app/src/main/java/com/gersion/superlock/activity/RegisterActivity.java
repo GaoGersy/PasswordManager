@@ -4,22 +4,25 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.gersion.superlock.R;
-import com.gersion.superlock.adapter.RegesterAdapter;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.db.PasswordManager;
+import com.gersion.superlock.lockadapter.LockAdapter;
+import com.gersion.superlock.lockadapter.LockAdapterFactory;
+import com.gersion.superlock.lockadapter.LockCallback;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.ImageLoader;
+import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.NoTouchViewPager;
+import com.gersion.superlock.view.TitleView;
 import com.gyf.barlibrary.ImmersionBar;
 import com.sdsmdg.tastytoast.TastyToast;
 
@@ -36,7 +39,7 @@ import java.util.ArrayList;
  * @更新时间 $Date$
  * @更新版本 $Rev$
  */
-public class RegesterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity {
     public static final int OLD_PWD = 0;
     public static final int NEW_PWD = 1;
     public static final int VERIFY_PWD = 2;
@@ -56,6 +59,9 @@ public class RegesterActivity extends BaseActivity {
     private TextView mTvName;
     private TextView mTvRegisterName;
     private ConfigManager mConfigManager;
+    private FrameLayout mFlContainer;
+    private TitleView mTitleView;
+    private LockAdapter mLockAdapter;
 
     @Override
     protected int setLayoutId() {
@@ -67,61 +73,100 @@ public class RegesterActivity extends BaseActivity {
     protected void initView() {
         ImmersionBar.with(this).fullScreen(false);
         mVp = (NoTouchViewPager) findViewById(R.id.activity_regester_vp);
+        mFlContainer = (FrameLayout) findViewById(R.id.fl_container);
+        mTitleView = (TitleView) findViewById(R.id.titleView);
+        mTitleView.setAddVisiable(false);
+        mTitleView.setSearchVisiable(false);
+        mTitleView.setTitleText("设置APP启动密码");
+
+        mConfigManager = ConfigManager.getInstance();
+        mIsChangePwd = mConfigManager.isChangePwd();
+        int mode = mIsChangePwd?MyConstants.LockMode.MODE_RESET:MyConstants.LockMode.MODE_INIT;
+        mLockAdapter = LockAdapterFactory.create(mode);
+        View view = mLockAdapter.init(this);
+        mFlContainer.addView(view);
+
     }
 
     // 初始化数据
     @Override
     protected void initData() {
-        mList = new ArrayList<>();
-        mConfigManager = ConfigManager.getInstance();
-        mUserName = mConfigManager.getUserName();
-        mIsChangePwd = mConfigManager.isChangePwd();
-        if (mIsChangePwd) {
-            addPagerView(OLD_PWD);
-        }
-        addPagerView(NEW_PWD);
-        addPagerView(VERIFY_PWD);
-
-        RegesterAdapter adapter = new RegesterAdapter(mList);
-        mVp.setAdapter(adapter);
+//        mList = new ArrayList<>();
+//
+//        mUserName = mConfigManager.getUserName();
+//        mIsChangePwd = mConfigManager.isChangePwd();
+//        if (mIsChangePwd) {
+//            addPagerView(OLD_PWD);
+//        }
+//        addPagerView(NEW_PWD);
+//        addPagerView(VERIFY_PWD);
+//
+//        RegesterAdapter adapter = new RegesterAdapter(mList);
+//        mVp.setAdapter(adapter);
     }
 
     @Override
     protected void initListener() {
-        if (mIsChangePwd) {
-            mOldPwd.setOnEditorActionListener(new OnEditorActionListener() {
-
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == 0) {
-                        checkOldPwd();
-                    }
-                    return false;
-                }
-            });
-        }
-
-        mVerifyPwd.setOnEditorActionListener(new OnEditorActionListener() {
-
+        mTitleView.setOnBackListener(new OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == 0) {
-                    verifyPwd();
-                }
-                return false;
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
-
-        mRegesterPwd.setOnEditorActionListener(new OnEditorActionListener() {
+        mLockAdapter.setLockCallback(new LockCallback() {
+            @Override
+            public void onSuccess() {
+                if (!mIsChangePwd) {
+                    ConfigManager.getInstance().setFinishGuide(true);
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                }
+                finish();
+            }
 
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == 0) {
-                    regesterPwd();
-                }
-                return false;
+            public void onError(String msg) {
+                ToastUtils.showTasty(RegisterActivity.this, msg, TastyToast.ERROR);
+            }
+
+            @Override
+            public void onChangLockType() {
+
             }
         });
+//        if (mIsChangePwd) {
+//            mOldPwd.setOnEditorActionListener(new OnEditorActionListener() {
+//
+//                @Override
+//                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                    if (actionId == 0) {
+//                        checkOldPwd();
+//                    }
+//                    return false;
+//                }
+//            });
+//        }
+//
+//        mVerifyPwd.setOnEditorActionListener(new OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == 0) {
+//                    verifyPwd();
+//                }
+//                return false;
+//            }
+//        });
+//
+//        mRegesterPwd.setOnEditorActionListener(new OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == 0) {
+//                    regesterPwd();
+//                }
+//                return false;
+//            }
+//        });
 
     }
 
@@ -213,12 +258,12 @@ public class RegesterActivity extends BaseActivity {
             } else {
                 PasswordManager.getInstance().addPassword(verifyPwd);
                 ConfigManager.getInstance().setFinishGuide(true);
-                startActivity(new Intent(RegesterActivity.this, MainActivity.class));
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             }
             ConfigManager.getInstance().setPwdLength(verifyPwd.length());
             finish();
         } else {
-            ToastUtils.showTasty(RegesterActivity.this, "两次密码不一致", TastyToast.WARNING);
+            ToastUtils.showTasty(RegisterActivity.this, "两次密码不一致", TastyToast.WARNING);
         }
     }
 
@@ -258,7 +303,7 @@ public class RegesterActivity extends BaseActivity {
             stepNum++;
             mVp.setCurrentItem(mVp.getCurrentItem() + 1);
         } else {
-            ToastUtils.showTasty(RegesterActivity.this, "密码错误", TastyToast.ERROR);
+            ToastUtils.showTasty(RegisterActivity.this, "密码错误", TastyToast.ERROR);
         }
     }
 

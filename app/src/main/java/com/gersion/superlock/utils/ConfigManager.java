@@ -6,6 +6,7 @@ import com.gersion.superlock.app.SuperLockApplication;
 
 import java.io.File;
 
+import static com.gersion.superlock.utils.MyConstants.APP_PASSWORD;
 import static com.gersion.superlock.utils.MyConstants.CREATE_DB_DATE;
 import static com.gersion.superlock.utils.MyConstants.CREATE_LOCK_DATE;
 import static com.gersion.superlock.utils.MyConstants.ENABLE_FLOAT_BALL;
@@ -17,6 +18,9 @@ import static com.gersion.superlock.utils.MyConstants.IS_LOCK;
 import static com.gersion.superlock.utils.MyConstants.IS_SHOW_PWD;
 import static com.gersion.superlock.utils.MyConstants.IS_SHOW_UPDATE_TIME;
 import static com.gersion.superlock.utils.MyConstants.LENGTH;
+import static com.gersion.superlock.utils.MyConstants.LOCK_TYPE;
+import static com.gersion.superlock.utils.MyConstants.PATTERN_STRING;
+import static com.gersion.superlock.utils.MyConstants.SUPER_PASSWORD_SETED;
 import static com.gersion.superlock.utils.MyConstants.SUPER_PASSWORD;
 import static com.gersion.superlock.utils.MyConstants.USER_NAME;
 
@@ -25,6 +29,10 @@ import static com.gersion.superlock.utils.MyConstants.USER_NAME;
  */
 
 public class ConfigManager {
+    private boolean mSuperPasswordSeted;
+    private int mLockType;
+    private String mAppPassword;
+    private String mPatternString;
     private boolean mFingerPrint;
     private boolean mIsEnableFloatBall;
     private int mPwdLength;
@@ -51,6 +59,10 @@ public class ConfigManager {
         mPwdLength = SpfUtils.getInt(mContext, LENGTH, 0);
         mUserName = SpfUtils.getString(mContext, USER_NAME);
         mSuperPassword = SpfUtils.getString(mContext, SUPER_PASSWORD);
+        mAppPassword = SpfUtils.getString(mContext, APP_PASSWORD);
+        mPatternString = SpfUtils.getString(mContext, PATTERN_STRING);
+        mLockType = SpfUtils.getInt(mContext, LOCK_TYPE);
+        mSuperPasswordSeted = SpfUtils.getBoolean(mContext, SUPER_PASSWORD_SETED);
     }
     private boolean getBoolean(String key) {
         return SpfUtils.getBoolean(mContext, key,false);
@@ -187,5 +199,41 @@ public class ConfigManager {
     public void setUserName(String userName) {
         mUserName = userName;
         SpfUtils.putString(mContext,USER_NAME,userName);
+    }
+
+    public String getPatternString() {
+        return mPatternString;
+    }
+
+    public void setPatternString(String patternString) {
+        mPatternString = patternString;
+        SpfUtils.putString(mContext,PATTERN_STRING,patternString);
+    }
+
+    public String getAppPassword() {
+        return mAppPassword;
+    }
+
+    public void setAppPassword(String appPassword) {
+        mAppPassword = Md5Utils.encodeWithTimes(appPassword, 2);
+        SpfUtils.putString(mContext,APP_PASSWORD,mAppPassword);
+    }
+
+    public int getLockType() {
+        return mLockType;
+    }
+
+    public void setLockType(int lockType) {
+        mLockType = lockType;
+        SpfUtils.putInt(mContext,LOCK_TYPE,lockType);
+    }
+
+    public boolean isSuperPasswordSeted() {
+        return mSuperPasswordSeted;
+    }
+
+    public void setSuperPasswordSeted(boolean superPasswordSeted) {
+        mSuperPasswordSeted = superPasswordSeted;
+        SpfUtils.putBoolean(mContext, SUPER_PASSWORD_SETED,superPasswordSeted);
     }
 }

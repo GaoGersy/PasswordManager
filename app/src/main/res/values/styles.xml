@@ -135,4 +135,11 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
 
+    <style name="Keyboard">
+        <item name="android:textSize">24dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/keyboard_background</item>
+        <item name="android:textColor">#353535</item>
+    </style>
+
 </resources>

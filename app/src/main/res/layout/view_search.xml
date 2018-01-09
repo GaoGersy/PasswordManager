@@ -3,14 +3,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/search_title_color"
         >
 
     <View
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/status_bar_height"
-            android:background="@color/colorPrimary"
             />
     <LinearLayout
             android:orientation="horizontal"
@@ -52,10 +51,10 @@
                     android:layout_centerVertical="true"
                     android:hint="搜索"
                     android:inputType="text"
-                    android:background="@color/colorPrimary"
                     android:imeOptions="actionSearch"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/gray_b0"
+                    android:textColorHint="@color/gray_d0"
+                    android:background="@null"
                     />
 
             <View

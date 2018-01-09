@@ -3,12 +3,16 @@ package com.gersion.superlock.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +20,11 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.ClipBoardUtils;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.PasswordUtils;
+import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.Croller;
 import com.gersion.superlock.view.TouchView;
-import com.gersion.superlock.view.TypeView;
 
 /**
  * Created by a3266 on 2017/6/11.
@@ -36,11 +41,13 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
     private int mLength = 6;
     private MyHandler handler;
     private Croller mCroller;
-    private TypeView mTySmall;
-    private TypeView mTyBig;
-    private TypeView mTyNum;
-    private TypeView mTySuper;
+    private CheckBox mCbSmall;
+    private CheckBox mCbBig;
+    private CheckBox mCbNum;
+    private CheckBox mCbSuper;
     private TouchView mTouchView;
+    private TextView mTvConfirm;
+    private boolean mIsSuperPassword;
 
     @Override
     protected int setLayoutId() {
@@ -51,15 +58,17 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
     protected void initView() {
         handler = new MyHandler();
         mTvPassword = findView(R.id.activity_main_key);
-        mTySmall = findView(R.id.ty_small);
-        mTyBig = findView(R.id.ty_big);
-        mTyNum = findView(R.id.ty_num);
-        mTySuper = findView(R.id.ty_super);
+        mCbSmall = findView(R.id.cb_small);
+        mCbBig = findView(R.id.cb_big);
+        mCbNum = findView(R.id.cb_num);
+        mCbSuper = findView(R.id.cb_super);
         mCroller = findView(R.id.croller_pwd_length);
         mTouchView = findView(R.id.touchView);
+        mTvConfirm = findView(R.id.tv_confirm);
 
-        mTySmall.setSelected(true);
+        mCbSmall.setSelected(true);
         mTouchView.setEnabled(false);
+        initSuperPassword();
     }
 
     @Override
@@ -73,35 +82,35 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
 
     @Override
     protected void initListener() {
-        mTySmall.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+        mCbSmall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckChange(boolean selected) {
-                mIsLower = selected;
-                setProgress(selected);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsLower = isChecked;
+                setProgress(isChecked);
                 checkButton();
             }
         });
-        mTyBig.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+        mCbBig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckChange(boolean selected) {
-                mIsCapital = selected;
-                setProgress(selected);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsCapital = isChecked;
+                setProgress(isChecked);
                 checkButton();
             }
         });
-        mTyNum.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+        mCbNum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckChange(boolean selected) {
-                mIsNumber = selected;
-                setProgress(selected);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsNumber = isChecked;
+                setProgress(isChecked);
                 checkButton();
             }
         });
-        mTySuper.setOnSelectChangeListener(new TypeView.OnSelectChangeListener() {
+        mCbSuper.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckChange(boolean selected) {
-                mIsChar = selected;
-                setProgress(selected);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsChar = isChecked;
+                setProgress(isChecked);
                 checkButton();
             }
         });
@@ -129,6 +138,20 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
             @Override
             public void onRelease() {
                 onStopCreate();
+            }
+        });
+
+        mTvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String password = mTvPassword.getText().toString().trim();
+                if (TextUtils.isEmpty(password)) {
+                    ToastUtils.show(activity, "点击指纹按钮成一个密码吧");
+                    return;
+                }
+                ConfigManager.getInstance().setSuperPassword(password);
+                activity.setResult(Activity.RESULT_OK);
+                activity.finish();
             }
         });
     }
@@ -199,6 +222,25 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
                 Toast.makeText(getActivity(), "已复制到剪贴板", Toast.LENGTH_SHORT).show();
                 break;
 
+        }
+    }
+
+    public void isSuperPassword(boolean isSuperPassword){
+        mIsSuperPassword = isSuperPassword;
+    }
+
+    private void initSuperPassword() {
+        if (mIsSuperPassword) {
+            mTvConfirm.setVisibility(View.VISIBLE);
+            mCroller.setProgress(20);
+            mCbBig.setChecked(true);
+            mCbSmall.setChecked(true);
+            mCbNum.setChecked(true);
+            mCbSuper.setChecked(true);
+            mIsCapital = true;
+            mIsChar = true;
+            mIsLower = true;
+            mIsNumber = true;
         }
     }
 

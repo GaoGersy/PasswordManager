@@ -31,4 +31,7 @@
     <color name="confirm">#a75190</color>
     <color name="item_divider">#a75190</color>
     <color name="item_bg">#11ffffff</color>
+    <color name="primary_color">#c32f98</color>
+    <color name="secondary_color">#e113a6</color>
+    <color name="search_title_color">#99c32f98</color>
 </resources>

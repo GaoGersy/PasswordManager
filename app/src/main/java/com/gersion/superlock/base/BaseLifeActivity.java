@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 
 import com.gersion.superlock.activity.LockActivity;
 import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.MyConstants;
-import com.gersion.superlock.utils.SpfUtils;
 
 /**
  * 是所有窗体控件的父类，封装了检测程序是否在前台的方法，如果进入后台，再次进入应用会进入登录界面
@@ -37,16 +35,9 @@ public class BaseLifeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         visibleCount++;
-//        Logger.d(this.getClass().getSimpleName()+"  onstart: "+visibleCount+"  需要锁屏"+shouldLockSceen(this));
     }
 
-//    @Override
-//    protected void attachBaseContext(Context newBase) {
-//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-//    }
-
     private boolean shouldLockSceen(Activity activity) {
-        // no enough timeout
         long passedTime = System.currentTimeMillis() - lastActive;
         if (lastActive > 0 && passedTime <= lockTimeOut) {
             return false;
@@ -60,7 +51,7 @@ public class BaseLifeActivity extends AppCompatActivity {
 //            return false;
 //        }
 
-        return true;
+        return false;
     }
 
 

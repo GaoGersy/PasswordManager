@@ -23,5 +23,7 @@ public interface ConstantsUtils {
     int TYPE_ALL = 2;
     String SHOW_SYSTEM_PROCESS = "show_system_process";
     String AUTO_CLEAN = "auto_clean";
+
+
 }
   

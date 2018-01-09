@@ -1,7 +1,5 @@
 package com.gersion.superlock.db;
 
-import android.text.TextUtils;
-
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.Md5Utils;
@@ -27,43 +25,41 @@ public final class DbManager {
         return InstanceHolder.INSTANCE;
     }
 
-    public void onStart(){
-        init();
-        if (mRealmConfiguration!=null){
-            mRealm = Realm.getInstance(mRealmConfiguration);
-            mRealm.addChangeListener(new RealmChangeListener<Realm>() {
-                @Override
-                public void onChange(Realm realm) {
-                    if (mListener!=null){
-                        List<DbBean> list = load();
-                        mListener.onDataChange(list);
-                    }
+    public void onStart() {
+        mRealm = Realm.getInstance(mRealmConfiguration);
+        mRealm.addChangeListener(new RealmChangeListener<Realm>() {
+            @Override
+            public void onChange(Realm realm) {
+                if (mListener != null) {
+                    List<DbBean> list = load();
+                    mListener.onDataChange(list);
                 }
-            });
-        }
+            }
+        });
     }
-    public Realm getRealm(){
+
+    public Realm getRealm() {
         return mRealm;
     }
 
     public void init() {
-        if (mRealmConfiguration==null){
-            init(1);
-        }
+        init(1);
     }
 
     /**
      * @param dbVersion
      */
     public void init(long dbVersion) {
-        byte[] key = getKey();
-        if (key!=null) {
-            mRealmConfiguration = new RealmConfiguration.Builder()
-                    .name("db.realm")
-                    .encryptionKey(key)
-                    .schemaVersion(dbVersion)
-                    .deleteRealmIfMigrationNeeded()
-                    .build();
+        if (mRealmConfiguration == null) {
+            byte[] key = getKey();
+            if (key != null){
+                mRealmConfiguration = new RealmConfiguration.Builder()
+                        .name("db.realm")
+                        .encryptionKey(key)
+                        .schemaVersion(dbVersion)
+                        .deleteRealmIfMigrationNeeded()
+                        .build();
+            }
         }
     }
 
@@ -74,17 +70,13 @@ public final class DbManager {
     private byte[] getKey() {
         byte[] key = new byte[64];
         String superPassword = ConfigManager.getInstance().getSuperPassword();
-        if (!TextUtils.isEmpty(superPassword)){
-            String password = Md5Utils.encodeWithTimes(superPassword,2);
-            char[] chars = password.toCharArray();
-            int length = chars.length;
-            for (int i = 0; i < length; i++) {
-                key[i] = (byte) chars[i];
-            }
-            return key;
+        String password = Md5Utils.encodeWithTimes(superPassword, 2);
+        char[] chars = password.toCharArray();
+        int length = chars.length;
+        for (int i = 0; i < length; i++) {
+            key[i] = (byte) chars[i];
         }
-
-        return null;
+        return key;
     }
 
     /**
@@ -103,7 +95,7 @@ public final class DbManager {
      * @return 返回realm中的对象
      */
     public DbBean add(DbBean bean) {
-        return add(bean,generateNewPrimaryKey());
+        return add(bean, generateNewPrimaryKey());
     }
 
     /**
@@ -148,7 +140,7 @@ public final class DbManager {
         return dbPasswordBean;
     }
 
-    public DbBean update(OnUpdateCallback callback){
+    public DbBean update(OnUpdateCallback callback) {
         mRealm.beginTransaction();
         //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
         DbBean dbPasswordBean = mRealm.copyToRealmOrUpdate(callback.onUpdate());
@@ -218,7 +210,7 @@ public final class DbManager {
         mRealm.commitTransaction();
     }
 
-    public void swap(int oldIndex,int newIndex){
+    public void swap(int oldIndex, int newIndex) {
         Logger.d("swap");
         mRealm.beginTransaction();
         DbBean oldPasswordBean = mRealm.where(DbBean.class)
@@ -252,11 +244,11 @@ public final class DbManager {
         return mRealm.where(DbBean.class).findAllSorted("index", Sort.ASCENDING);
     }
 
-    public void addChangeListener(RealmChangeListener listener){
+    public void addChangeListener(RealmChangeListener listener) {
         mRealm.addChangeListener(listener);
     }
 
-    public void setOnDataChangeListener(OnDataChangeListener listener){
+    public void setOnDataChangeListener(OnDataChangeListener listener) {
         mListener = listener;
     }
 
@@ -264,15 +256,15 @@ public final class DbManager {
         private static final DbManager INSTANCE = new DbManager();
     }
 
-    public interface OnDataChangeListener{
+    public interface OnDataChangeListener {
         void onDataChange(List<DbBean> list);
     }
 
-    public interface OnUpdateCallback{
+    public interface OnUpdateCallback {
         DbBean onUpdate();
     }
 
-    public interface OnUpdateByIdCallback{
+    public interface OnUpdateByIdCallback {
         DbBean onUpdate(DbBean bean);
     }
 }
