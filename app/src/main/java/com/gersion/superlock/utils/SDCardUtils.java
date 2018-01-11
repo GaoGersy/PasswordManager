@@ -3,6 +3,8 @@ package com.gersion.superlock.utils;
 import android.os.Environment;
 import android.os.StatFs;
 
+import com.orhanobut.logger.Logger;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,8 +45,6 @@ public class SDCardUtils {
 
     /**
      * 获取SD卡的剩余容量 单位byte
-     *
-     * @return
      */
     public static long getSDCardAllSize() {
         if (isSDCardEnable()) {
@@ -61,7 +61,6 @@ public class SDCardUtils {
     /**
      * 获取指定路径所在空间的剩余可用容量字节数，单位byte
      *
-     * @param filePath
      * @return 容量字节 SDCard可用空间，内部存储可用空间
      */
     public static long getFreeBytes(String filePath) {
@@ -78,8 +77,6 @@ public class SDCardUtils {
 
     /**
      * 获取系统存储路径
-     *
-     * @return
      */
     public static String getRootDirectoryPath() {
         return Environment.getRootDirectory().getAbsolutePath();
@@ -87,10 +84,6 @@ public class SDCardUtils {
 
     /**
      * Check if the file is exists
-     *
-     * @param filePath
-     * @param fileName
-     * @return
      */
     public static boolean isFileExistsInSDCard(String filePath, String fileName) {
         boolean flag = false;
@@ -105,21 +98,18 @@ public class SDCardUtils {
 
     /**
      * Write file to SD card
-     * @param filePath
-     * @param filename
-     * @param content
-     * @return
-     * @throws Exception
      */
-    public static boolean saveFileToSDCard(String filePath, String filename, String content)
-            throws Exception {
+    public static boolean saveFileToSDCard(String filePath, String filename, String content)throws Exception {
         boolean flag = false;
         if (isSDCardEnable()) {
-            File dir = new File(filePath);
+            File absoluteFile = Environment.getExternalStorageDirectory().getAbsoluteFile();
+            File dir = new File(absoluteFile, filePath);
             if (!dir.exists()) {
-                dir.mkdir();
+                boolean mkdir = dir.mkdirs();
+                Logger.e(mkdir + "");
             }
-            File file = new File(filePath, filename);
+            renameOldFile(dir);
+            File file = new File(dir, filename);
             FileOutputStream outStream = new FileOutputStream(file);
             outStream.write(content.getBytes());
             outStream.close();
@@ -128,22 +118,45 @@ public class SDCardUtils {
         return flag;
     }
 
+    private static void renameOldFile(File dir) {
+        File lastFile = null;
+        int maxIndex = 0;
+        if (dir.length() > 0) {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                String name = file.getName();
+                int firstIndex = name.lastIndexOf("_");
+                int lastIndex = name.lastIndexOf(".");
+                String index = name.substring(firstIndex + 1,lastIndex);
+                if (firstIndex==-1) {
+                    lastFile = file;
+                } else {
+                    int i = Integer.parseInt(index);
+                    maxIndex = maxIndex < i ? i : maxIndex;
+                }
+            }
+            if (lastFile != null) {
+                lastFile.renameTo(new File(dir,MyConstants.BACKUP_FILE_NAME + "_" + (maxIndex + 1) + "." + MyConstants.FILE_TYPE));
+            }
+        }
+    }
+
     /**
      * Read file as stream from SD card
      *
-     * @param fileName
-     *            String PATH =
-     *            Environment.getExternalStorageDirectory().getAbsolutePath() +
-     *            "/dirName";
-     * @return
+     * @param fileName String PATH =
+     * Environment.getExternalStorageDirectory().getAbsolutePath() +
+     * "/dirName";
      */
     public static byte[] readFileFromSDCard(String filePath, String fileName) {
         byte[] buffer = null;
         FileInputStream fin = null;
         try {
             if (isSDCardEnable()) {
-                String filePaht = filePath + "/" + fileName;
-                fin = new FileInputStream(filePaht);
+                File absoluteFile = Environment.getExternalStorageDirectory().getAbsoluteFile();
+                File dir = new File(absoluteFile, filePath);
+                File file = new File(dir, fileName);
+                fin = new FileInputStream(file);
                 int length = fin.available();
                 buffer = new byte[length];
                 fin.read(buffer);
@@ -163,11 +176,8 @@ public class SDCardUtils {
     /**
      * Delete file
      *
-     * @param filePath
-     * @param fileName
-     *            filePath =
-     *            android.os.Environment.getExternalStorageDirectory().getPath()
-     * @return
+     * @param fileName filePath =
+     * android.os.Environment.getExternalStorageDirectory().getPath()
      */
     public static boolean deleteSDFile(String filePath, String fileName) {
         File file = new File(filePath + "/" + fileName);

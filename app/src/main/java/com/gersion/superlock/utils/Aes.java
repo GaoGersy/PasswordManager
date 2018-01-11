@@ -45,6 +45,16 @@ public class Aes {
 		return null;
 	}
 
+	public static String encryptWithSuperPassword(String content) {
+		String superPassword = ConfigManager.getInstance().getEncryptSuperPassword();
+		return encrypt(content,superPassword);
+	}
+
+	public static String decryptWithSuperPassword(String content) {
+		String superPassword = ConfigManager.getInstance().getEncryptSuperPassword();
+		return decrypt(content,superPassword);
+	}
+
 	///** 加密(结果为16进制字符串) **/ 
 	public static String encrypt(String content, String password) {
 		byte[] data = null;

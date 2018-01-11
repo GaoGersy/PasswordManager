@@ -10,6 +10,7 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.filescanner.callback.FileResultCallback;
 import com.gersion.superlock.filescanner.model.Document;
 import com.gersion.superlock.filescanner.model.FileType;
+import com.gersion.superlock.utils.MyConstants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class DocScannerTask extends AsyncTask<Void, Void, List<Document>> {
             MediaStore.Images.Media.DATE_ADDED,
             MediaStore.Files.FileColumns.TITLE
     };
-    private static final String TYPE = "slk";
+
     private final FileResultCallback<Document> resultCallback;
 
     private final Context context;
@@ -74,8 +75,8 @@ public class DocScannerTask extends AsyncTask<Void, Void, List<Document>> {
     private ArrayList<Document> getDocumentFromCursor(Cursor data) {
         ArrayList<Document> documents = new ArrayList<>();
         ArrayList<FileType> fileTypes = new ArrayList<>();
-        String[] slk = {"slk"};
-        fileTypes.add(new FileType(TYPE, slk, R.drawable.about));
+        String[] slk = {MyConstants.FILE_TYPE};
+        fileTypes.add(new FileType(MyConstants.FILE_TYPE, slk, R.drawable.about));
 
         while (data.moveToNext()) {
 

@@ -16,7 +16,7 @@ android {
     defaultConfig {
         applicationId "com.gersion.superpasswordlock"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 19
         versionCode 2
         versionName "1.1"
         resConfigs "zh"

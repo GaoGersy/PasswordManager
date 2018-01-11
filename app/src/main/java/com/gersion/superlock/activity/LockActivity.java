@@ -26,7 +26,7 @@ public class LockActivity extends BaseLifeActivity{
         initData();
         initEvent();
         mFlContainer = (FrameLayout) findViewById(R.id.fl_container);
-        LockAdapter lockAdapter = LockAdapterFactory.create();
+        LockAdapter lockAdapter = LockAdapterFactory.initLock();
         View view = lockAdapter.init(this);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(layoutParams);

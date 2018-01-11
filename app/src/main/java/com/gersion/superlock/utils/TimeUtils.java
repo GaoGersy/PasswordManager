@@ -34,6 +34,10 @@ public class TimeUtils {
         return getTime(timeInMillis, DEFAULT_DATE_FORMAT);
     }
 
+    public static String getSimpleTime(long timeInMillis) {
+        return getTime(timeInMillis, DATE_FORMAT_DATE);
+    }
+
     /**
      * get current time in milliseconds
      * 

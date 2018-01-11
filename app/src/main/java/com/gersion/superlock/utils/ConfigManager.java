@@ -7,8 +7,10 @@ import com.gersion.superlock.app.SuperLockApplication;
 import java.io.File;
 
 import static com.gersion.superlock.utils.MyConstants.APP_PASSWORD;
+import static com.gersion.superlock.utils.MyConstants.BACKUP_EMAIL_ADDRESS;
 import static com.gersion.superlock.utils.MyConstants.CREATE_DB_DATE;
 import static com.gersion.superlock.utils.MyConstants.CREATE_LOCK_DATE;
+import static com.gersion.superlock.utils.MyConstants.DATA_LIST_COUNT;
 import static com.gersion.superlock.utils.MyConstants.ENABLE_FLOAT_BALL;
 import static com.gersion.superlock.utils.MyConstants.FINGER_PRINT;
 import static com.gersion.superlock.utils.MyConstants.IS_AUTO_LOGIN;
@@ -20,6 +22,7 @@ import static com.gersion.superlock.utils.MyConstants.IS_SHOW_UPDATE_TIME;
 import static com.gersion.superlock.utils.MyConstants.LENGTH;
 import static com.gersion.superlock.utils.MyConstants.LOCK_TYPE;
 import static com.gersion.superlock.utils.MyConstants.PATTERN_STRING;
+import static com.gersion.superlock.utils.MyConstants.SALT;
 import static com.gersion.superlock.utils.MyConstants.SUPER_PASSWORD_SETED;
 import static com.gersion.superlock.utils.MyConstants.SUPER_PASSWORD;
 import static com.gersion.superlock.utils.MyConstants.USER_NAME;
@@ -29,6 +32,8 @@ import static com.gersion.superlock.utils.MyConstants.USER_NAME;
  */
 
 public class ConfigManager {
+    private int mDataListCount;
+    private String mBackupEmailAddress;
     private boolean mSuperPasswordSeted;
     private int mLockType;
     private String mAppPassword;
@@ -63,6 +68,8 @@ public class ConfigManager {
         mPatternString = SpfUtils.getString(mContext, PATTERN_STRING);
         mLockType = SpfUtils.getInt(mContext, LOCK_TYPE);
         mSuperPasswordSeted = SpfUtils.getBoolean(mContext, SUPER_PASSWORD_SETED);
+        mBackupEmailAddress = SpfUtils.getString(mContext, BACKUP_EMAIL_ADDRESS);
+        mDataListCount = SpfUtils.getInt(mContext, DATA_LIST_COUNT);
     }
     private boolean getBoolean(String key) {
         return SpfUtils.getBoolean(mContext, key,false);
@@ -179,6 +186,10 @@ public class ConfigManager {
         return mSuperPassword;
     }
 
+    public String getEncryptSuperPassword() {
+        return Md5Utils.encodeWithTimes(mSuperPassword+SALT,3);
+    }
+
     public void setSuperPassword(String superPassword) {
         mSuperPassword = superPassword;
         SpfUtils.putString(mContext,SUPER_PASSWORD,superPassword);
@@ -235,5 +246,23 @@ public class ConfigManager {
     public void setSuperPasswordSeted(boolean superPasswordSeted) {
         mSuperPasswordSeted = superPasswordSeted;
         SpfUtils.putBoolean(mContext, SUPER_PASSWORD_SETED,superPasswordSeted);
+    }
+
+    public String getBackupEmailAddress() {
+        return mBackupEmailAddress;
+    }
+
+    public void setBackupEmailAddress(String backupEmailAddress) {
+        mBackupEmailAddress = backupEmailAddress;
+        SpfUtils.putString(mContext, BACKUP_EMAIL_ADDRESS,backupEmailAddress);
+    }
+
+    public int getDataListCount() {
+        return mDataListCount;
+    }
+
+    public void setDataListCount(int dataListCount) {
+        mDataListCount = dataListCount;
+        SpfUtils.putInt(mContext, DATA_LIST_COUNT,dataListCount);
     }
 }

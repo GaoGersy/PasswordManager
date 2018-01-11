@@ -309,6 +309,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        setResult(1);
         mVp.setCurrentItem(mVp.getCurrentItem() - 1);
         if (mVp.getCurrentItem() == 0) {
             stepNum--;

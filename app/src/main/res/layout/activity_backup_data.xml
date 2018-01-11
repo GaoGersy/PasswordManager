@@ -9,7 +9,6 @@
         >
     <com.gersion.superlock.view.TitleView
             android:id="@+id/titleView"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -29,6 +28,7 @@
             >
 
         <RadioGroup
+                android:id="@+id/rg_back_location"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,10 +37,11 @@
                 android:padding="10dp"
                 >
             <RadioButton
+                    android:id="@+id/rb_local"
                     android:layout_weight="1"
                     android:text="备份到本地存储"
+                    android:padding="5dp"
                     android:textSize="15sp"
-                    android:checked="true"
                     android:textColor="@color/gray_b0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -50,9 +51,11 @@
                     android:drawableLeft="@drawable/checkbox_bg"
                     />
             <RadioButton
+                    android:id="@+id/rb_mail"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:textSize="15sp"
                     android:text="发送到邮箱"
                     android:textColor="@color/gray_b0"
@@ -83,7 +86,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/shape_confirm_bg"
                 android:gravity="center"
-                android:padding="15dp"
+                android:padding="12dp"
                 android:text="导出"
                 android:textColor="#fff"
                 android:textSize="18sp"

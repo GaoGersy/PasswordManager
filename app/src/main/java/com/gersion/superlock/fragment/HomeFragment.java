@@ -14,6 +14,7 @@ import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.OnItemClickListener;
+import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
@@ -89,6 +90,7 @@ public class HomeFragment extends BaseFragment {
             mDataList.clear();
             mDataList.addAll(list);
             mTotalCount = mDataList.size();
+            ConfigManager.getInstance().setDataListCount(mTotalCount);
             mSmartRecycleView.onRefresh(mDataList);
         }
     };
@@ -156,6 +158,7 @@ public class HomeFragment extends BaseFragment {
         mDataList.clear();
         mDataList.addAll(passwordBeans);
         mTotalCount = mDataList.size();
+        ConfigManager.getInstance().setDataListCount(mTotalCount);
 //        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
 //        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
 //            @Override

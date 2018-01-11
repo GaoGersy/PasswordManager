@@ -42,7 +42,7 @@ public class SetSuperPasswordActivity extends BaseActivity {
     @Override
     protected void initData() {
         boolean superPassowrdSeted = mConfigManager.isSuperPasswordSeted();
-        if (superPassowrdSeted){
+        if (superPassowrdSeted) {
             toActivity(RegisterActivity.class);
             finish();
         }
@@ -53,7 +53,7 @@ public class SetSuperPasswordActivity extends BaseActivity {
         mTvGetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toActivityForResult(CreatePasswordActivity.class,CODE);
+                toActivityForResult(CreatePasswordActivity.class, CODE);
             }
         });
 
@@ -80,7 +80,7 @@ public class SetSuperPasswordActivity extends BaseActivity {
     }
 
     private boolean checkPwdIsOk(String pwd) {
-        if (TextUtils.isEmpty(pwd)){
+        if (TextUtils.isEmpty(pwd)) {
             ToastUtils.showTasty(this, "请输入一个超级密码", TastyToast.ERROR);
             return false;
         }
@@ -104,11 +104,24 @@ public class SetSuperPasswordActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
-            if (requestCode==CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CODE) {
                 String superPassword = mConfigManager.getSuperPassword();
                 mEtPassword.setText(superPassword);
             }
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        visibleCount++;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        visibleCount--;
+    }
+
 }

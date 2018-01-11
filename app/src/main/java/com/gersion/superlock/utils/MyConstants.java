@@ -55,10 +55,24 @@ public interface MyConstants {
 
     String SUPER_PASSWORD_SETED = "super_password_seted";
 
+    String BACKUP_EMAIL_ADDRESS = "backup_email_address";
+
     String CREATE_DB_DATE = "create_db_date";
+
+    String DATA_LIST_COUNT = "data_list_count";
 
     String CREATE_LOCK_DATE = "create_lock_date";
     String TEST = "test";
+
+    String AES_PASSWORD = "jmn5k29ok78&ssa@!$%&";
+
+    String BACKUP_PATH = "superlock/backup";
+
+    String BACKUP_FILE_NAME= "data";
+
+    String SALT = "9ok78&ssa@";
+
+    String FILE_TYPE = "slk";
 
     interface LockMode{
         int MODE_INIT=0;//初始设置
@@ -70,6 +84,12 @@ public interface MyConstants {
         int TYPE_PIN=0;//pin
         int TYPE_PATTERN=1;//图案
         int TYPE_FINGER_PRINT=2;//指纹
+    }
+
+    interface RegisterMode{
+        int MODE_INIT=0;//pin
+        int MODE_RESET=1;//图案
+        int MODE_CHANGE_LOCK_TYPE=2;//更换到
     }
 }
   

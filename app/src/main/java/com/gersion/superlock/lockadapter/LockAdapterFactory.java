@@ -18,6 +18,17 @@ public class LockAdapterFactory {
         return create(lockType,mode);
     }
 
+    public static LockAdapter initLock(){
+        int lockType = ConfigManager.getInstance().getLockType();
+        if (lockType==MyConstants.LockType.TYPE_PATTERN){
+            String patternString = ConfigManager.getInstance().getPatternString();
+            if (patternString==null){
+                lockType = MyConstants.LockType.TYPE_PIN;
+            }
+        }
+        return create(lockType,MyConstants.LockMode.MODE_LOCK);
+    }
+
     public static LockAdapter create(int lockType,int lockMode){
         switch (lockType){
             case MyConstants.LockType.TYPE_FINGER_PRINT:

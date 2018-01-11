@@ -1,6 +1,5 @@
 package com.gersion.superlock.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,13 +7,13 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.AboutActivity;
+import com.gersion.superlock.activity.BackupDataActivity;
 import com.gersion.superlock.activity.DonationActivity;
+import com.gersion.superlock.activity.ImportOldDataActivity;
+import com.gersion.superlock.activity.SelectLockTypeActivity;
 import com.gersion.superlock.activity.SettingActivity;
-import com.gersion.superlock.activity.WebActivity;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.EmailUtil;
-import com.gersion.superlock.utils.FileUtils;
 import com.gersion.superlock.utils.SDCardUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.ItemView;
@@ -44,6 +43,8 @@ public class MineFragment extends BaseFragment {
     private ItemView mRecovery;
     private ItemView mDonation;
     private View mProjectAddress;
+    private View mAppLockType;
+    private View mViewSuperPassword;
 
     @Override
     protected int setLayoutId() {
@@ -64,6 +65,8 @@ public class MineFragment extends BaseFragment {
         mRecovery = findView(R.id.recovery);
         mDonation = findView(R.id.donation);
         mProjectAddress = findView(R.id.project_address);
+        mViewSuperPassword = findView(R.id.superpassword);
+        mAppLockType = findView(R.id.app_lock);
 
         mName.setText(ConfigManager.getInstance().getUserName());
     }
@@ -84,13 +87,15 @@ public class MineFragment extends BaseFragment {
         mBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backupDB(getActivity());
+//                backupDB(getActivity());
+                toActivity(BackupDataActivity.class);
             }
         });
         mRecovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recoveryDB();
+//                recoveryDB();
+                toActivity(ImportOldDataActivity.class);
             }
         });
         mDonation.setOnClickListener(new View.OnClickListener() {
@@ -99,12 +104,12 @@ public class MineFragment extends BaseFragment {
                 toActivity(DonationActivity.class);
             }
         });
-        mProjectAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toActivity(WebActivity.class);
-            }
-        });
+//        mProjectAddress.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                toActivity(WebActivity.class);
+//            }
+//        });
 
         mAbout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +125,20 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+        mAppLockType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(SelectLockTypeActivity.class);
+            }
+        });
+
+        mViewSuperPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     private void exit() {
@@ -128,73 +147,7 @@ public class MineFragment extends BaseFragment {
         System.exit(0);
     }
 
-    //备份数据库文件
-    public void backupDB(Activity activity){
-        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
-        if (!sdCardEnable) {
-            ToastUtils.showTasty(activity, "没有SD卡，备份工作无法继续进行", TastyToast.WARNING);
-            return ;
-        }
 
-        ConfigManager instance = ConfigManager.getInstance();
-        File srcDbFile = instance.getSrcDbFile();
-        if (!srcDbFile.exists()) {
-            ToastUtils.showTasty(activity, "还没有任何数据，不需要备份", TastyToast.WARNING);
-            return ;
-        }
-
-        if (SDCardUtils.getSDCardAllSize() < srcDbFile.length()) {
-            ToastUtils.showTasty(activity, "SD卡剩余容量不足，无法备份", TastyToast.WARNING);
-            return;
-        }
-
-        boolean success = FileUtils.copyFile(instance.getSrcDbFile(), instance.getDestDbFile());
-        if (success){
-            ToastUtils.showTasty(activity, "备份成功", TastyToast.SUCCESS);
-        }
-    }
-
-    //恢复数据库文件
-    public void recoveryDB(){
-
-        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
-        if (!sdCardEnable) {
-            ToastUtils.showTasty(getActivity(), "没有SD卡，无法读取备份的文件", TastyToast.WARNING);
-            return;
-        }
-
-        ConfigManager instance = ConfigManager.getInstance();
-        File destDbFile = instance.getDestDbFile();
-        if (!destDbFile.exists()) {
-            ToastUtils.showTasty(getActivity(), "没有找到任何备份了的文件", TastyToast.WARNING);
-            return;
-        }
-
-        boolean success = FileUtils.copyFile( instance.getDestDbFile(),instance.getSrcDbFile());
-        if (success){
-            ToastUtils.showTasty(activity, "恢复成功", TastyToast.SUCCESS);
-        }
-    }
-
-    public void sendMail(final String toMail, final String title,
-                         final String body, final String path){
-        new Thread(new Runnable() {
-            public void run() {
-                EmailUtil emailUtil = new EmailUtil();
-                try {
-
-                    String account = "cmmailserver@canmou123.com";
-                    String password = "CANmou123";
-                    // String authorizedPwd = "vxosxkgtwrtxvoqz";
-                    emailUtil.sendMail(toMail, account, "smtp.mxhichina.com",
-                            account, password, title, body, path);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
     private boolean loadSqlData() {
         boolean sdCardEnable = SDCardUtils.isSDCardEnable();
