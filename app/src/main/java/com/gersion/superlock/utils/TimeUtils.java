@@ -1,7 +1,6 @@
 package com.gersion.superlock.utils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * TimeUtils
@@ -21,7 +20,7 @@ public class TimeUtils {
      * @return
      */
     public static String getTime(long timeInMillis, SimpleDateFormat dateFormat) {
-        return dateFormat.format(new Date(timeInMillis));
+        return dateFormat.format(timeInMillis*1000);
     }
 
     /**

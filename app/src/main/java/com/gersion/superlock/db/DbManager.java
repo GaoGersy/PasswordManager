@@ -1,8 +1,11 @@
 package com.gersion.superlock.db;
 
+import android.text.TextUtils;
+
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.Md5Utils;
+import com.gersion.superlock.utils.TimeUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -12,6 +15,8 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
+
+import static com.gersion.superlock.db.PasswordManager.mCreateDate;
 
 public final class DbManager {
     private Realm mRealm;
@@ -69,8 +74,12 @@ public final class DbManager {
     **/
     private byte[] getKey() {
         byte[] key = new byte[64];
-        String superPassword = ConfigManager.getInstance().getSuperPassword();
-        String password = Md5Utils.encodeWithTimes(superPassword, 2);
+        mCreateDate = ConfigManager.getInstance().getCreateDbDate();
+        if (TextUtils.isEmpty(mCreateDate)) {
+            mCreateDate = TimeUtils.getCurrentTimeInString();
+            ConfigManager.getInstance().setCreateDbDate(mCreateDate);
+        }
+        String password = Md5Utils.encodeWithTimes(mCreateDate, 2);
         char[] chars = password.toCharArray();
         int length = chars.length;
         for (int i = 0; i < length; i++) {

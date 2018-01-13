@@ -11,8 +11,8 @@ android {
             storePassword 'hpw3kojn3DdJ'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0'
     defaultConfig {
         applicationId "com.gersion.superpasswordlock"
         minSdkVersion 16
@@ -62,20 +62,20 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.6.0'
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
-    compile 'com.wei.android.lib:fingerprintidentify:1.1.5'
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.wei.android.lib:fingerprintidentify:1.2.1'
+    compile 'com.android.support:appcompat-v7:26+'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:recyclerview-v7:26+'
     compile 'jp.wasabeef:recyclerview-animators:2.2.4'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.orhanobut:logger:1.15'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.android.support:design:26+'
+    compile 'com.android.support:cardview-v7:26+'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:palette-v7:24.2.1'
+    compile 'com.android.support:support-v4:26+'
+    compile 'com.android.support:palette-v7:26+'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
     compile 'com.yinglan.alphatabs:library:1.0.8'
     compile 'com.google.code.gson:gson:2.8.0'
@@ -90,4 +90,7 @@ dependencies {
     compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.vincent.filepicker:MultiTypeFilePicker:1.0.5'
+    compile 'com.github.GaoGersy:SimpleMutiTypeAdapter:1.0.0'
+    compile 'com.yarolegovich:discrete-scrollview:1.3.2'
 }

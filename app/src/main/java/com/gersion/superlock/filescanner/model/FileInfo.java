@@ -5,27 +5,28 @@ import java.io.File;
 /**
  * Created by droidNinja on 29/07/16.
  */
-public class Document extends BaseFile {
+public class FileInfo extends BaseFile {
     private String mimeType;
     private String size;
     private FileType fileType;
+    private String dateAdded;
 
-    public Document(int id, String title, String path) {
+    public FileInfo(int id, String title, String path) {
         super(id, title, path);
     }
 
-    public Document() {
+    public FileInfo() {
         super(0, null, null);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Document)) return false;
+        if (!(o instanceof FileInfo)) return false;
 
-        Document document = (Document) o;
+        FileInfo fileInfo = (FileInfo) o;
 
-        return android.R.attr.id == document.id;
+        return android.R.attr.id == fileInfo.id;
     }
 
     @Override
@@ -65,12 +66,20 @@ public class Document extends BaseFile {
         this.size = size;
     }
 
-    public String getTitle() {
+    public String getFileName() {
         return new File(this.path).getName();
     }
 
-    public void setTitle(String title) {
+    public void setFileName(String title) {
         this.name = title;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dataAdded) {
+        this.dateAdded = dataAdded;
     }
 
     public boolean isThisType(String[] types) {
@@ -88,5 +97,14 @@ public class Document extends BaseFile {
 
     public void setFileType(FileType fileType) {
         this.fileType = fileType;
+    }
+
+    @Override
+    public String toString() {
+        return "FileInfo{" +
+                "mimeType='" + mimeType + '\'' +
+                ", size='" + size + '\'' +
+                ", fileType=" + fileType +
+                '}';
     }
 }

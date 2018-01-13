@@ -89,7 +89,12 @@ public class FingerPrintAdapter implements LockAdapter {
         }
 
         @Override
-        public void onFailed() {
+        public void onStartFailedByDeviceLocked() {
+
+        }
+
+        @Override
+        public void onFailed(boolean isDeviceLocked) {
             mTvNotice.setText("指纹解锁已禁用，请 " + 15 + " 秒后重试");
             SPManager.setLockedTime(SystemClock.currentThreadTimeMillis());
             mIvFinger.setImageResource(R.mipmap.alert);

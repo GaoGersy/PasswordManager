@@ -8,7 +8,6 @@ import android.view.View;
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.MainPagerAdapter;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.service.FloatBallService;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.view.TitleView;
@@ -33,7 +32,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        DbManager.getInstance().init();
         if (ConfigManager.getInstance().isEnableFloatBall()){
             addBall();
         }

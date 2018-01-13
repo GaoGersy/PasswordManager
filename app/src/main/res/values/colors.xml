@@ -34,4 +34,5 @@
     <color name="primary_color">#c32f98</color>
     <color name="secondary_color">#e113a6</color>
     <color name="search_title_color">#99c32f98</color>
+    <color name="list_bg_color">#15ffffff</color>
 </resources>

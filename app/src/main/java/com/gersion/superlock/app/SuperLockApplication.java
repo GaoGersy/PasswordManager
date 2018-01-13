@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.MainActivity;
+import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.utils.RudenessScreenHelper;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -85,7 +86,7 @@ public class SuperLockApplication extends Application {
         new RudenessScreenHelper(this, 750).activate();
         Realm.init(this);
 //        PasswordManager.getInstance().init(this,1);
-//        DbManager.getInstance().init();
+        DbManager.getInstance().init();
         CalligraphyConfig.
                 initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/NotoSansHans.otf")
@@ -108,7 +109,7 @@ public class SuperLockApplication extends Application {
     private void initLogger() {
         Logger
                 .init("Gersy")                 // defaulticon PRETTYLOGGER or use just init()
-                .methodCount(2)                 // defaulticon 2
+                .methodCount(5)                 // defaulticon 2
 //                .hideThreadInfo()               // defaulticon shown
                 .logLevel(LogLevel.FULL)        // defaulticon LogLevel.FULL
                 .methodOffset(0);

@@ -128,11 +128,16 @@ public class ImportOldDataActivity extends BaseActivity {
     private void recoveryData() {
         switch (currentLocationId) {
             case R.id.rb_file:
+                getDataFromFile();
                 break;
             case R.id.rb_backup:
                 getDataFromBackup();
                 break;
         }
+    }
+
+    private void getDataFromFile() {
+        toActivity(SelectFileActivity.class);
     }
 
     //从本地备份恢复

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="@dimen/pwd_item_width"
+        android:layout_height="@dimen/pwd_item_height"
+        app:cardCornerRadius="@dimen/pwd_item_radius"
+        app:cardBackgroundColor="@color/secondary_color"
+        >
+<TextView
+        android:text="删除"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:textColor="@color/white"
+        android:background="@drawable/selector_lock_type"
+        />
+</android.support.v7.widget.CardView>

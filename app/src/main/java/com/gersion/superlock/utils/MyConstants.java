@@ -72,7 +72,7 @@ public interface MyConstants {
 
     String SALT = "9ok78&ssa@";
 
-    String FILE_TYPE = "slk";
+    String FILE_TYPE = "slock";
 
     interface LockMode{
         int MODE_INIT=0;//初始设置
