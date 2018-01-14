@@ -189,7 +189,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             itemPicker.setOffscreenItems(0);
             itemPicker.setItemTransformer(new ItemTransformer.Builder()
                     .setMinScale(0.7f)
-                    .setDegree(60f)
+                    .setDegree(45f)
                     .build());
 //            itemPicker.setItemTransformer(new ScaleTransformer.Builder()
 //                    .setMinScale(1f)

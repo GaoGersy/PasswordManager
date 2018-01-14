@@ -1,6 +1,10 @@
 package com.gersion.superlock.adapter;
 
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gersion.library.adapter.MultiTypeAdapter;
 import com.gersion.library.viewholder.BaseViewHolder;
@@ -16,13 +20,29 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean,Object> {
     protected void convert(BaseViewHolder baseViewHolder, ItemBean bean) {
         switch (bean.getLayoutId()){
             case R.layout.item_detail_del:
+                TextView tvDel = (TextView) baseViewHolder.getView(R.id.tv_del);
+                tvDel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
                 break;
             case R.layout.item_detail_home:
                 baseViewHolder.setText(R.id.tv_name,bean.getName());
                 break;
             case R.layout.item_detail_password:
                 baseViewHolder.setText(R.id.tv_name,bean.getName());
-                baseViewHolder.setText(R.id.et_password,bean.getPwd());
+                final EditText etPassword = (EditText) baseViewHolder.getView(R.id.et_password);
+                etPassword.setText(bean.getPwd());
+                ImageView ivEdit = (ImageView) baseViewHolder.getView(R.id.iv_edit);
+                ivEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        etPassword.setEnabled(true);
+                        etPassword.requestFocus();
+                    }
+                });
                 break;
             case R.layout.item_detail_notice:
                 String notes = bean.getNotes();

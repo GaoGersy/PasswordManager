@@ -61,7 +61,7 @@ public class GuideActivity extends AppCompatActivity implements OnPageChangeList
 //            startActivity(new Intent(this, MainActivity.class));
 //            finish();
 //        }
-        startActivity(new Intent(this, SetSuperPasswordActivity.class));
+        startActivity(new Intent(this, RegisterActivity.class));
         finish();
     }
 

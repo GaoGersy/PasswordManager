@@ -35,4 +35,7 @@
     <color name="secondary_color">#e113a6</color>
     <color name="search_title_color">#99c32f98</color>
     <color name="list_bg_color">#15ffffff</color>
+    <color name="item_home">#fdc647</color>
+    <color name="item_password">#7abe45</color>
+    <color name="item_notes">#5aa7eb</color>
 </resources>
