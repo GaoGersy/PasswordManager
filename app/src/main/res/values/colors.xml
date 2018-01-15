@@ -12,6 +12,7 @@
     <color name="white">#fff</color>
     <color name="font_color">#fff</color>
     <color name="divider">#cdcdcd</color>
+    <color name="red">#f00</color>
     <color name="gray_80">#808080</color>
     <color name="gray_a0">#a0a0a0</color>
     <color name="gray_b0">#b0b0b0</color>

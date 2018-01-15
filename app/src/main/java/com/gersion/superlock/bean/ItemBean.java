@@ -7,6 +7,7 @@ import com.gersion.library.inter.IMultiLayout;
  */
 
 public class ItemBean implements IMultiLayout {
+    private long id;
     private int layoutId;
     private String number;
     private String address;
@@ -19,6 +20,14 @@ public class ItemBean implements IMultiLayout {
     private String notes;
     private int index;
     private String icon;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getNumber() {
         return number;

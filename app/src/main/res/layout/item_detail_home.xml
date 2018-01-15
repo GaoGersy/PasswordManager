@@ -5,7 +5,7 @@
         android:layout_width="@dimen/pwd_item_width"
         android:layout_height="@dimen/pwd_item_height"
         app:cardCornerRadius="@dimen/pwd_item_radius"
-        android:background="@color/item_home"
+        android:background="@drawable/shape_item_home_bg"
         app:cardBackgroundColor="@color/item_home"
         >
     <LinearLayout
@@ -17,9 +17,21 @@
             >
         <ImageView
                 android:id="@+id/iv_icon"
+                android:visibility="gone"
                 android:src="@mipmap/ic_launcher"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                />
+        <TextView
+                android:id="@+id/tv_icon"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="淘宝"
+                android:lines="1"
+                android:background="@drawable/shape_guide_bg_blue"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 />
         <TextView
                 android:id="@+id/tv_name"
@@ -27,7 +39,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:textSize="16sp"
-                android:textColor="@color/white"
+                android:textColor="@color/secondary_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />

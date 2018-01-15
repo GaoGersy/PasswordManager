@@ -50,7 +50,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     private int mTotalCount;
 
     CharSequence[] words = {
-            "未知",
+            "自定义",
             "腾讯",
             "淘宝",
             "百度",

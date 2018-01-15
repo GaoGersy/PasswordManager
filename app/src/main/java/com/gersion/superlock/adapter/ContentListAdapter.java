@@ -104,6 +104,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
     @Override
     public void remove(DbBean data) {
         mDatas.remove(data);
+//        DbManager.getInstance().delete(data);
         notifyDataSetChanged();
     }
 
@@ -205,6 +206,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             List<ItemBean> list = new ArrayList<>();
 
             ItemBean delItemBean = new ItemBean();
+            delItemBean.setId(dbBean.getId());
             delItemBean.setLayoutId(R.layout.item_detail_del);
 
             ItemBean homeItemBean = new ItemBean();

@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
                 .setSearchVisiable(true)
                 .setBackVisiable(false)
                 .setTitleText("密码列表");
-
+        mViewPager.setOffscreenPageLimit(2);
     }
 
     private void addBall(){

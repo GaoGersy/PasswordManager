@@ -5,7 +5,7 @@
         android:layout_width="@dimen/pwd_item_width"
         android:layout_height="@dimen/pwd_item_height"
         app:cardCornerRadius="@dimen/pwd_item_radius"
-        android:background="@color/secondary_color"
+        android:background="@drawable/shape_item_del_bg"
         app:cardBackgroundColor="@color/secondary_color"
         >
 <TextView
@@ -18,5 +18,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:textColor="@color/white"
+        android:background="@drawable/shape_del_bg"
         />
 </FrameLayout>

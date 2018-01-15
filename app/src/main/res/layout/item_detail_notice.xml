@@ -5,7 +5,7 @@
         android:layout_width="@dimen/pwd_item_width"
         android:layout_height="@dimen/pwd_item_height"
         app:cardCornerRadius="@dimen/pwd_item_radius"
-        android:background="@color/item_notes"
+        android:background="@drawable/shape_item_note_bg"
         app:cardBackgroundColor="@color/item_notes"
         android:layout_gravity="center"
         >
@@ -18,7 +18,7 @@
                 android:id="@+id/tv_title"
                 android:text="备注"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textColor="@color/white"
                 android:padding="10dp"
                 android:layout_width="match_parent"
@@ -27,7 +27,8 @@
         <TextView
                 android:id="@+id/tv_notice"
                 android:text="备注"
-                android:padding="10dp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="15dp"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
