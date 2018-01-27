@@ -23,7 +23,8 @@
     <color name="gray_f1">#E9EAEA</color>
     <color name="gray_77">#777777</color>
     <color name="light_gray">#F2F3F5</color>
-    <color name="font_black">#151515</color>
+    <color name="font_black">#5f5f5f</color>
+    <color name="font_grey">#737373</color>
     <color name="global_bg">#9000</color>
     <color name="title">#090e17</color>
     <color name="transparent">#00ffffff</color>
@@ -31,17 +32,20 @@
     <color name="password_bg">#f8f9fb</color>
     <color name="password_boarder">#f0f2f1</color>
     <color name="confirm">#a75190</color>
-    <color name="item_divider">#f0f0f0</color>
+    <color name="item_divider">#d9d9d9</color>
     <color name="item_bg">#11ffffff</color>
-    <color name="primary_color">#c32f98</color>
-    <color name="secondary_color">#e113a6</color>
+    <color name="primary_color">#008171</color>
+    <color name="secondary_color">#0d7d6f</color>
     <color name="search_title_color">#99c32f98</color>
     <color name="list_bg_color">#15ffffff</color>
     <color name="item_home">#fdc647</color>
     <color name="item_password">#7abe45</color>
     <color name="item_notes">#5aa7eb</color>
-    <color name="theme_bg">#f0f0f0</color>
+    <color name="theme_grey_bg">#efeff0</color>
     <color name="edit_text_bg">#fff</color>
     <color name="button_bg">#5aa7eb</color>
-    <color name="title_bg">#5aa7eb</color>
+    <color name="title_bg">#008171</color>
+    <color name="dividers">#bfbfbf</color>
+    <color name="grey_bg">#efeff0</color>
+
 </resources>

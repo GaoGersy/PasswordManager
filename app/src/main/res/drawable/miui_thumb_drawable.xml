@@ -2,18 +2,18 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:state_enabled="false" android:state_checked="true">
 		<shape android:shape="oval">
-			<solid android:color="#FFA75E"/>
+			<solid android:color="#8aafaa"/>
 			<stroke
 				android:width="1px"
-				android:color="#DB8056"/>
+				android:color="#82a4a0"/>
 		</shape>
 	</item>
 	<item android:state_enabled="false">
 		<shape android:shape="oval">
-			<solid android:color="#E1E1E1"/>
+			<solid android:color="#ededed"/>
 			<stroke
 				android:width="1px"
-				android:color="#ECECEC"/>
+				android:color="@color/item_divider"/>
 		</shape>
 	</item>
 	<item android:state_checked="true">
@@ -26,10 +26,10 @@
 	</item>
 	<item>
 		<shape android:shape="oval">
-			<solid android:color="#E0E0E0"/>
+			<solid android:color="#ededed"/>
 			<stroke
 				android:width="1px"
-				android:color="#D0D0D0"/>
+				android:color="@color/item_divider"/>
 		</shape>
 	</item>
 </selector>

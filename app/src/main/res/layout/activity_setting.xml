@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/theme_bg"
+        android:background="@color/theme_grey_bg"
         >
     <com.gersion.superlock.view.TitleView
             android:id="@+id/titleView"
@@ -16,6 +16,7 @@
     <com.gersion.superlock.view.SettingView
             android:id="@+id/open_lock"
             app:setting_title="开启程序锁"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:setting_switch_show="true"
@@ -26,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:setting_switch_show="true"
+            android:visibility="gone"
             />
     <com.gersion.superlock.view.SettingView
             android:id="@+id/update_time_show"
