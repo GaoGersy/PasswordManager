@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
-import android.view.animation.OvershootInterpolator;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -67,7 +66,7 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
         mTvConfirm = findView(R.id.tv_confirm);
 
         mCbSmall.setSelected(true);
-        mTouchView.setEnabled(false);
+        mTouchView.setCanTouch(false);
         initSuperPassword();
     }
 
@@ -164,7 +163,7 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
      */
     private void stopAnimator() {
         handler.stop();
-        mTouchView.setEnable(false);
+        mTouchView.setCanTouch(false);
         final ObjectAnimator animator = ObjectAnimator.ofFloat(mTvPassword, "translationY", 300f);
         animator.setDuration(1000);
         animator.setInterpolator(new BounceInterpolator());
@@ -172,7 +171,7 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
         animator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                mTouchView.setEnable(true);
+                mTouchView.setCanTouch(true);
             }
         });
 
@@ -191,20 +190,20 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
      * @author Gers
      * @time 2016/8/10 16:28
      */
-    private void playAnimator() {
-        mTouchView.setEnable(false);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mTvPassword, "translationY", 0);
-        animator.setDuration(300);
-        animator.setInterpolator(new OvershootInterpolator());
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mTouchView.setEnable(true);
-                handler.start();
-            }
-        });
-        animator.start();
-    }
+//    private void playAnimator() {
+//        mTouchView.setCanTouch(false);
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(mTvPassword, "translationY", 0);
+//        animator.setDuration(300);
+//        animator.setInterpolator(new OvershootInterpolator());
+//        animator.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                mTouchView.setCanTouch(true);
+//                handler.start();
+//            }
+//        });
+//        animator.start();
+//    }
 
     private ObjectAnimator shake(View view) {
         ObjectAnimator animator = AnimatorUtils.nope(view);

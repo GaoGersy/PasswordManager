@@ -13,7 +13,6 @@ import com.gersion.superlock.animator.EasyTransitionOptions;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
-import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
@@ -73,15 +72,15 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-        mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view,int position) {
-                DbBean dbBean = mDataList.get(position);
-                startTrainsition(view,dbBean);
-            }
-        });
-
-        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
+//        mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view,int position) {
+//                DbBean dbBean = mDataList.get(position);
+//                startTrainsition(view,dbBean);
+//            }
+//        });
+//
+//        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
     }
 
     DbManager.OnDataChangeListener dataChangeListener = new DbManager.OnDataChangeListener() {

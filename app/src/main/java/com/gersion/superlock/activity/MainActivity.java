@@ -9,7 +9,6 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.MainPagerAdapter;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.service.FloatBallService;
-import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.view.TitleView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
 
@@ -32,9 +31,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (ConfigManager.getInstance().isEnableFloatBall()) {
-            addBall();
-        }
+//        if (ConfigManager.getInstance().isEnableFloatBall()) {
+//            addBall();
+//        }
     }
 
     @Override

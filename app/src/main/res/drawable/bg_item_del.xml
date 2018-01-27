@@ -11,5 +11,4 @@
         android:endColor="#FFE03535"
         android:startColor="#FFF98989"
         android:type="linear"/>
-    <stroke android:color="#FFE03535" android:width="1px"></stroke>
 </shape>

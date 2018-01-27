@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 
 import com.gersion.superlock.activity.LockActivity;
 import com.gersion.superlock.utils.ConfigManager;
-import com.orhanobut.logger.Logger;
 
 /**
  * 是所有窗体控件的父类，封装了检测程序是否在前台的方法，如果进入后台，再次进入应用会进入登录界面
@@ -62,7 +61,6 @@ public class BaseLifeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         type = UNLOCK_PASSWORD;
         liveCount++;
-        Logger.e(this.getClass().getSimpleName());
     }
 
 
@@ -74,7 +72,6 @@ public class BaseLifeActivity extends AppCompatActivity {
             startActivity(intent);
         }
 //        visibleCount++;
-//        Logger.d(this.getClass().getSimpleName()+"  onResume: "+visibleCount+"   需要锁屏"+shouldLockSceen(this));
         super.onResume();
 //        lastActive = 0;
     }
@@ -84,7 +81,6 @@ public class BaseLifeActivity extends AppCompatActivity {
         super.onStop();
         visibleCount--;
 
-//        Logger.d(this.getClass().getSimpleName()+"  onStop: "+visibleCount+"   需要锁屏"+shouldLockSceen(this));
         if (visibleCount == 0) {
             lastActive = System.currentTimeMillis();
         }
