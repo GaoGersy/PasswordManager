@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/bg"
+        android:background="@color/theme_bg"
         >
     <com.gersion.superlock.view.TitleView
             android:id="@+id/titleView"
@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:orientation="horizontal"
+            android:background="@color/bg_white"
             >
 
         <com.yinglan.alphatabs.AlphaTabView

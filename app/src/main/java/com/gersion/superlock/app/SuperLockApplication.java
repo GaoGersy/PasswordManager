@@ -3,15 +3,21 @@ package com.gersion.superlock.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Environment;
 import android.os.Handler;
 import android.view.WindowManager;
+import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.MainActivity;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.utils.RudenessScreenHelper;
+import com.hitomi.cmlibrary.CircleMenu;
+import com.hitomi.cmlibrary.OnMenuSelectedListener;
+import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.tencent.bugly.Bugly;
@@ -19,6 +25,9 @@ import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
 import com.wei.android.lib.fingerprintidentify.FingerprintIdentify;
 import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
+import com.yhao.floatwindow.FloatWindow;
+import com.yhao.floatwindow.MoveType;
+import com.yhao.floatwindow.Screen;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -102,8 +111,44 @@ public class SuperLockApplication extends Application {
 
         //初始化主线程的一个handler
         mHandler = new Handler();
+//        initActionButton();
+    }
 
+    private void initActionButton() {
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageResource(R.mipmap.finger_print);
 
+        CircleMenu circleMenu = new CircleMenu(this);
+
+        circleMenu.setMainMenu(Color.parseColor("#CDCDCD"), R.mipmap.icon_menu, R.mipmap.icon_cancel)
+                .addSubMenu(Color.parseColor("#258CFF"), R.mipmap.icon_home)
+                .addSubMenu(Color.parseColor("#30A400"), R.mipmap.icon_search)
+                .addSubMenu(Color.parseColor("#FF4B32"), R.mipmap.icon_notify)
+                .addSubMenu(Color.parseColor("#8A39FF"), R.mipmap.icon_setting)
+                .addSubMenu(Color.parseColor("#FF6A00"), R.mipmap.icon_gps)
+                .setOnMenuSelectedListener(new OnMenuSelectedListener() {
+
+                    @Override
+                    public void onMenuSelected(int index) {}
+
+                }).setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
+
+            @Override
+            public void onMenuOpened() {}
+
+            @Override
+            public void onMenuClosed() {}
+
+        });
+        FloatWindow
+                .with(getApplicationContext())
+                .setView(circleMenu)
+                .setX(Screen.width, 0.8f)
+                .setY(Screen.height, 0.3f)
+                .setMoveType(MoveType.slide)
+                .setMoveStyle(500, new BounceInterpolator())
+                .setDesktopShow(true)
+                .build();
     }
 
     private void initLogger() {

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -19,8 +20,8 @@ import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.SettingView;
 import com.gersion.superlock.view.TitleView;
+import com.kyleduo.switchbutton.SwitchButton;
 import com.sdsmdg.tastytoast.TastyToast;
-import com.suke.widget.SwitchButton;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -33,8 +34,6 @@ public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.titleView)
     TitleView mTitleView;
-    @BindView(R.id.auto_login)
-    SettingView mAutoLogin;
     @BindView(R.id.open_lock)
     SettingView mOpenLock;
     @BindView(R.id.pwd_show)
@@ -71,7 +70,6 @@ public class SettingActivity extends BaseActivity {
         mConfigManager = ConfigManager.getInstance();
         mOpenLock.setSwitchStatus(mConfigManager.isLock());
         mPwdShow.setSwitchStatus(mConfigManager.isShowPwd());
-        mAutoLogin.setSwitchStatus(mConfigManager.isAutoLogin());
         mUpdateTimeShow.setSwitchStatus(mConfigManager.isShowUpdateTime());
         mFloatBall.setSwitchStatus(mConfigManager.isEnableFloatBall());
         mFingerPrint.setEnableEffect(isFringerEnable());
@@ -80,19 +78,10 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        mAutoLogin.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
-                String toast = isChecked ? "开启自动登录" : "关闭自动登录";
-                ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
-                mConfigManager.setAutoLogin(isChecked);
-            }
-        });
 
         mOpenLock.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
-                mAutoLogin.setEnableEffect(isChecked);
+            public void onCheckedChanged(CompoundButton switchButton, boolean isChecked) {
                 String toast = isChecked ? "开启程序锁" : "关闭程序锁";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
                 mConfigManager.setLock(isChecked);
@@ -101,7 +90,7 @@ public class SettingActivity extends BaseActivity {
 
         mPwdShow.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton switchButton, boolean isChecked) {
                 String toast = isChecked ? "开启显示密码" : "关闭显示密码";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
                 mConfigManager.setShowPwd(isChecked);
@@ -110,7 +99,7 @@ public class SettingActivity extends BaseActivity {
         });
         mUpdateTimeShow.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton switchButton, boolean isChecked) {
                 String toast = isChecked ? "开启显示更新时间" : "关闭显示更新时间";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
                 mConfigManager.setShowUpdateTime(isChecked);
@@ -119,7 +108,7 @@ public class SettingActivity extends BaseActivity {
 
         mFingerPrint.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(SwitchButton switchButton, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton switchButton, boolean isChecked) {
                     String toast = isChecked ? "开启指纹解锁" : "关闭指纹解锁";
                     ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
                     mConfigManager.setFingerPrint(isChecked);
@@ -140,7 +129,7 @@ public class SettingActivity extends BaseActivity {
 
         mFloatBall.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton view, boolean isChecked) {
                 String toast = isChecked ? "开启悬浮球" : "关闭悬浮球";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
 //                mConfigManager.setEnableFloatBall(isChecked);

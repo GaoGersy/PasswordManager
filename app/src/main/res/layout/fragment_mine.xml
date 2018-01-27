@@ -16,13 +16,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_marginTop="10dp"
                 >
 
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20pt"
-                    android:background="#11ffffff"
+                    android:background="#ffffff"
                     >
 
                 <ImageView
@@ -43,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="路人甲"
-                        android:textColor="@color/white"
+                        android:textColor="@color/font_black"
                         android:textSize="20sp"
                         />
 
@@ -69,22 +70,12 @@
                     />
 
             <com.gersion.superlock.view.ItemView
-                    android:id="@+id/setting"
+                    android:id="@+id/backup"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:item_icon="@drawable/settings"
-                    app:item_show_divider="false"
-                    app:item_title="设置"
-                    />
-
-            <com.gersion.superlock.view.ItemView
-                    android:id="@+id/backup"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     app:item_icon="@mipmap/share"
-                    app:item_title="备份到存储卡"
+                    app:item_title="备份密码"
                     />
 
             <com.gersion.superlock.view.ItemView
@@ -92,23 +83,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_icon="@mipmap/share"
-                    app:item_show_divider="false"
-                    app:item_title="从存储卡恢复"
+                    app:item_show_divider="true"
+                    app:item_title="恢复密码"
                     />
 
             <com.gersion.superlock.view.ItemView
                     android:id="@+id/app_lock"
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_icon="@drawable/about"
-                    app:item_title="解锁姿势"
+                    app:item_show_divider="false"
+                    app:item_title="密码设置"
                     />
             <com.gersion.superlock.view.ItemView
                     android:id="@+id/superpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:item_icon="@mipmap/share"
                     app:item_show_divider="false"
                     app:item_title="查看超级密码"
@@ -120,6 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_show_divider="true"
+                    android:visibility="gone"
                     app:item_title="捐赠"
                     />
             <com.gersion.superlock.view.ItemView
@@ -132,8 +124,16 @@
                     app:item_title="分享"
                     />
             <com.gersion.superlock.view.ItemView
-                    android:id="@+id/about"
+                    android:id="@+id/setting"
                     android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:item_icon="@drawable/settings"
+                    app:item_show_divider="true"
+                    app:item_title="设置"
+                    />
+            <com.gersion.superlock.view.ItemView
+                    android:id="@+id/about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_icon="@drawable/about"

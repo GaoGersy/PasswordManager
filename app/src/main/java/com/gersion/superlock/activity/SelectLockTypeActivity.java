@@ -37,7 +37,7 @@ public class SelectLockTypeActivity extends BaseActivity {
         mTvPattern.setSelected(lockType == MyConstants.LockType.TYPE_PATTERN);
         mTvFingerPrint.setSelected(lockType == MyConstants.LockType.TYPE_FINGER_PRINT);
 
-        mTitleView.setTitleText("选择解锁姿势")
+        mTitleView.setTitleText("密码设置")
                 .setAddVisiable(false)
                 .setSearchVisiable(false);
     }

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="#11ffffff"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="#ffffff"
         android:orientation="vertical"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
@@ -38,7 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/ll_icon"
-                android:textColor="@color/white"
+                android:textColor="@color/font_black"
+                android:typeface="sans"
                 android:textSize="16sp"
                 />
 
@@ -52,14 +54,19 @@
                 android:src="@mipmap/arrow_right_p"
                 />
 
-        <com.suke.widget.SwitchButton
-                android:visibility="gone"
+        <com.kyleduo.switchbutton.SwitchButton
                 android:id="@+id/switchButton"
-                android:layout_marginRight="2dp"
+                style="@style/SwitchButtonStyle"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:kswBackDrawable="@drawable/miui_back_drawable"
+                app:kswThumbDrawable="@drawable/miui_thumb_drawable"
+                app:kswThumbHeight="18dp"
+                app:kswThumbRangeRatio="2"
+                app:kswThumbWidth="18dp"
                 />
 
     </RelativeLayout>

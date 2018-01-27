@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/shape_pwd_bg"
+                android:background="@drawable/edit_text_bg"
                 android:padding="10dp"
                 >
             <RadioButton
@@ -74,7 +74,7 @@
                 android:hint="邮箱地址"
                 android:textColor="@color/gray_d0"
                 android:textColorHint="@color/gray_b0"
-                android:background="@drawable/shape_pwd_bg"
+                android:background="@drawable/edit_text_bg"
                 android:padding="15dp"
                 />
         <TextView

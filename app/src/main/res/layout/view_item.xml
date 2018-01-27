@@ -6,7 +6,7 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:gravity="center"
-        android:background="#11ffffff"
+        android:background="#ffffff"
         >
 
     <RelativeLayout
@@ -47,8 +47,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/ll_icon"
-                android:text="adsfasd"
-                android:textColor="@color/white"
+                android:typeface="sans"
+                android:textColor="@color/font_black"
                 android:textSize="16sp"
                 />
 

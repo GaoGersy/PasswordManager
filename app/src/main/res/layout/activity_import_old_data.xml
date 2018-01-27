@@ -41,7 +41,7 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_pwd_bg"
+                        android:background="@drawable/edit_text_bg"
                         android:visibility="gone"
                         >
                     <RadioGroup
@@ -88,7 +88,7 @@
                             android:hint="超级密码"
                             android:textColor="@color/gray_d0"
                             android:textColorHint="@color/gray_b0"
-                            android:background="@drawable/shape_pwd_bg"
+                            android:background="@drawable/edit_text_bg"
                             android:layout_margin="10dp"
                             android:padding="15dp"
                             />
@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/shape_pwd_bg"
+                        android:background="@drawable/edit_text_bg"
                         >
                     <RadioGroup
                             android:id="@+id/rg_location"
@@ -158,7 +158,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:background="@drawable/shape_pwd_bg"
+                        android:background="@drawable/edit_text_bg"
                         android:padding="10dp"
                         >
                     <RadioButton

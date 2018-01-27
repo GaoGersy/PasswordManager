@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (ConfigManager.getInstance().isEnableFloatBall()){
+        if (ConfigManager.getInstance().isEnableFloatBall()) {
             addBall();
         }
     }
@@ -49,9 +49,10 @@ public class MainActivity extends BaseActivity {
                 .setBackVisiable(false)
                 .setTitleText("密码列表");
         mViewPager.setOffscreenPageLimit(2);
+
     }
 
-    private void addBall(){
+    private void addBall() {
         Intent intent = new Intent(MainActivity.this, FloatBallService.class);
         Bundle data = new Bundle();
         data.putInt("type", FloatBallService.TYPE_ADD);
@@ -90,10 +91,10 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position==0){
+                if (position == 0) {
                     mTitleView.setAddVisiable(true);
                     mTitleView.setSearchVisiable(true);
-                }else{
+                } else {
                     mTitleView.setAddVisiable(false);
                     mTitleView.setSearchVisiable(false);
                 }

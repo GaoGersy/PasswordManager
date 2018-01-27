@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
+        android:id="@+id/container"
         android:layout_width="@dimen/pwd_item_width"
         android:layout_height="@dimen/pwd_item_height"
-        app:cardCornerRadius="@dimen/pwd_item_radius"
-        android:background="@drawable/shape_item_del_bg"
-        app:cardBackgroundColor="@color/secondary_color"
-        >
-<TextView
-        android:id="@+id/tv_del"
-        android:text="删除"
-        android:gravity="center"
+        android:orientation="vertical"
         android:layout_gravity="center"
-        android:padding="10dp"
-        android:textSize="16sp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_del_bg"
-        />
-</FrameLayout>
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:background="@drawable/bg_item_del"
+        >
+    <TextView
+            android:id="@+id/tv_del"
+            android:text="删除"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:textColor="#FFE03535"
+            android:background="@drawable/shape_del_bg"
+            />
+</LinearLayout>

@@ -28,12 +28,12 @@ public class ItemTransformer implements DiscreteScrollItemTransformer {
 
     @Override
     public void transformItem(View view, float position) {
-        pivotX.setOn(view);
-        pivotY.setOn(view);
-        float closenessToCenter = 1f - Math.abs(position);
-        float scale = minScale + maxMinDiff * closenessToCenter;
-        view.setScaleX(scale);
-        view.setScaleY(scale);
+//        pivotX.setOn(view);
+//        pivotY.setOn(view);
+//        float closenessToCenter = 1f - Math.abs(position);
+//        float scale = minScale + maxMinDiff * closenessToCenter;
+//        view.setScaleX(scale);
+//        view.setScaleY(scale);
         view.setPivotX(position < 0f ? view.getWidth() : 0f);
         view.setPivotY(view.getHeight() * 0.5f);
         view.setRotationY(degree * position);

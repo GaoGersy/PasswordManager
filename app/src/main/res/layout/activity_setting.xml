@@ -6,21 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/bg"
+        android:background="@color/theme_bg"
         >
     <com.gersion.superlock.view.TitleView
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
-
-    <com.gersion.superlock.view.SettingView
-            android:layout_marginTop="10dp"
-            android:id="@+id/auto_login"
-            app:setting_title="输入密码后自动登入"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:setting_switch_show="true"
             />
     <com.gersion.superlock.view.SettingView
             android:id="@+id/open_lock"

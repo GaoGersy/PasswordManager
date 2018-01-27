@@ -9,7 +9,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:padding="7dp"
-        android:background="@drawable/shape_pwd_bg"
+        android:background="@drawable/edit_text_bg"
         >
     <ImageView
             android:id="@+id/iv_icon"

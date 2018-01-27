@@ -14,17 +14,7 @@ import com.gersion.superlock.activity.SelectLockTypeActivity;
 import com.gersion.superlock.activity.SettingActivity;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.SDCardUtils;
-import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.ItemView;
-import com.orhanobut.logger.Logger;
-import com.sdsmdg.tastytoast.TastyToast;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
 /**
  * Created by a3266 on 2017/6/11.
@@ -146,45 +136,4 @@ public class MineFragment extends BaseFragment {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }
-
-
-
-    private boolean loadSqlData() {
-        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
-        if (!sdCardEnable) {
-            ToastUtils.showTasty(getActivity(), "没有SD卡，无法读取备份的文件", TastyToast.WARNING);
-            return false;
-        }
-
-        File sqlPath = new File(SDCardUtils.getSDCardPath() + "biabia.db");
-        if (!sqlPath.exists()) {
-            ToastUtils.showTasty(getActivity(), "没有找到任何备份了的文件", TastyToast.WARNING);
-            return false;
-        }
-
-        boolean isSaved = false;
-        try {
-            FileInputStream fis = new FileInputStream(sqlPath);
-            String path = getActivity().getDatabasePath("biabia.db").getAbsolutePath();
-            Logger.d(path);
-            File file = new File(path);
-            if (file.exists()) {
-                file.delete();
-            }
-            byte[] buffer = new byte[1];
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            int len;
-            while ((len = bis.read(buffer)) != -1) {
-                bos.write(buffer);
-            }
-            bis.close();
-            bos.close();
-            isSaved = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return isSaved;
-    }
-
 }

@@ -5,12 +5,13 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
-import com.suke.widget.SwitchButton;
+import com.kyleduo.switchbutton.SwitchButton;
 
 /**
  * Created by gersy on 2017/6/22.
@@ -72,7 +73,7 @@ public class SettingView extends RelativeLayout {
         mSwitchButton.setEnabled(enable);
     }
 
-    public void setSwitchChangeListener(SwitchButton.OnCheckedChangeListener listener) {
+    public void setSwitchChangeListener(CompoundButton.OnCheckedChangeListener listener) {
         if (mSwitchButton != null) {
             mSwitchButton.setOnCheckedChangeListener(listener);
         }

@@ -10,6 +10,7 @@ import com.gersion.superlock.ItemTransformer;
 import com.gersion.superlock.R;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.ItemBean;
+import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuAdapter;
@@ -29,6 +30,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
     private List<DbBean> mDatas;
 
     private OnItemClickListener mOnItemClickListener;
+    private HomeFragment mHomeFragment;
 
     public ContentListAdapter(SwipeMenuRecyclerView menuRecyclerView, List<DbBean> data) {
         this.mMenuRecyclerView = menuRecyclerView;
@@ -190,7 +192,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             itemPicker.setOffscreenItems(0);
             itemPicker.setItemTransformer(new ItemTransformer.Builder()
                     .setMinScale(0.7f)
-                    .setDegree(45f)
+                    .setDegree(90f)
                     .build());
 //            itemPicker.setItemTransformer(new ScaleTransformer.Builder()
 //                    .setMinScale(1f)
@@ -230,6 +232,14 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             list.add(detailItemBean);
             list.add(noticeItemBean);
             mAdapter.setItems(list);
+            mAdapter.setOnItemClickListener(new DetailItemAdapter.OnItemClickListener() {
+                @Override
+                public void onClik(View view) {
+                    if (view.getId()==R.id.fl_container){
+                        itemPicker.smoothScrollToPosition(2);
+                    }
+                }
+            });
             itemPicker.scrollToPosition(1);
         }
 
@@ -244,6 +254,10 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             }
             return false;
         }
+    }
+
+    public void setFragment(HomeFragment homeFragment){
+        mHomeFragment = homeFragment;
     }
 
 }

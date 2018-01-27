@@ -94,4 +94,7 @@
             <enum name="password" value="2" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="ShadowContainer">
+        <attr name="sc_shadowColor" format="color"/>
+    </declare-styleable>
 </resources>
