@@ -22,12 +22,19 @@ public class MainPagerAdapter extends FragmentPagerAdapter implements ViewPager.
     private List<Fragment> fragments = new ArrayList<>();
     private AlphaTabsIndicator mAlphaTabsIndicator;
     private TitleView mTitleView;
-    private String[] mTitles = {"密码列表","密码生成器","我"};
+    private String[] mTitles = {"密码录","生成器","我的"};
 
     public MainPagerAdapter(FragmentManager fm, AlphaTabsIndicator alphaTabsIndicator, TitleView titleView) {
         super(fm);
         mAlphaTabsIndicator = alphaTabsIndicator;
         mTitleView = titleView;
+        fragments.add(new HomeFragment());
+        fragments.add(new PasswordCreaterFragment());
+        fragments.add(new MineFragment());
+    }
+
+    public MainPagerAdapter(FragmentManager fm) {
+        super(fm);
         fragments.add(new HomeFragment());
         fragments.add(new PasswordCreaterFragment());
         fragments.add(new MineFragment());
@@ -57,7 +64,13 @@ public class MainPagerAdapter extends FragmentPagerAdapter implements ViewPager.
 //        } else if (3 == position) {
 //            mAlphaTabsIndicator.removeAllBadge();
 //        }
-        mTitleView.setTitleText(mTitles[position]);
+//        mTitleView.setTitleText(mTitles[position]);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        String titile = mTitles[position];
+        return titile;
     }
 
     @Override

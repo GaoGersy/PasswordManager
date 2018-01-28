@@ -83,6 +83,12 @@ public class Croller extends View {
         init();
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        getParent().requestDisallowInterceptTouchEvent(true);
+        return super.dispatchTouchEvent(ev);
+    }
+
     private void init() {
         progressTextPaint = new Paint();
         progressTextPaint.setColor(progressTextColor);

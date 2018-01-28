@@ -4,6 +4,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/theme_grey_bg"
         >
 
     <ScrollView
@@ -155,6 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:item_go_show="false"
+                    android:visibility="gone"
                     app:item_icon="@drawable/exit"
                     app:item_title="退出"
                     />

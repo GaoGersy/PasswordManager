@@ -14,7 +14,7 @@ public class CreatePasswordActivity extends BaseActivity {
     private TitleView mTitleView;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_create_password;
     }
 

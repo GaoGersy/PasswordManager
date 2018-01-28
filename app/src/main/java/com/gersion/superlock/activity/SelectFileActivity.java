@@ -26,7 +26,7 @@ public class SelectFileActivity extends BaseActivity {
     private FileListAdapter mAdapter;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_select_file;
     }
 

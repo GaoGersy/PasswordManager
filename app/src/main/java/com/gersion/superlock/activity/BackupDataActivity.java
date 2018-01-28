@@ -10,17 +10,11 @@ import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.db.DbManager;
-import com.gersion.superlock.utils.Aes;
-import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.EmailUtil;
+import com.gersion.superlock.listener.ResultCallback;
+import com.gersion.superlock.utils.BackupHelper;
 import com.gersion.superlock.utils.GsonHelper;
-import com.gersion.superlock.utils.MyConstants;
-import com.gersion.superlock.utils.SDCardUtils;
-import com.gersion.superlock.utils.SDCardUtilss;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.TitleView;
-import com.orhanobut.logger.Logger;
-import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +27,11 @@ public class BackupDataActivity extends BaseActivity {
     private String mEncryptResult;
     private TextView mTvCommit;
     private int backupLocation = R.id.rb_local;
+    private String mDataJson;
+    private BackupHelper mBackupHelper;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_backup_data;
     }
 
@@ -63,11 +59,20 @@ public class BackupDataActivity extends BaseActivity {
                 Keyer keyer = new Keyer(data);
                 keyers.add(keyer);
             }
-            String dataJson = GsonHelper.toJsonFromList(keyers);
-            Logger.e(dataJson);
-
-            mEncryptResult = Aes.encryptWithSuperPassword(dataJson);
+            mDataJson = GsonHelper.toJsonFromList(keyers);
         }
+        mBackupHelper = BackupHelper.getInstance();
+        mBackupHelper.setOnResultCallback(new ResultCallback() {
+            @Override
+            public void onResultSuccess(String result) {
+                ToastUtils.show(BackupDataActivity.this,result);
+            }
+
+            @Override
+            public void onResultFailed(String result) {
+                ToastUtils.show(BackupDataActivity.this,result);
+            }
+        });
     }
 
     @Override
@@ -107,68 +112,12 @@ public class BackupDataActivity extends BaseActivity {
         }
         switch (backupLocation) {
             case R.id.rb_local:
-                backup2Local();
+                BackupHelper.getInstance().backup2Local(mDataJson);
                 break;
             case R.id.rb_mail:
-                backup2Email();
+                BackupHelper.getInstance().backup2Email(mDataJson);
                 break;
         }
     }
 
-    private void backup2Local() {
-        boolean sdCardEnable = SDCardUtils.isSDCardEnable();
-        if (!sdCardEnable) {
-            ToastUtils.showTasty(this, "没有SD卡，备份工作无法继续进行", TastyToast.WARNING);
-            return ;
-        }
-
-        List<String> sdCardPaths = SDCardUtilss.getSDCardPaths(this);
-        for (String sdCardPath : sdCardPaths) {
-            Logger.e(sdCardPath);
-        }
-        try {
-            boolean b = SDCardUtils.saveFileToSDCard(MyConstants.BACKUP_PATH, MyConstants.BACKUP_FILE_NAME + "."+ MyConstants.FILE_TYPE, mEncryptResult);
-
-            if (b){
-                ToastUtils.showTasty(this, "备份成功", TastyToast.SUCCESS);
-            }else {
-                ToastUtils.showTasty(this, "备份失败", TastyToast.SUCCESS);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            ToastUtils.showTasty(this, "备份出现异常", TastyToast.SUCCESS);
-        }
-    }
-
-    private void backup2Email() {
-        String backupEmailAddress = ConfigManager.getInstance().getBackupEmailAddress();
-        if (backupEmailAddress==null){
-            ToastUtils.show(this,"请先设置要备份到的邮箱地址");
-            return;
-        }
-        String title = "";
-        String body = "";
-        String path = "";
-        sendMail(backupEmailAddress,title,body,path);
-    }
-
-    public void sendMail(final String toMail, final String title,
-                         final String body, final String filePath){
-        new Thread(new Runnable() {
-            public void run() {
-                EmailUtil emailUtil = new EmailUtil();
-                try {
-
-                    String account = "cmmailserver@canmou123.com";
-                    String password = "CANmou123";
-                    // String authorizedPwd = "vxoxkgtwrtxvoqz";
-                    emailUtil.sendMail(toMail, account, "smtp.mxhichina.com",
-                            account, password, title, body, filePath);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 }

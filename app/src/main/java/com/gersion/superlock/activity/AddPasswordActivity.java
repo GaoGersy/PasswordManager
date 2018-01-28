@@ -70,7 +70,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_add_password;
     }
 

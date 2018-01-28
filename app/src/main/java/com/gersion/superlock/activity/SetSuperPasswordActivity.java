@@ -23,7 +23,7 @@ public class SetSuperPasswordActivity extends BaseActivity {
     private ConfigManager mConfigManager;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_set_super_password;
     }
 

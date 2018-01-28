@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.gersion.superlock.view.MyTouchFramLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="@dimen/pwd_item_width"
         android:layout_height="@dimen/pwd_item_height"
         android:id="@+id/fl_container"
+        android:clickable="true"
         android:background="@drawable/bg_item_home"
         >
     <LinearLayout
@@ -47,4 +48,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</com.gersion.superlock.view.MyTouchFramLayout>

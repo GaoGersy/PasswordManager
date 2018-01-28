@@ -53,7 +53,7 @@ public class DetailActivity extends BaseActivity {
     private long mId;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_detail;
     }
 

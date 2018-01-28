@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/bg"
+        android:background="@color/white"
         >
     <com.gersion.superlock.view.TitleView
             android:id="@+id/titleView"
@@ -25,7 +25,7 @@
                     android:text="@string/import_data_warn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_d0"
+                    android:textColor="@color/font_black"
                     android:textSize="15sp"
                     android:padding="10dp"
                     />
@@ -201,6 +201,20 @@
                             android:drawableLeft="@drawable/checkbox_bg"
                             />
                 </RadioGroup>
+                <!--<TextView-->
+                        <!--android:id="@+id/tv_commit"-->
+                        <!--android:layout_marginTop="50dp"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="bottom|center"-->
+                        <!--android:layout_marginBottom="20dp"-->
+                        <!--android:background="@drawable/shape_confirm_bg"-->
+                        <!--android:gravity="center"-->
+                        <!--android:padding="12dp"-->
+                        <!--android:text="导入"-->
+                        <!--android:textColor="#fff"-->
+                        <!--android:textSize="18sp"-->
+                        <!--/>-->
                 <TextView
                         android:id="@+id/tv_commit"
                         android:layout_marginTop="50dp"
@@ -208,12 +222,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|center"
                         android:layout_marginBottom="20dp"
-                        android:background="@drawable/shape_confirm_bg"
                         android:gravity="center"
-                        android:padding="12dp"
+                        android:padding="10dp"
                         android:text="导入"
-                        android:textColor="#fff"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:textColor="@color/bg_text_long_press"
+                        android:background="@drawable/bg_long_press"
                         />
             </LinearLayout>
         </LinearLayout>

@@ -2,7 +2,6 @@ package com.gersion.superlock.adapter;
 
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.gersion.library.adapter.MultiTypeAdapter;
@@ -26,8 +25,6 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
     };
     private HomeFragment mHomeFragment;
     private OnItemClickListener mItemClickListener;
-
-
     @Override
     protected void convert(final BaseViewHolder baseViewHolder, final ItemBean bean) {
         switch (bean.getLayoutId()) {
@@ -43,15 +40,15 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
             case R.layout.item_detail_home:
                 baseViewHolder.setText(R.id.tv_name, bean.getName());
                 baseViewHolder.setText(R.id.tv_icon, bean.getAddress());
-                FrameLayout flContainer = (FrameLayout) baseViewHolder.getView(R.id.fl_container);
-                flContainer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mItemClickListener != null) {
-                            mItemClickListener.onClik(v);
-                        }
-                    }
-                });
+//                FrameLayout flContainer = (FrameLayout) baseViewHolder.getView(R.id.fl_container);
+//                flContainer.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (mItemClickListener != null) {
+//                            mItemClickListener.onClik(v);
+//                        }
+//                    }
+//                });
                 break;
             case R.layout.item_detail_password:
                 baseViewHolder.setText(R.id.tv_name, bean.getName());

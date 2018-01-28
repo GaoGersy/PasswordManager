@@ -1,5 +1,8 @@
 package com.gersion.superlock.fragment;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,14 +10,25 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.AboutActivity;
-import com.gersion.superlock.activity.BackupDataActivity;
 import com.gersion.superlock.activity.DonationActivity;
-import com.gersion.superlock.activity.ImportOldDataActivity;
 import com.gersion.superlock.activity.SelectLockTypeActivity;
 import com.gersion.superlock.activity.SettingActivity;
 import com.gersion.superlock.base.BaseFragment;
+import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.Keyer;
+import com.gersion.superlock.db.DbManager;
+import com.gersion.superlock.listener.ResultCallback;
+import com.gersion.superlock.utils.BackupHelper;
 import com.gersion.superlock.utils.ConfigManager;
+import com.gersion.superlock.utils.GsonHelper;
+import com.gersion.superlock.utils.RecoveryHelper;
+import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.ItemView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.gersion.superlock.utils.GsonHelper.getGson;
 
 /**
  * Created by a3266 on 2017/6/11.
@@ -35,6 +49,10 @@ public class MineFragment extends BaseFragment {
     private View mProjectAddress;
     private View mAppLockType;
     private View mViewSuperPassword;
+    private BackupHelper mBackupHelper;
+    private RecoveryHelper mRecoveryHelper;
+    private DbManager mDbManager;
+    private String mDataJson;
 
     @Override
     protected int setLayoutId() {
@@ -63,7 +81,46 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle bundle) {
+        mDbManager = DbManager.getInstance();
+        mDbManager.onStart();
+        getData();
+        mBackupHelper = BackupHelper.getInstance();
+        mBackupHelper.setOnResultCallback(new ResultCallback() {
+            @Override
+            public void onResultSuccess(String result) {
+                ToastUtils.show(getActivity(),result);
+            }
 
+            @Override
+            public void onResultFailed(String result) {
+                ToastUtils.show(getActivity(),result);
+            }
+        });
+
+        mRecoveryHelper = RecoveryHelper.getInstance();
+        mRecoveryHelper.setOnResultCallback(new ResultCallback() {
+            @Override
+            public void onResultSuccess(String result) {
+                parseDataJson(result);
+            }
+
+            @Override
+            public void onResultFailed(String result) {
+                ToastUtils.show(getActivity(),result);
+            }
+        });
+    }
+
+    private void getData() {
+        List<DbBean> datas = mDbManager.load();
+        if (datas != null && datas.size() > 0) {
+            List<Keyer> keyers = new ArrayList<>();
+            for (DbBean data : datas) {
+                Keyer keyer = new Keyer(data);
+                keyers.add(keyer);
+            }
+            mDataJson = GsonHelper.toJsonFromList(keyers);
+        }
     }
 
     @Override
@@ -77,15 +134,17 @@ public class MineFragment extends BaseFragment {
         mBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBackupHelper.backup2Local(mDataJson);
 //                backupDB(getActivity());
-                toActivity(BackupDataActivity.class);
+//                toActivity(BackupDataActivity.class);
             }
         });
         mRecovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mRecoveryHelper.getDataFromBackup();
 //                recoveryDB();
-                toActivity(ImportOldDataActivity.class);
+//                toActivity(ImportOldDataActivity.class);
             }
         });
         mDonation.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +188,22 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+    }
+
+    public void parseDataJson(String dataJson) {
+        Gson gson = getGson();
+        TypeToken<List<Keyer>> type = new TypeToken<List<Keyer>>() {
+        };
+        int dataListCount = ConfigManager.getInstance().getDataListCount();
+        List<Keyer> keyers = gson.fromJson(dataJson, type.getType());
+        for (Keyer keyer : keyers) {
+            dataListCount++;
+            DbBean dbBean = keyer.keyer2DbBean();
+            dbBean.setIndex(dataListCount);
+            dbBean.setId(dataListCount);
+            mDbManager.add(dbBean);
+        }
+        ToastUtils.show(getActivity(), "导入成功");
     }
 
     private void exit() {

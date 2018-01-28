@@ -3,9 +3,10 @@ package com.gersion.superlock.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.activity.AddPasswordActivity;
 import com.gersion.superlock.activity.DetailActivity;
 import com.gersion.superlock.adapter.ContentListAdapter;
 import com.gersion.superlock.animator.EasyTransition;
@@ -13,6 +14,7 @@ import com.gersion.superlock.animator.EasyTransitionOptions;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
+import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
@@ -50,7 +52,7 @@ public class HomeFragment extends BaseFragment {
         }
 
     };
-    private ImageView mIvBg;
+    private TextView mTvAdd;
 
     @Override
     protected int setLayoutId() {
@@ -60,7 +62,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         mSmartRecycleView = findView(R.id.smartRecycleView);
-        mIvBg = findView(R.id.iv_bg);
+        mTvAdd = findView(R.id.tv_add);
         DbManager.getInstance().onStart();
         init();
     }
@@ -72,15 +74,22 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-//        mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view,int position) {
-//                DbBean dbBean = mDataList.get(position);
-//                startTrainsition(view,dbBean);
-//            }
-//        });
-//
-//        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
+        mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view,int position) {
+                DbBean dbBean = mDataList.get(position);
+                startTrainsition(view,dbBean);
+            }
+        });
+
+        mTvAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(AddPasswordActivity.class);
+            }
+        });
+
+        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
     }
 
     DbManager.OnDataChangeListener dataChangeListener = new DbManager.OnDataChangeListener() {
@@ -101,7 +110,7 @@ public class HomeFragment extends BaseFragment {
                 .setAutoRefresh(true)
                 .setAdapter(mPasswordShowAdapter)
                 .loadMoreEnable(false)
-                .refreshEnable(true)
+                .refreshEnable(false)
                 .setLayoutManger(SmartRecycleView.LayoutManagerType.LINEAR_LAYOUT)
                 .setRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
                     @Override

@@ -3,14 +3,13 @@ package com.gersion.superlock.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.MainPagerAdapter;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.service.FloatBallService;
 import com.gersion.superlock.view.TitleView;
-import com.yinglan.alphatabs.AlphaTabsIndicator;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,11 +20,13 @@ public class MainActivity extends BaseActivity {
     TitleView mTitleView;
     @BindView(R.id.mViewPager)
     ViewPager mViewPager;
-    @BindView(R.id.alphaIndicator)
-    AlphaTabsIndicator mAlphaIndicator;
+    @BindView(R.id.viewpagertab)
+    SmartTabLayout mViewPagerTab;
+//    @BindView(R.id.alphaIndicator)
+//    AlphaTabsIndicator mAlphaIndicator;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
@@ -39,16 +40,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         ButterKnife.bind(this);
-        MainPagerAdapter mainAdapter = new MainPagerAdapter(getSupportFragmentManager(), mAlphaIndicator, mTitleView);
+        MainPagerAdapter mainAdapter = new MainPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mainAdapter);
         mViewPager.addOnPageChangeListener(mainAdapter);
-        mAlphaIndicator.setViewPager(mViewPager);
+//        mAlphaIndicator.setViewPager(mViewPager);
         mTitleView.setAddVisiable(true)
                 .setSearchVisiable(true)
                 .setBackVisiable(false)
                 .setTitleText("密码列表");
         mViewPager.setOffscreenPageLimit(2);
-
+        mViewPagerTab.setViewPager(mViewPager);
     }
 
     private void addBall() {
@@ -61,49 +62,49 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        mTitleView.setOnBackListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        mTitleView.setOnSearchListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GlobalSearchActivity.start(MainActivity.this);
-            }
-        });
-
-        mTitleView.setOnAddListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toActivity(AddPasswordActivity.class);
-            }
-        });
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    mTitleView.setAddVisiable(true);
-                    mTitleView.setSearchVisiable(true);
-                } else {
-                    mTitleView.setAddVisiable(false);
-                    mTitleView.setSearchVisiable(false);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        mTitleView.setOnBackListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onBackPressed();
+//            }
+//        });
+//
+//        mTitleView.setOnSearchListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                GlobalSearchActivity.start(MainActivity.this);
+//            }
+//        });
+//
+//        mTitleView.setOnAddListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                toActivity(AddPasswordActivity.class);
+//            }
+//        });
+//
+//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                if (position == 0) {
+//                    mTitleView.setAddVisiable(true);
+//                    mTitleView.setSearchVisiable(true);
+//                } else {
+//                    mTitleView.setAddVisiable(false);
+//                    mTitleView.setSearchVisiable(false);
+//                }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
     }
 
 }

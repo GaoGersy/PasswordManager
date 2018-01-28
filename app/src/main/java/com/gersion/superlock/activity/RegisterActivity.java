@@ -64,7 +64,7 @@ public class RegisterActivity extends BaseActivity {
     private LockAdapter mLockAdapter;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_regester;
     }
 

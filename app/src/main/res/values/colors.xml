@@ -48,4 +48,7 @@
     <color name="dividers">#bfbfbf</color>
     <color name="grey_bg">#efeff0</color>
 
+    <color name="text_enabled">#FFFFFFFF</color>
+    <color name="text_disabled">#4DFFFFFF</color>
+
 </resources>

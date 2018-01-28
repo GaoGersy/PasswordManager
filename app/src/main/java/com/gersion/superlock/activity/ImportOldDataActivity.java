@@ -17,10 +17,9 @@ import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.db.DbManager;
-import com.gersion.superlock.utils.Aes;
+import com.gersion.superlock.listener.ResultCallback;
 import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.MyConstants;
-import com.gersion.superlock.utils.SDCardUtils;
+import com.gersion.superlock.utils.RecoveryHelper;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.TitleView;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -47,9 +46,10 @@ public class ImportOldDataActivity extends BaseActivity {
     private DbManager mDbManager;
     private int currentSuperPasswordId;
     private int currentLocationId;
+    private RecoveryHelper mRecoveryHelper;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_import_old_data;
     }
 
@@ -82,7 +82,18 @@ public class ImportOldDataActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mRecoveryHelper = RecoveryHelper.getInstance();
+        mRecoveryHelper.setOnResultCallback(new ResultCallback() {
+            @Override
+            public void onResultSuccess(String result) {
+                parseDataJson(result);
+            }
 
+            @Override
+            public void onResultFailed(String result) {
+                ToastUtils.show(ImportOldDataActivity.this,result);
+            }
+        });
     }
 
     @Override
@@ -131,7 +142,7 @@ public class ImportOldDataActivity extends BaseActivity {
                 getDataFromFile();
                 break;
             case R.id.rb_backup:
-                getDataFromBackup();
+                mRecoveryHelper.getDataFromBackup();
                 break;
         }
     }
@@ -140,20 +151,12 @@ public class ImportOldDataActivity extends BaseActivity {
         toActivity(SelectFileActivity.class);
     }
 
-    //从本地备份恢复
-    public void getDataFromBackup() {
-        byte[] bytes = SDCardUtils.readFileFromSDCard(MyConstants.BACKUP_PATH, MyConstants.BACKUP_FILE_NAME + "." + MyConstants.FILE_TYPE);
-        if (bytes==null){
-            ToastUtils.showTasty(this,"还没有任何备份数据",TastyToast.ERROR);
-            return;
-        }
-        String s = new String(bytes);
-        String decrypt = Aes.decryptWithSuperPassword(s);
+    public void parseDataJson(String dataJson) {
         Gson gson = getGson();
         TypeToken<List<Keyer>> type = new TypeToken<List<Keyer>>() {
         };
         int dataListCount = ConfigManager.getInstance().getDataListCount();
-        List<Keyer> keyers = gson.fromJson(decrypt, type.getType());
+        List<Keyer> keyers = gson.fromJson(dataJson, type.getType());
         for (Keyer keyer : keyers) {
             dataListCount++;
             DbBean dbBean = keyer.keyer2DbBean();

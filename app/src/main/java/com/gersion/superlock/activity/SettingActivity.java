@@ -53,7 +53,7 @@ public class SettingActivity extends BaseActivity {
     private ConfigManager mConfigManager;
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_setting;
     }
 

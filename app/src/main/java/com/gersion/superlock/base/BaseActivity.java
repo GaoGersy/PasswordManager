@@ -16,7 +16,10 @@ public abstract class BaseActivity extends BaseLifeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ImmersionBar.with(this).init();
-        setContentView(setLayoutId());
+        int layoutResID = getLayoutId();
+        if (layoutResID!=0) {
+            setContentView(layoutResID);
+        }
         initView();
         initData();
         initListener();
@@ -69,7 +72,7 @@ public abstract class BaseActivity extends BaseLifeActivity {
         ToastUtils.showTasty(this,text,type);
     }
 
-    protected abstract int setLayoutId();
+    protected abstract int getLayoutId();
 
     protected abstract void initView();
 

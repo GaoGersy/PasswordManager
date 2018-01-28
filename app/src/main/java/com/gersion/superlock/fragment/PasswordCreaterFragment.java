@@ -4,13 +4,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +21,7 @@ import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.PasswordUtils;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.Croller;
+import com.gersion.superlock.view.SettingView;
 import com.gersion.superlock.view.TouchView;
 
 /**
@@ -40,10 +39,10 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
     private int mLength = 6;
     private MyHandler handler;
     private Croller mCroller;
-    private CheckBox mCbSmall;
-    private CheckBox mCbBig;
-    private CheckBox mCbNum;
-    private CheckBox mCbSuper;
+    private SettingView mCbSmall;
+    private SettingView mCbBig;
+    private SettingView mCbNum;
+    private SettingView mCbSuper;
     private TouchView mTouchView;
     private TextView mTvConfirm;
     private boolean mIsSuperPassword;
@@ -57,31 +56,31 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
     protected void initView() {
         handler = new MyHandler();
         mTvPassword = findView(R.id.activity_main_key);
-        mCbSmall = findView(R.id.cb_small);
-        mCbBig = findView(R.id.cb_big);
-        mCbNum = findView(R.id.cb_num);
-        mCbSuper = findView(R.id.cb_super);
+        mCbSmall = findView(R.id.sv_small);
+        mCbBig = findView(R.id.sv_big);
+        mCbNum = findView(R.id.sv_num);
+        mCbSuper = findView(R.id.sv_super);
         mCroller = findView(R.id.croller_pwd_length);
         mTouchView = findView(R.id.touchView);
         mTvConfirm = findView(R.id.tv_confirm);
 
-        mCbSmall.setSelected(true);
+        mCbSmall.setEnableEffect(true);
         mTouchView.setCanTouch(false);
         initSuperPassword();
     }
 
     @Override
     protected void initData(Bundle bundle) {
-        Typeface fontFace = Typeface.createFromAsset(getActivity().getAssets(),
-                "fonts/source.ttf");
-        mTvPassword.setTextSize(20);
-        mTvPassword.setTypeface(fontFace);
+//        Typeface fontFace = Typeface.createFromAsset(getActivity().getAssets(),
+//                "fonts/source.ttf");
+//        mTvPassword.setTextSize(20);
+//        mTvPassword.setTypeface(fontFace);
         mIsLower = true;
     }
 
     @Override
     protected void initListener() {
-        mCbSmall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCbSmall.setSwitchChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mIsLower = isChecked;
@@ -89,7 +88,7 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
                 checkButton();
             }
         });
-        mCbBig.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCbBig.setSwitchChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mIsCapital = isChecked;
@@ -97,7 +96,7 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
                 checkButton();
             }
         });
-        mCbNum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCbNum.setSwitchChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mIsNumber = isChecked;
@@ -105,7 +104,7 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
                 checkButton();
             }
         });
-        mCbSuper.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mCbSuper.setSwitchChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mIsChar = isChecked;
@@ -232,10 +231,10 @@ public class PasswordCreaterFragment extends BaseFragment implements View.OnClic
         if (mIsSuperPassword) {
             mTvConfirm.setVisibility(View.VISIBLE);
             mCroller.setProgress(20);
-            mCbBig.setChecked(true);
-            mCbSmall.setChecked(true);
-            mCbNum.setChecked(true);
-            mCbSuper.setChecked(true);
+            mCbBig.setEnableEffect(true);
+            mCbSmall.setEnableEffect(true);
+            mCbNum.setEnableEffect(true);
+            mCbSuper.setEnableEffect(true);
             mIsCapital = true;
             mIsChar = true;
             mIsLower = true;

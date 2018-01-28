@@ -21,7 +21,7 @@ public class SelectLockTypeActivity extends BaseActivity {
 
 
     @Override
-    protected int setLayoutId() {
+    protected int getLayoutId() {
         return R.layout.activity_select_lock_type;
     }
 
