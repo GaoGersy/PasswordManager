@@ -187,7 +187,6 @@ public class ConfigManager {
     }
 
     public String getEncryptSuperPassword() {
-        mSuperPassword =mSuperPassword==null?SALT:mSuperPassword;
         return Md5Utils.encodeWithTimes(mSuperPassword+SALT,3);
     }
 

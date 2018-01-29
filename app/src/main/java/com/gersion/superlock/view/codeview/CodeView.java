@@ -39,6 +39,7 @@ public class CodeView extends View {
     private float unitWidth;
     private Paint paint;
     private Listener listener;
+    private int bgPointColor;
 
     public CodeView(Context context) {
         super(context);
@@ -82,6 +83,7 @@ public class CodeView extends View {
             TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.CodeView);
             length = typedArray.getInt(R.styleable.CodeView_length, 6);
             borderColor = typedArray.getColor(R.styleable.CodeView_borderColor, Color.parseColor("#E1E1E1"));
+            bgPointColor = typedArray.getColor(R.styleable.CodeView_bgPointColor, Color.parseColor("#4DFFFFFF"));
             borderWidth = typedArray.getDimensionPixelSize(R.styleable.CodeView_borderWidth, 1);
             dividerColor = typedArray.getColor(R.styleable.CodeView_dividerColor, Color.parseColor("#E1E1E1"));
             dividerWidth = typedArray.getDimensionPixelSize(R.styleable.CodeView_dividerWidth, 1);
@@ -99,6 +101,7 @@ public class CodeView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawBgPoint(canvas);
         drawDivider(canvas);
         drawBorder(canvas);
         switch (showType) {
@@ -161,6 +164,16 @@ public class CodeView extends View {
         if (pointRadius > 0) {
             paint.setColor(codeColor);
             for (int i = 0; i < code.length(); i++) {
+                final float left = unitWidth * i + dividerWidth * i + borderWidth;
+                canvas.drawCircle(left + unitWidth / 2, getHeight() / 2, pointRadius, paint);
+            }
+        }
+    }
+
+    private void drawBgPoint(Canvas canvas) {
+        if (pointRadius > 0) {
+            paint.setColor(bgPointColor);
+            for (int i = 0; i < 6; i++) {
                 final float left = unitWidth * i + dividerWidth * i + borderWidth;
                 canvas.drawCircle(left + unitWidth / 2, getHeight() / 2, pointRadius, paint);
             }

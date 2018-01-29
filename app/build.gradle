@@ -55,7 +55,7 @@ dependencies {
     compile(name: 'DialogUtils', ext: 'aar')
     compile(name: 'tastytoast', ext: 'aar')
     compile(name: 'paletteimageview', ext: 'aar')
-    compile(name: 'blurpopupwindow', ext: 'aar')
+//    compile(name: 'blurpopupwindow', ext: 'aar')
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     compile 'com.yanzhenjie:recyclerview-swipe:1.0.4'
@@ -72,7 +72,7 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.android.support:design:26+'
-    compile 'com.android.support:cardview-v7:26+'
+//    compile 'com.android.support:cardview-v7:26+'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.android.support:support-v4:26+'
     compile 'com.android.support:palette-v7:26+'

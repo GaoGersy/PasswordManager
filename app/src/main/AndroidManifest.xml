@@ -56,6 +56,7 @@
         <activity
                 android:name=".activity.LockActivity"
                 android:screenOrientation="portrait"
+                android:theme="@style/LockTheme"
                 android:windowSoftInputMode="stateHidden|adjustPan"/>
         <!-- =====================================Receiver==================================== -->
 

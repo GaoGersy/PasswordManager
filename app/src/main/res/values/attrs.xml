@@ -84,6 +84,7 @@
         <attr name="borderColor" format="color" />
         <attr name="borderWidth" format="dimension" />
         <attr name="dividerColor" format="color" />
+        <attr name="bgPointColor" format="color" />
         <attr name="dividerWidth" format="dimension" />
         <attr name="code" format="string" />
         <attr name="codeColor" format="color" />

@@ -66,11 +66,11 @@ public class PinAdapter implements LockAdapter {
             String pwd = Md5Utils.encodeWithTimes(result, 2);
             if (TextUtils.equals(password, pwd)) {
                 mCodeView.clear();
-                mTvNotice.setText("输入新的PIN码");
+                mTvNotice.setText("输入新的密码");
                 step++;
             }else {
-                mLockCallback.onError("PIN码错误");
-                mTvNotice.setText("PIN码错误");
+                mLockCallback.onError("密码错误");
+                mTvNotice.setText("密码错误");
                 shake();
             }
         }else {
@@ -85,8 +85,8 @@ public class PinAdapter implements LockAdapter {
             mLockCallback.onSuccess();
         } else {
             mCodeView.clear();
-            mLockCallback.onError("PIN码错误");
-            mTvNotice.setText("PIN码错误");
+            mLockCallback.onError("密码错误");
+            mTvNotice.setText("密码错误");
             shake();
         }
     }
@@ -97,14 +97,16 @@ public class PinAdapter implements LockAdapter {
                 mLockCallback.onSuccess();
                 mConfigManager.setAppPassword(result);
             } else {
-                mLockCallback.onError("两次PIN码不一致");
-                mTvNotice.setText("两次PIN码不一致");
+                mCodeView.clear();
+                mPassword=null;
+                mLockCallback.onError("两次密码不一致");
+                mTvNotice.setText("两次密码不一致");
                 shake();
             }
         } else {
             mPassword = result;
             mCodeView.clear();
-            mTvNotice.setText("重复上一次pin码");
+            mTvNotice.setText("重复上一次密码");
         }
     }
 

@@ -9,28 +9,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="center"
             >
         <TextView
                 android:id="@+id/tv_notice"
-                android:text="请输入pin码"
-                android:textSize="18sp"
-                android:layout_marginTop="40dp"
-                android:textColor="@color/white"
+                android:text="请输入密码"
+                android:textSize="15sp"
+                android:textColor="@color/gray_f0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 />
         <com.gersion.superlock.view.codeview.CodeView
                 android:id="@+id/password_view"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:background="#66ffffff"
-                app:borderColor="#bebebe"
+                android:background="@color/transparent"
+                app:borderColor="@color/transparent"
                 app:borderWidth="2px"
-                app:dividerColor="#eeeeee"
-                app:dividerWidth="2px"
-                app:codeColor="@color/confirm"
-                android:layout_margin="20dp"
+                app:dividerColor="@color/transparent"
+                app:dividerWidth="0px"
+                app:codeColor="@color/white"
+                app:pointRadius="5dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="100dp"
                 android:layout_centerInParent="true"
                 />
     </LinearLayout>
@@ -39,5 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:layout_gravity="bottom"
+            android:layout_marginBottom="30dp"
             />
 </FrameLayout>

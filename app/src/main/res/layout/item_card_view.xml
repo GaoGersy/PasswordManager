@@ -8,13 +8,12 @@
     android:background="#20202B"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:id="@+id/cv_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:layout_marginTop="0dp"
-        app:cardCornerRadius="8dp">
+        android:layout_marginTop="0dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -46,16 +45,14 @@
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
 
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:id="@+id/cv_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginBottom="2dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5dp">
+        android:layout_marginBottom="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,6 +133,6 @@
                     android:text="备注"/>
             </LinearLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
 
 </FrameLayout>
