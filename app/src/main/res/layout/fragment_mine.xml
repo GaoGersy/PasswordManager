@@ -17,38 +17,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
                 >
 
             <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20pt"
-                    android:background="#ffffff"
+                    android:layout_height="400pt"
+                    android:background="@color/title_bg"
                     >
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        >
+                    <ImageView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/icon"
+                            android:layout_gravity="center"
+                            android:layout_width="150pt"
+                            android:layout_height="150pt"
+                            android:padding="1px"
+                            android:layout_centerInParent="true"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon"
+                            />
 
-                <ImageView
-                        android:layout_centerVertical="true"
-                        android:id="@+id/icon"
-                        android:layout_width="100pt"
-                        android:layout_height="100pt"
-                        android:padding="1px"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icon"
-                        />
-
-                <TextView
-                        android:layout_toRightOf="@id/icon"
-                        android:layout_centerVertical="true"
-                        android:id="@+id/name"
-                        android:layout_marginLeft="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="路人甲"
-                        android:textColor="@color/font_black"
-                        android:textSize="20sp"
-                        />
-
+                    <TextView
+                            android:id="@+id/name"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="路人甲"
+                            android:textColor="@color/theme_grey_bg"
+                            android:textSize="16sp"
+                            />
+                </LinearLayout>
                 <ImageView
                         android:id="@+id/code2d"
                         android:layout_alignParentRight="true"
@@ -57,6 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:src="@drawable/code2d"
+                        android:visibility="gone"
                         />
             </RelativeLayout>
 

@@ -76,7 +76,7 @@ public class MineFragment extends BaseFragment {
         mViewSuperPassword = findView(R.id.superpassword);
         mAppLockType = findView(R.id.app_lock);
 
-        mName.setText(ConfigManager.getInstance().getUserName());
+//        mName.setText(ConfigManager.getInstance().getUserName());
     }
 
     @Override
