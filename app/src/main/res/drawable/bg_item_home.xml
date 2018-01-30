@@ -6,9 +6,10 @@
     <!--FF80DDE4, FF286EDC-->
     <!--FFE480C6, FFDC285E-->
     <corners android:radius="@dimen/item_radius"></corners>
-    <gradient
-        android:angle="0"
-        android:endColor="#FFDC285E"
-        android:startColor="#FFE480C6"
-        android:type="linear"/>
+    <solid android:color="@color/title_bg"/>
+    <!--<gradient-->
+        <!--android:angle="0"-->
+        <!--android:endColor="#FFDC285E"-->
+        <!--android:startColor="#FFE480C6"-->
+        <!--android:type="linear"/>-->
 </shape>

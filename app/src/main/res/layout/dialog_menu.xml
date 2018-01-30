@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+    <com.gersion.superlock.view.ItemView
+            android:layout_marginTop="20dp"
+            android:id="@+id/pwd_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_icon="@drawable/collection"
+            app:item_title="收藏"
+            />
+    <com.gersion.superlock.view.ItemView
+            android:id="@+id/setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_icon="@drawable/collection"
+            app:item_title="设置"
+            />
+
+</LinearLayout>

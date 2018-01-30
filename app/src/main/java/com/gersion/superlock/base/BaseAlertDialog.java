@@ -5,8 +5,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.Window;
 
-import com.gersion.superlock.R;
-
 
 /**
  * Created by Administrator on 2017/2/10.
@@ -19,11 +17,11 @@ public abstract class BaseAlertDialog {
     public BaseAlertDialog(Context context) {
         mContext = context;
         mDialog = new AlertDialog.Builder(context).create();
-        mDialog.setCancelable(false);
-        mDialog.setCanceledOnTouchOutside(false);
+        mDialog.setCancelable(true);
+        mDialog.setCanceledOnTouchOutside(true);
         mDialog.show();
         mWindow = mDialog.getWindow();
-        mWindow.setBackgroundDrawableResource(R.drawable.transpant);
+//        mWindow.setBackgroundDrawableResource(R.drawable.transpant);
         mWindow.setContentView(getLayoutId());
         initView();
         initListener();

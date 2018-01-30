@@ -43,15 +43,12 @@ public class BaseLifeActivity extends AppCompatActivity {
             return false;
         }
 
-        // start more than one page
         if (visibleCount > 1) {
             return false;
         }
-//        if (visibleCount > 1) {
-//            return false;
-//        }
 
-        return true;
+        return false;
+//        return true;
     }
 
 

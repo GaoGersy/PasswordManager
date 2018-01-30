@@ -6,9 +6,10 @@
     <!--0xFF80DDE4, 0xFF286EDC-->
     <!--0xFFE480C6, 0xFFDC285E-->
     <corners android:radius="@dimen/item_radius"></corners>
-    <gradient
-        android:angle="0"
-        android:endColor="#FFE03535"
-        android:startColor="#FFF98989"
-        android:type="linear"/>
+    <solid android:color="@color/title_bg"/>
+    <!--<gradient-->
+        <!--android:angle="0"-->
+        <!--android:endColor="#FFE03535"-->
+        <!--android:startColor="#FFF98989"-->
+        <!--android:type="linear"/>-->
 </shape>
