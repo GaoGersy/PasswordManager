@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +26,7 @@ public class MainActivity extends BaseActivity {
 //    TitleView mTitleView;
     @BindView(R.id.title)
     TextView mTitle;
-    @BindView(R.id.iv_search)
+    @BindView(R.id.activity_iv_search)
     ImageView mIvSearch;
     @BindView(R.id.iv_close)
     ImageView mIvClose;
@@ -104,12 +103,6 @@ public class MainActivity extends BaseActivity {
                     }
                 })
                 .start();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        closeMenu();
-        return true;
     }
 
     private void addBall() {

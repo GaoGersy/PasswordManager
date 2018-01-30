@@ -32,7 +32,7 @@
                     />
 
             <ImageView
-                    android:id="@+id/iv_search"
+                    android:id="@+id/activity_iv_search"
                     android:layout_width="50pt"
                     android:layout_height="50pt"
                     android:layout_centerVertical="true"
