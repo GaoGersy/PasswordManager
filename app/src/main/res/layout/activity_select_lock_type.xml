@@ -14,21 +14,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+    <TextView
+            android:id="@+id/tv_finger_print"
+            android:text="指纹解锁"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_lock_type"
+            android:layout_width="@dimen/select_lock_radius"
+            android:layout_height="@dimen/select_lock_radius"
+            />
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             >
         <TextView
                 android:id="@+id/tv_pin"
-                android:text="PIN"
+                android:text="密码解锁"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:background="@drawable/selector_lock_type"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/select_lock_radius"
+                android:layout_height="@dimen/select_lock_radius"
                 />
         <TextView
                 android:id="@+id/tv_pattern"
@@ -37,18 +48,9 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:background="@drawable/selector_lock_type"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/select_lock_radius"
+                android:layout_height="@dimen/select_lock_radius"
                 />
     </LinearLayout>
-    <TextView
-            android:id="@+id/tv_finger_print"
-            android:text="手势解锁"
-            android:gravity="center"
-            android:visibility="gone"
-            android:textColor="@color/white"
-            android:background="@drawable/selector_lock_type"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            />
+
 </LinearLayout>

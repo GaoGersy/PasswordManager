@@ -2,12 +2,21 @@ package com.gersion.superlock.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-import com.gersion.superlock.base.BasePermissionActivity;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.PermissionHelper;
 
-public class SplashActivity extends BasePermissionActivity {
+public class SplashActivity extends AppCompatActivity {
+
+    private boolean mIsCheckPermission;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        checkPermissions();
+    }
     private static final String[] PERMISSIONS = {
 //            Manifest.permission.CAMERA,
 //            Manifest.permission.RECORD_AUDIO,
@@ -16,21 +25,6 @@ public class SplashActivity extends BasePermissionActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
-
-    @Override
-    protected int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    protected void initView() {
-        checkPermissions();
-    }
-
-    @Override
-    protected void initData() {
-
-    }
 
     private void onComplete() {
         Intent intent;
@@ -43,21 +37,15 @@ public class SplashActivity extends BasePermissionActivity {
         finish();
     }
 
-    @Override
-    protected void initListener() {
-
-    }
-
-    @Override
     protected void checkPermissions() {
-        super.checkPermissions();
+        mIsCheckPermission = true;
         PermissionHelper instance = PermissionHelper.getInstance();
         boolean hasPermission = instance.hasPermission(this, PERMISSIONS);
         if (hasPermission) {
             onComplete();
         } else {
             instance
-                    .requestAllPermission(this, new PermissionHelper.PermissionResultCallback() {
+                    .requestPermission(this, new PermissionHelper.PermissionResultCallback() {
                         @Override
                         public void onSuccess() {
                             onComplete();
@@ -67,7 +55,16 @@ public class SplashActivity extends BasePermissionActivity {
                         public void onFailed() {
                             onComplete();
                         }
-                    });
+                    },PERMISSIONS);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mIsCheckPermission && requestCode == PermissionHelper.PERMISSION_CODE) {
+            mIsCheckPermission = false;
+            checkPermissions();
         }
     }
 }

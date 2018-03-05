@@ -20,7 +20,6 @@ public class LockAdapterFactory {
 
     public static LockAdapter initLock() {
         int lockType = ConfigManager.getInstance().getLockType();
-        lockType=MyConstants.LockType.TYPE_FINGER_PRINT;
         return initLock(lockType);
     }
 

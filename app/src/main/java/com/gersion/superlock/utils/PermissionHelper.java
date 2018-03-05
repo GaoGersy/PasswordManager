@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 
@@ -51,6 +52,7 @@ public class PermissionHelper {
     public static String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     public static String READ_CONTACTS = Manifest.permission.READ_CONTACTS;
     public static String WRITE_EXTERNAL_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+    public static String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     public static String CAMERA = Manifest.permission.CAMERA;
     private static Map<String, String> mMap = new HashMap<>();
     private Activity mActivity;
@@ -64,7 +66,8 @@ public class PermissionHelper {
                     mMap.put(RECORD_AUDIO, "录音");
                     mMap.put(ACCESS_FINE_LOCATION, "定位");
                     mMap.put(READ_CONTACTS, "读取联系人");
-                    mMap.put(WRITE_EXTERNAL_STORAGE, "存储卡读写");
+                    mMap.put(WRITE_EXTERNAL_STORAGE, "存储卡写");
+                    mMap.put(READ_EXTERNAL_STORAGE, "存储卡读");
                     mMap.put(CAMERA, "相机");
                 }
             }
@@ -109,29 +112,28 @@ public class PermissionHelper {
         final List<Permission> list = new ArrayList<>();
         RxPermissions rxPermissions = new RxPermissions(fragment.getActivity());
         rxPermissions.setLogging(false);
-        io.reactivex.Observable<Permission> permissionObservable = rxPermissions.requestEach(permissions);
+        rxPermissions.requestEach(permissions)
+                .subscribe(new Observer<Permission>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mDisposable = d;
+                    }
 
-//                .subscribe(new Observer<Permission>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        mDisposable = d;
-//                    }
-//
-//                    @Override
-//                    public void onNext(Permission permission) {
-//                        PermissionHelper.this.onNext(permission, list);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        PermissionHelper.this.onComplite(list, fragment);
-//                    }
-//                });
+                    @Override
+                    public void onNext(Permission permission) {
+                        PermissionHelper.this.onNext(permission, list);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        PermissionHelper.this.onComplite(list, fragment);
+                    }
+                });
         return this;
     }
 
@@ -200,7 +202,7 @@ public class PermissionHelper {
                                 mCamera = Camera.open(0);
                                 mCamera.startPreview();
                                 releaseCamera();
-                                if (mCallback!=null){
+                                if (mCallback != null) {
                                     mCallback.onSuccess();
                                 }
                             } catch (Exception e) {

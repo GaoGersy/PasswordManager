@@ -5,10 +5,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
+import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.TitleView;
+import com.sdsmdg.tastytoast.TastyToast;
 
 public class SelectLockTypeActivity extends BaseActivity {
     private static final int CODE = 100;
@@ -40,6 +43,10 @@ public class SelectLockTypeActivity extends BaseActivity {
         mTitleView.setTitleText("密码设置")
                 .setAddVisiable(false)
                 .setSearchVisiable(false);
+        boolean fingerprintEnable = SuperLockApplication.mFingerprintIdentify.isFingerprintEnable();
+        if (!fingerprintEnable){
+            mTvFingerPrint.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -85,6 +92,19 @@ public class SelectLockTypeActivity extends BaseActivity {
         mTvPattern.setSelected(lockType == MyConstants.LockType.TYPE_PATTERN);
         mTvFingerPrint.setSelected(lockType == MyConstants.LockType.TYPE_FINGER_PRINT);
         mConfigManager.setLockType(lockType);
+        String msg = null;
+        switch (lockType){
+            case MyConstants.LockType.TYPE_PIN:
+                msg="已修改为密码解锁";
+                break;
+            case MyConstants.LockType.TYPE_PATTERN:
+                msg="已修改为图案解锁";
+                break;
+            case MyConstants.LockType.TYPE_FINGER_PRINT:
+                msg="已修改为指纹解锁";
+                break;
+        }
+        ToastUtils.showTasty(this,msg, TastyToast.SUCCESS);
     }
 
     @Override

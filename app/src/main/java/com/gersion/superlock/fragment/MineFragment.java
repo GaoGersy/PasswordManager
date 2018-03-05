@@ -13,7 +13,7 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.activity.AboutActivity;
 import com.gersion.superlock.activity.DonationActivity;
 import com.gersion.superlock.activity.SelectLockTypeActivity;
-import com.gersion.superlock.base.BaseFragment;
+import com.gersion.superlock.base.BasePermissionFragment;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.db.DbManager;
@@ -37,7 +37,7 @@ import static com.gersion.superlock.utils.GsonHelper.getGson;
  * Created by a3266 on 2017/6/11.
  */
 
-public class MineFragment extends BaseFragment {
+public class MineFragment extends BasePermissionFragment {
     private ImageView mIcon;
     private TextView mName;
     private ImageView mCode2d;
@@ -59,6 +59,7 @@ public class MineFragment extends BaseFragment {
     private SettingView mOpenLock;
     private SettingView mFloatBall;
     private ConfigManager mConfigManager;
+    private boolean mIsRecoveryPwd=false;//是否是恢复密码
 
     @Override
     protected int setLayoutId() {
@@ -152,17 +153,15 @@ public class MineFragment extends BaseFragment {
         mBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBackupHelper.backup2Local(mDataJson);
-//                backupDB(getActivity());
-//                toActivity(BackupDataActivity.class);
+                mIsRecoveryPwd = false;
+                checkExternalPermission();
             }
         });
         mRecovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRecoveryHelper.getDataFromBackup();
-//                recoveryDB();
-//                toActivity(ImportOldDataActivity.class);
+                mIsRecoveryPwd = true;
+                checkExternalPermission();
             }
         });
         mDonation.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +205,24 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+    }
+
+    @Override
+    protected void onPermissionFialed() {
+        if (mIsRecoveryPwd){
+            ToastUtils.showTasty(getActivity(),"没有存储卡读写权限，无法读取数据！",TastyToast.ERROR);
+        }else {
+            ToastUtils.showTasty(getActivity(),"没有存储卡读写权限，无法写入数据！",TastyToast.ERROR);
+        }
+    }
+
+    @Override
+    protected void onPermissionSuccess() {
+        if (mIsRecoveryPwd) {
+            mRecoveryHelper.getDataFromBackup();
+        }else {
+            mBackupHelper.backup2Local(mDataJson);
+        }
     }
 
     public void parseDataJson(String dataJson) {

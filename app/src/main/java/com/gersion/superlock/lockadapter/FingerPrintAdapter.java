@@ -15,6 +15,8 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.ConfigManager;
+import com.orhanobut.logger.Logger;
+import com.wei.android.lib.fingerprintidentify.FingerprintIdentify;
 import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 
 /**
@@ -31,6 +33,7 @@ public class FingerPrintAdapter implements LockAdapter {
     private TextView mBtnCancel;
     private TextView mBtnOtherType;
     private Context mContext;
+    private FingerprintIdentify mFingerprintIdentify;
 
     @Override
     public View init(Context context) {
@@ -41,6 +44,13 @@ public class FingerPrintAdapter implements LockAdapter {
         mIvFinger = (ImageView) view.findViewById(R.id.iv_finger);
         mBtnCancel = (TextView) view.findViewById(R.id.btn_cancel);
         mBtnOtherType = (TextView) view.findViewById(R.id.btn_other_type);
+        mFingerprintIdentify = new FingerprintIdentify(SuperLockApplication.getContext(), new BaseFingerprint.FingerprintIdentifyExceptionListener() {
+            @Override
+            public void onCatchException(Throwable exception) {
+                Logger.e("\nException：" + exception.getLocalizedMessage());
+            }
+        });
+        start();
         initListener();
         return view;
     }
@@ -62,39 +72,39 @@ public class FingerPrintAdapter implements LockAdapter {
 
     @Override
     public void onStart() {
-        initFingerPrint();
+//        initFingerPrint();
     }
 
-    private void initFingerPrint() {
+    private void start() {
         mInstance = ConfigManager.getInstance();
-        SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
-    }
 
-    BaseFingerprint.FingerprintIdentifyListener mFingerprintIdentifyListener = new BaseFingerprint.FingerprintIdentifyListener() {
-        @Override
-        public void onSucceed() {
-            mIvFinger.setImageResource(R.mipmap.success);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mLockCallback.onSuccess();
-                }
-            }, 300);
-        }
+        mFingerprintIdentify.startIdentify(5, new BaseFingerprint.FingerprintIdentifyListener() {
+            @Override
+            public void onSucceed() {
+                mIvFinger.setImageResource(R.mipmap.success);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mLockCallback.onSuccess();
+                    }
+                }, 300);
+                Logger.e("成功");
+            }
 
-        @Override
-        public void onNotMatch(int availableTimes) {
-            mTvNotice.setText("指纹不匹配，还可以尝试 " + availableTimes + " 次");
-            shake();
-        }
+            @Override
+            public void onNotMatch(int availableTimes) {
+                mTvNotice.setText("指纹不匹配，还可以尝试 " + availableTimes + " 次");
+                shake();
+            }
 
-        @Override
-        public void onStartFailedByDeviceLocked() {
-            switch2OtherType(true);
-        }
+            @Override
+            public void onStartFailedByDeviceLocked() {
+                switch2OtherType(true);
+                Logger.e("成功");
+            }
 
-        @Override
-        public void onFailed(boolean isDeviceLocked) {
+            @Override
+            public void onFailed(boolean isDeviceLocked) {
 //            mTvNotice.setText("指纹解锁已禁用，请 " + 15 + " 秒后重试");
 //            SPManager.setLockedTime(SystemClock.currentThreadTimeMillis());
 //            mIvFinger.setImageResource(R.mipmap.alert);
@@ -106,9 +116,25 @@ public class FingerPrintAdapter implements LockAdapter {
 //                    SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
 //                }
 //            }, 15000);
-            switch2OtherType(true);
-        }
-    };
+//                if (isDeviceLocked) {
+//                    switch2OtherType(true);
+//                }else {
+//                    start();
+//                }
+                Logger.e("是否禁用"+isDeviceLocked);
+                if (!isDeviceLocked){
+                    mTvNotice.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                           start();
+                        }
+                    },1000);
+                }else {
+                    switch2OtherType(true);
+                }
+            }
+        });
+    }
 
     private void switch2OtherType(final boolean isFingerLock) {
         mRlFingerContainer.animate()
@@ -130,5 +156,9 @@ public class FingerPrintAdapter implements LockAdapter {
     @Override
     public void setLockCallback(LockCallback lockCallback) {
         mLockCallback = lockCallback;
+    }
+
+    public void onDestroy() {
+        mFingerprintIdentify.cancelIdentify();
     }
 }

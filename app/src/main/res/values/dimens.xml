@@ -44,5 +44,6 @@
     <dimen name="pwd_item_width">700pt</dimen>
     <dimen name="pwd_item_height">300pt</dimen>
     <dimen name="item_radius">5dp</dimen>
+    <dimen name="select_lock_radius">100dp</dimen>
 
 </resources>

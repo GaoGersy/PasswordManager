@@ -48,6 +48,7 @@
     <TextView
             android:id="@+id/btn_cancel"
             android:text="取消"
+            android:visibility="gone"
             android:gravity="center"
             android:padding="10dp"
             android:textColor="@color/font_black"
@@ -66,10 +67,10 @@
             android:padding="10dp"
             android:textColor="@color/font_black"
             android:background="@drawable/edit_text_bg"
-            android:layout_above="@id/btn_cancel"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             />
 
 </RelativeLayout>
