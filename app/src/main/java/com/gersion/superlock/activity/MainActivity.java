@@ -15,7 +15,6 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.service.FloatBallService;
-import com.gersion.superlock.view.ItemView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,9 +32,9 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tv_menu)
     TextView mTvMenu;
     @BindView(R.id.pwd_create)
-    ItemView mPwdCreate;
+    TextView mPwdCreate;
     @BindView(R.id.setting)
-    ItemView mSetting;
+    TextView mSetting;
     @BindView(R.id.container)
     View mContainer;
     @BindView(R.id.menu_container)
@@ -122,7 +121,7 @@ public class MainActivity extends BaseActivity {
 //            }
 //        });
 
-        mPwdCreate.setItemClickListener(new View.OnClickListener() {
+        mPwdCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toActivity(PwdCreateActivity.class);
@@ -130,7 +129,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mSetting.setItemClickListener(new View.OnClickListener() {
+        mSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toActivity(SettingActivity.class);

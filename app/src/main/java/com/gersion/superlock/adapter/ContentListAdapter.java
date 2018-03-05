@@ -185,7 +185,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
 //            itemPicker.addOnItemChangedListener();
             mAdapter = new DetailItemAdapter();
             mAdapter.registerMultiLayout(R.layout.item_detail_home);
-            mAdapter.registerMultiLayout(R.layout.item_detail_del);
+//            mAdapter.registerMultiLayout(R.layout.item_detail_del);
             mAdapter.registerMultiLayout(R.layout.item_detail_notice);
             mAdapter.registerMultiLayout(R.layout.item_detail_password);
 //            infiniteAdapter = InfiniteScrollAdapter.wrap(mAdapter);
@@ -222,9 +222,9 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             DbBean dbBean = mDatas.get(position);
             List<ItemBean> list = new ArrayList<>();
 
-            ItemBean delItemBean = new ItemBean();
-            delItemBean.setId(dbBean.getId());
-            delItemBean.setLayoutId(R.layout.item_detail_del);
+//            ItemBean delItemBean = new ItemBean();
+//            delItemBean.setId(dbBean.getId());
+//            delItemBean.setLayoutId(R.layout.item_detail_del);
 
             ItemBean homeItemBean = new ItemBean();
             homeItemBean.setLayoutId(R.layout.item_detail_home);
@@ -237,12 +237,14 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             detailItemBean.setAddress(dbBean.getAddress());
             detailItemBean.setPwd(dbBean.getPwd());
             detailItemBean.setName(dbBean.getName());
+            detailItemBean.setNotes(dbBean.getNotes());
+            detailItemBean.setId(dbBean.getId());
 
             ItemBean noticeItemBean = new ItemBean();
             noticeItemBean.setLayoutId(R.layout.item_detail_notice);
             noticeItemBean.setNotes(dbBean.getNotes());
 
-            list.add(delItemBean);
+//            list.add(delItemBean);
             list.add(homeItemBean);
             list.add(detailItemBean);
             list.add(noticeItemBean);
@@ -255,7 +257,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
                     }
                 }
             });
-            itemPicker.scrollToPosition(1);
+//            itemPicker.scrollToPosition(1);
         }
 
         @Override

@@ -13,6 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+    <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     <com.gersion.superlock.view.SettingView
             android:id="@+id/open_lock"
             app:setting_title="开启程序锁"

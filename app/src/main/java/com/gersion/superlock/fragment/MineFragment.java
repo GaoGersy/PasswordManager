@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +13,6 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.activity.AboutActivity;
 import com.gersion.superlock.activity.DonationActivity;
 import com.gersion.superlock.activity.SelectLockTypeActivity;
-import com.gersion.superlock.activity.SettingActivity;
 import com.gersion.superlock.base.BaseFragment;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.Keyer;
@@ -24,6 +24,9 @@ import com.gersion.superlock.utils.GsonHelper;
 import com.gersion.superlock.utils.RecoveryHelper;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.ItemView;
+import com.gersion.superlock.view.SettingView;
+import com.kyleduo.switchbutton.SwitchButton;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +56,9 @@ public class MineFragment extends BaseFragment {
     private RecoveryHelper mRecoveryHelper;
     private DbManager mDbManager;
     private String mDataJson;
+    private SettingView mOpenLock;
+    private SettingView mFloatBall;
+    private ConfigManager mConfigManager;
 
     @Override
     protected int setLayoutId() {
@@ -75,12 +81,16 @@ public class MineFragment extends BaseFragment {
         mProjectAddress = findView(R.id.project_address);
         mViewSuperPassword = findView(R.id.superpassword);
         mAppLockType = findView(R.id.app_lock);
+        mOpenLock = findView(R.id.open_lock);
+        mFloatBall = findView(R.id.float_ball);
 
 //        mName.setText(ConfigManager.getInstance().getUserName());
     }
 
     @Override
     protected void initData(Bundle bundle) {
+        mConfigManager = ConfigManager.getInstance();
+        mOpenLock.setSwitchStatus(mConfigManager.isLock());
         mDbManager = DbManager.getInstance();
         mDbManager.onStart();
         getData();
@@ -125,12 +135,20 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-        mSetting.setOnClickListener(new View.OnClickListener() {
+        mOpenLock.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                toActivity(SettingActivity.class);
+            public void onCheckedChanged(CompoundButton switchButton, boolean isChecked) {
+                String toast = isChecked ? "开启程序锁" : "关闭程序锁";
+                ToastUtils.showTasty(getActivity(), toast, TastyToast.INFO);
+                mConfigManager.setLock(isChecked);
             }
         });
+//        mSetting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                toActivity(SettingActivity.class);
+//            }
+//        });
         mBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

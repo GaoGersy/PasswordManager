@@ -9,5 +9,5 @@ public interface LockCallback {
 
     void onError(String msg);
 
-    void onChangLockType();
+    void onChangLockType(boolean isFingerLock);
 }

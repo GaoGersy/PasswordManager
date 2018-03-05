@@ -4,7 +4,7 @@
         android:layout_height="150pt"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:background="@color/title_bg"
+        android:background="@color/primary_color"
         >
     <View
             android:id="@+id/view"

@@ -2,11 +2,13 @@ package com.gersion.superlock.bean;
 
 import com.gersion.library.inter.IMultiLayout;
 
+import java.io.Serializable;
+
 /**
  * Created by aa326 on 2018/1/13.
  */
 
-public class ItemBean implements IMultiLayout {
+public class ItemBean implements IMultiLayout,Serializable {
     private long id;
     private int layoutId;
     private String number;

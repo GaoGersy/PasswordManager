@@ -7,6 +7,8 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import com.gersion.superlock.R;
 import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.base.BaseActivity;
+import com.gersion.superlock.fragment.HomeFragment;
+import com.gersion.superlock.fragment.MineFragment;
 import com.gersion.superlock.service.FloatBallService;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.ToastUtils;
@@ -63,6 +67,10 @@ public class SettingActivity extends BaseActivity {
         mTitleView.setTitleText("设置");
         mTitleView.setAddVisiable(false)
                 .setSearchVisiable(false);
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fl_container, new MineFragment());
+        fragmentTransaction.commit();
     }
 
     @Override

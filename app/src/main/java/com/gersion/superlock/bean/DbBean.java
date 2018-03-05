@@ -23,7 +23,7 @@ public class DbBean extends RealmObject implements Serializable {
     private int position;
     private boolean isVisible;
     private String notes;
-    private int index;
+    private long index;
     private String icon;
 
     public void setId(long id){
@@ -114,11 +114,11 @@ public class DbBean extends RealmObject implements Serializable {
         this.notes = notes;
     }
 
-    public int getIndex() {
+    public long getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(long index) {
         this.index = index;
     }
 

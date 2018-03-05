@@ -145,7 +145,6 @@ public final class DbManager {
         //如果RealmObject对象没有primaryKey, 会报错: java.lang.IllegalArgumentException: A RealmObject with no @PrimaryKey cannot be updated: class com.stone.hostproject.db.model.PasswordBean
         DbBean dbPasswordBean = mRealm.copyToRealmOrUpdate(bean);
         mRealm.commitTransaction();
-
         return dbPasswordBean;
     }
 

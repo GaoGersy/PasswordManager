@@ -25,8 +25,9 @@ public class PinAdapter implements LockAdapter {
     private CodeView mCodeView;
     private String mPassword;
     private int mLockMode = -1;
+    private TextView mTvFingerLockNotice;
 
-    public PinAdapter(int lockMode){
+    public PinAdapter(int lockMode) {
         mLockMode = lockMode;
     }
 
@@ -59,21 +60,22 @@ public class PinAdapter implements LockAdapter {
         }
     }
 
-    int step =0;
+    int step = 0;
+
     private void onReset(String result) {
-        if (step ==0) {
+        if (step == 0) {
             String password = ConfigManager.getInstance().getAppPassword();
             String pwd = Md5Utils.encodeWithTimes(result, 2);
             if (TextUtils.equals(password, pwd)) {
                 mCodeView.clear();
                 mTvNotice.setText("输入新的密码");
                 step++;
-            }else {
+            } else {
                 mLockCallback.onError("密码错误");
                 mTvNotice.setText("密码错误");
                 shake();
             }
-        }else {
+        } else {
             onInit(result);
         }
     }
@@ -98,7 +100,7 @@ public class PinAdapter implements LockAdapter {
                 mConfigManager.setAppPassword(result);
             } else {
                 mCodeView.clear();
-                mPassword=null;
+                mPassword = null;
                 mLockCallback.onError("两次密码不一致");
                 mTvNotice.setText("两次密码不一致");
                 shake();
@@ -110,6 +112,10 @@ public class PinAdapter implements LockAdapter {
         }
     }
 
+    public void showFingerLockNotice() {
+        mTvFingerLockNotice.setVisibility(View.VISIBLE);
+    }
+
     private ConfigManager mConfigManager;
     private TextView mTvNotice;
 
@@ -117,6 +123,7 @@ public class PinAdapter implements LockAdapter {
         mConfigManager = ConfigManager.getInstance();
         View view = LayoutInflater.from(context).inflate(R.layout.view_code, null);
         mTvNotice = (TextView) view.findViewById(R.id.tv_notice);
+        mTvFingerLockNotice = (TextView) view.findViewById(R.id.tv_finger_lock_notice);
         final KeyboardView keyboardView = (KeyboardView) view.findViewById(R.id.password_input);
         mCodeView = (CodeView) view.findViewById(R.id.password_view);
         mCodeView.setShowType(CodeView.SHOW_TYPE_PASSWORD);

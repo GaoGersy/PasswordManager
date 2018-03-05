@@ -129,7 +129,7 @@ public class RegisterActivity extends BaseActivity {
             }
 
             @Override
-            public void onChangLockType() {
+            public void onChangLockType(boolean b) {
 
             }
         });

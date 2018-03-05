@@ -6,7 +6,7 @@
     <!--FF80DDE4, FF286EDC-->
     <!--FFE480C6, FFDC285E-->
     <corners android:radius="@dimen/item_radius"></corners>
-    <solid android:color="@color/global_bg"/>
+    <solid android:color="@color/title_bg"/>
     <!--<gradient-->
         <!--android:angle="0"-->
         <!--android:endColor="#FF67CC34"-->

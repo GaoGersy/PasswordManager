@@ -11,7 +11,7 @@ public class Keyer {
     public int position;
     public boolean isVisible;
     public String notes;
-    public int index;
+    public long index;
     public String icon;
 
     public Keyer(){}
@@ -100,7 +100,7 @@ public class Keyer {
         this.notes = notes;
     }
 
-    public int getIndex() {
+    public long getIndex() {
         return index;
     }
 

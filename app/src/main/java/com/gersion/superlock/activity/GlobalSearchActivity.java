@@ -3,8 +3,6 @@ package com.gersion.superlock.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.gersion.superlock.R;
@@ -15,6 +13,7 @@ import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.OnItemClickListener;
+import com.gersion.superlock.utils.KeyboardUtils;
 import com.gersion.superlock.utils.MatchUtils;
 import com.gersion.superlock.view.SearchView;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
@@ -67,6 +66,7 @@ public class GlobalSearchActivity extends BaseLifeActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+                KeyboardUtils.hideSoftInput(GlobalSearchActivity.this);
             }
         });
 

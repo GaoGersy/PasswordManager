@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.utils.SPManager;
 import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 
 /**
@@ -32,9 +30,11 @@ public class FingerPrintAdapter implements LockAdapter {
     private TextView mTvNotice;
     private TextView mBtnCancel;
     private TextView mBtnOtherType;
+    private Context mContext;
 
     @Override
     public View init(Context context) {
+        mContext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.view_finger_print, null);
         mRlFingerContainer = (RelativeLayout) view.findViewById(R.id.rl_finger_container);
         mTvNotice = (TextView) view.findViewById(R.id.tv_notice);
@@ -55,7 +55,7 @@ public class FingerPrintAdapter implements LockAdapter {
         mBtnOtherType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch2OtherType();
+                switch2OtherType(false);
             }
         });
     }
@@ -90,32 +90,33 @@ public class FingerPrintAdapter implements LockAdapter {
 
         @Override
         public void onStartFailedByDeviceLocked() {
-
+            switch2OtherType(true);
         }
 
         @Override
         public void onFailed(boolean isDeviceLocked) {
-            mTvNotice.setText("指纹解锁已禁用，请 " + 15 + " 秒后重试");
-            SPManager.setLockedTime(SystemClock.currentThreadTimeMillis());
-            mIvFinger.setImageResource(R.mipmap.alert);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mIvFinger.setImageResource(R.mipmap.finger);
-                    mTvNotice.setText("请轻触指纹感应器验证指纹");
-                    SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
-                }
-            }, 15000);
+//            mTvNotice.setText("指纹解锁已禁用，请 " + 15 + " 秒后重试");
+//            SPManager.setLockedTime(SystemClock.currentThreadTimeMillis());
+//            mIvFinger.setImageResource(R.mipmap.alert);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mIvFinger.setImageResource(R.mipmap.finger);
+//                    mTvNotice.setText("请轻触指纹感应器验证指纹");
+//                    SuperLockApplication.mFingerprintIdentify.startIdentify(5, mFingerprintIdentifyListener);
+//                }
+//            }, 15000);
+            switch2OtherType(true);
         }
     };
 
-    private void switch2OtherType() {
+    private void switch2OtherType(final boolean isFingerLock) {
         mRlFingerContainer.animate()
                 .alpha(0)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        mLockCallback.onChangLockType();
+                        mLockCallback.onChangLockType(isFingerLock);
                     }
                 }).setDuration(500).start();
     }

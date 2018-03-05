@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.utils.KeyboardUtils;
 
 /**
@@ -28,7 +29,7 @@ import com.gersion.superlock.utils.KeyboardUtils;
 public class SearchView extends LinearLayout {
 
     private View mView;
-    private Context mContext;
+    private BaseLifeActivity mContext;
     private EditText mEtContent;
     private ImageView mIvClear;
     private ImageView mIvBack;
@@ -43,7 +44,7 @@ public class SearchView extends LinearLayout {
     public SearchView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mView = LayoutInflater.from(context).inflate(R.layout.view_search, this);
-        mContext = context;
+        mContext = (BaseLifeActivity) context;
         initView();
         initData(attrs);
         initListner();
@@ -55,7 +56,7 @@ public class SearchView extends LinearLayout {
         mEtContent = findView(R.id.et_content);
         mLlContainer = findView(R.id.ll_container);
         mIvClear.setVisibility(GONE);
-        KeyboardUtils.toggleSoftInput(mContext);
+        KeyboardUtils.toggleSoftInput();
     }
 
     private void initData(AttributeSet attrs) {

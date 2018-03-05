@@ -47,8 +47,8 @@ public class BaseLifeActivity extends AppCompatActivity {
             return false;
         }
 
-        return false;
-//        return true;
+//        return false;
+        return true;
     }
 
 

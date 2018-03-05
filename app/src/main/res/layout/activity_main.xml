@@ -65,44 +65,65 @@
     <LinearLayout
             android:id="@+id/menu_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone"
             >
-        <FrameLayout
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="60pt"
-                android:background="@color/white"
+                android:orientation="vertical"
+                android:background="@color/primary_color"
                 >
-            <ImageView
-                    android:id="@+id/iv_close"
-                    android:layout_width="50pt"
-                    android:layout_height="50pt"
-                    android:layout_gravity="right"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:padding="3dp"
-                    android:src="@mipmap/add"
-                    android:tint="@color/item_divider"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/miui_back_drawable"
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="60pt"
+                    >
+                <ImageView
+                        android:id="@+id/iv_close"
+                        android:layout_width="50pt"
+                        android:layout_height="50pt"
+                        android:layout_gravity="right"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="3dp"
+                        android:src="@mipmap/add"
+                        android:tint="@color/item_divider"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/miui_back_drawable"
+                        android:layout_marginBottom="5dp"
+                        />
+            </FrameLayout>
+            <TextView
+                    android:id="@+id/pwd_create"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="密码生成器"
+                    android:typeface="sans"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    android:padding="15dp"
                     />
-        </FrameLayout>
-        <com.gersion.superlock.view.ItemView
-                android:id="@+id/pwd_create"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:item_icon="@drawable/collection"
-                app:item_title="密码生成器"
-                />
-        <com.gersion.superlock.view.ItemView
-                android:id="@+id/setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:item_icon="@drawable/collection"
-                app:item_title="设置"
-                />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/item_divider"
+                    android:layout_marginLeft="10dp"
+                    />
+            <TextView
+                    android:id="@+id/setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="设置"
+                    android:typeface="sans"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    android:padding="15dp"
+                    />
+        </LinearLayout>
         <View
                 android:id="@+id/container"
                 android:visibility="gone"

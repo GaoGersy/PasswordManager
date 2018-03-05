@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.ItemBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.utils.AnimatorUtils;
@@ -48,6 +50,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     @BindView(R.id.activity_add_password)
     LinearLayout mActivityAddPassword;
     private int mTotalCount;
+    private boolean mIsEdit;
 
     CharSequence[] words = {
             "自定义",
@@ -62,6 +65,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
             "网易",
             "新浪"
     };
+    private ItemBean mItemBean;
 
     public static void startIntent(Activity activity, int totalCount) {
         Intent intent = new Intent(activity, AddPasswordActivity.class);
@@ -88,6 +92,19 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     protected void initData() {
         mTotalCount = HomeFragment.mTotalCount;
         mTotalCount--;
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            mItemBean = (ItemBean) bundle.getSerializable("itemBean");
+            if (mItemBean != null) {
+                mTitleView.setTitleText("修改密码");
+                mCetvLocation.setText(mItemBean.getAddress());
+                mCetvName.setText(mItemBean.getName());
+                mEtNotes.setText(mItemBean.getNotes());
+                mCetvPassword.setText(mItemBean.getPwd());
+                mIsEdit = true;
+            }
+        }
     }
 
     @Override
@@ -133,7 +150,6 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.tv_commit:
                 addItem();
-
                 break;
             case R.id.selector:
                 StyledDialog.buildMdSingleChoose(this, "选择密码位置", 0, words, new MyItemDialogListener() {
@@ -164,16 +180,19 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
             dbBean.setName(name);
             dbBean.setNotes(notes);
             dbBean.setPwd(pwd);
-            mTotalCount++;
-            dbBean.setIndex(mTotalCount);
-            dbBean.setId(mTotalCount);
-            DbManager.getInstance().add(dbBean);
-            ToastUtils.showTasty(AddPasswordActivity.this, "添加成功", TastyToast.SUCCESS);
+            if (mIsEdit){
+                dbBean.setIndex(mItemBean.getId());
+                dbBean.setId(mItemBean.getId());
+                DbManager.getInstance().update(dbBean);
+                ToastUtils.showTasty(AddPasswordActivity.this, "修改成功", TastyToast.SUCCESS);
+            }else {
+                mTotalCount++;
+                dbBean.setId(mTotalCount);
+                dbBean.setIndex(mTotalCount);
+                DbManager.getInstance().add(dbBean);
+                ToastUtils.showTasty(AddPasswordActivity.this, "添加成功", TastyToast.SUCCESS);
+            }
             finish();
-//            mCetvLocation.setText("");
-//            mCetvName.setText("");
-//            mCetvPassword.setText("");
-//            mEtNotes.setText("");
         } else {
             shakeAnimator();
         }

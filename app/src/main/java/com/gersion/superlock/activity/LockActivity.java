@@ -10,6 +10,8 @@ import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.lockadapter.LockAdapter;
 import com.gersion.superlock.lockadapter.LockAdapterFactory;
 import com.gersion.superlock.lockadapter.LockCallback;
+import com.gersion.superlock.lockadapter.PinAdapter;
+import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -17,6 +19,8 @@ import com.sdsmdg.tastytoast.TastyToast;
 public class LockActivity extends BaseLifeActivity{
 
     private FrameLayout mFlContainer;
+    private View currentView;
+    private LockAdapter mLockAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +30,24 @@ public class LockActivity extends BaseLifeActivity{
         initData();
         initEvent();
         mFlContainer = (FrameLayout) findViewById(R.id.fl_container);
-        LockAdapter lockAdapter = LockAdapterFactory.initLock();
-        View view = lockAdapter.init(this);
+        initLockAdapter();
+    }
+    private void initLockAdapter() {
+        initLockAdapter(-1);
+    }
+    private void initLockAdapter(int lockType) {
+        if (lockType==-1){
+            mLockAdapter = LockAdapterFactory.initLock();
+        }else {
+            mLockAdapter = LockAdapterFactory.initLock(lockType);
+        }
+        View view = mLockAdapter.init(this);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
         view.setLayoutParams(layoutParams);
         mFlContainer.addView(view);
-        lockAdapter.setLockCallback(mLockCallback);
+        currentView=view;
+        mLockAdapter.setLockCallback(mLockCallback);
+        mLockAdapter.onStart();
     }
 
     @Override
@@ -55,8 +71,11 @@ public class LockActivity extends BaseLifeActivity{
         }
 
         @Override
-        public void onChangLockType() {
-
+        public void onChangLockType(boolean isFingerLock) {
+            mFlContainer.removeView(currentView);
+            initLockAdapter(MyConstants.LockType.TYPE_PIN);
+            PinAdapter lockAdapter = (PinAdapter) mLockAdapter;
+            lockAdapter.showFingerLockNotice();
         }
     };
     // 初始化数据
