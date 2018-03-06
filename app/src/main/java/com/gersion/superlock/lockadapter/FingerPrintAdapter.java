@@ -88,7 +88,6 @@ public class FingerPrintAdapter implements LockAdapter {
                         mLockCallback.onSuccess();
                     }
                 }, 300);
-                Logger.e("成功");
             }
 
             @Override
@@ -100,7 +99,6 @@ public class FingerPrintAdapter implements LockAdapter {
             @Override
             public void onStartFailedByDeviceLocked() {
                 switch2OtherType(true);
-                Logger.e("成功");
             }
 
             @Override
@@ -121,7 +119,6 @@ public class FingerPrintAdapter implements LockAdapter {
 //                }else {
 //                    start();
 //                }
-                Logger.e("是否禁用"+isDeviceLocked);
                 if (!isDeviceLocked){
                     mTvNotice.postDelayed(new Runnable() {
                         @Override

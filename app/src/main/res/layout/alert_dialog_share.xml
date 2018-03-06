@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transpant"
+        >
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_f1"
+            android:paddingBottom="10dp"
+            android:orientation="vertical"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="8dp"
+                android:text="请选择分享平台"
+                android:textColor="#999999"
+                android:textSize="18sp"
+                />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                >
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    >
+
+                <ImageView
+                        android:id="@+id/share_friends"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/friends_icon"
+                        />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="朋友圈"
+                        android:textColor="@color/font_black"
+                        android:textSize="@dimen/text_size_16"
+                        />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    >
+
+                <ImageView
+                        android:id="@+id/share_weixin"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/weixin_icon"
+                        />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="微信"
+                        android:textColor="@color/font_black"
+                        android:textSize="@dimen/text_size_16"
+                        />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    >
+
+                <ImageView
+                        android:id="@+id/share_qq"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/qq_icon"
+                        />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="QQ"
+                        android:textColor="@color/font_black"
+                        android:textSize="@dimen/text_size_16"
+                        />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

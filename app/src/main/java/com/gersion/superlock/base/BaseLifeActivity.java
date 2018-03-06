@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionSet;
@@ -21,7 +21,7 @@ import com.gersion.superlock.utils.ConfigManager;
  *
  * @author Ger
  */
-public class BaseLifeActivity extends AppCompatActivity {
+public class BaseLifeActivity extends FragmentActivity {
     public static int visibleCount = 0;
     public int liveCount = 0;
     public long lastActive = 0;

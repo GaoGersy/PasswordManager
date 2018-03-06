@@ -27,7 +27,6 @@ import com.gersion.superlock.view.TitleView;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.sdsmdg.tastytoast.TastyToast;
 
-import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Method;
 
@@ -102,7 +101,7 @@ public class SettingActivity extends BaseActivity {
                 String toast = isChecked ? "开启显示密码" : "关闭显示密码";
                 ToastUtils.showTasty(SettingActivity.this, toast, TastyToast.INFO);
                 mConfigManager.setShowPwd(isChecked);
-                EventBus.getDefault().postSticky("ChangSwitch");
+//                EventBus.getDefault().postSticky("ChangSwitch");
             }
         });
         mUpdateTimeShow.setSwitchChangeListener(new SwitchButton.OnCheckedChangeListener() {

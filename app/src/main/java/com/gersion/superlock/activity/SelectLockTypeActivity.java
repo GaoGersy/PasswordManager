@@ -44,7 +44,7 @@ public class SelectLockTypeActivity extends BaseActivity {
                 .setAddVisiable(false)
                 .setSearchVisiable(false);
         boolean fingerprintEnable = SuperLockApplication.mFingerprintIdentify.isFingerprintEnable();
-        if (!fingerprintEnable){
+        if (!fingerprintEnable) {
             mTvFingerPrint.setVisibility(View.GONE);
         }
     }
@@ -67,55 +67,64 @@ public class SelectLockTypeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String patternString = mConfigManager.getPatternString();
-                changeLockType(MyConstants.LockType.TYPE_PATTERN);
+                currentMode = mConfigManager.getLockType();
                 if (patternString == null) {
-                    toActivityForResult(RegisterActivity.class,CODE);
+                    mConfigManager.setChangePwd(false);
+                    changeLockType(MyConstants.LockType.TYPE_PATTERN, false);
+                    toActivityForResult(RegisterActivity.class, CODE);
+                } else {
+                    changeLockType(MyConstants.LockType.TYPE_PATTERN, true);
                 }
             }
         });
         mTvPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLockType(MyConstants.LockType.TYPE_PIN);
+                changeLockType(MyConstants.LockType.TYPE_PIN, true);
             }
         });
         mTvFingerPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeLockType(MyConstants.LockType.TYPE_FINGER_PRINT);
+                changeLockType(MyConstants.LockType.TYPE_FINGER_PRINT, true);
             }
         });
     }
 
-    private void changeLockType(int lockType) {
+    private void changeLockType(int lockType, boolean showMsg) {
         mTvPin.setSelected(lockType == MyConstants.LockType.TYPE_PIN);
         mTvPattern.setSelected(lockType == MyConstants.LockType.TYPE_PATTERN);
         mTvFingerPrint.setSelected(lockType == MyConstants.LockType.TYPE_FINGER_PRINT);
         mConfigManager.setLockType(lockType);
-        String msg = null;
-        switch (lockType){
-            case MyConstants.LockType.TYPE_PIN:
-                msg="已修改为密码解锁";
-                break;
-            case MyConstants.LockType.TYPE_PATTERN:
-                msg="已修改为图案解锁";
-                break;
-            case MyConstants.LockType.TYPE_FINGER_PRINT:
-                msg="已修改为指纹解锁";
-                break;
+        if (showMsg) {
+            String msg = null;
+            switch (lockType) {
+                case MyConstants.LockType.TYPE_PIN:
+                    msg = "已修改为密码解锁";
+                    break;
+                case MyConstants.LockType.TYPE_PATTERN:
+                    msg = "已修改为图案解锁";
+                    break;
+                case MyConstants.LockType.TYPE_FINGER_PRINT:
+                    msg = "已修改为指纹解锁";
+
+                    break;
+            }
+            ToastUtils.showTasty(this, msg, TastyToast.SUCCESS);
         }
-        ToastUtils.showTasty(this,msg, TastyToast.SUCCESS);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==resultCode){
-            if (requestCode==CODE){
-                changeLockType(MyConstants.LockType.TYPE_PATTERN);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CODE) {
+                changeLockType(MyConstants.LockType.TYPE_PATTERN, true);
             }
-        }else {
-            changeLockType(MyConstants.LockType.TYPE_PIN);
+        } else {
+            changeLockType(currentMode, false);
+            ToastUtils.showTasty(this, "设置图案解锁失败", TastyToast.ERROR);
         }
     }
 }

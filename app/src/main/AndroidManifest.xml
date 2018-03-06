@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
     <uses-permission android:name="com.fingerprints.service.ACCESS_FINGERPRINT_MANAGER"/>
     <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY"/>
+
     <application
             android:name=".app.SuperLockApplication"
             android:allowBackup="true"
@@ -107,9 +108,31 @@
         <activity
                 android:name=".activity.MenuActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/AlertDialogBottom"/>
+                android:theme="@style/AlertDialogUp"/>
         <activity android:name=".activity.PwdCreateActivity">
         </activity>
+        <activity
+                android:name=".share.SharePopup"
+                android:screenOrientation="portrait"
+                android:theme="@style/AlertDialogBottom"/>
+
+        <activity
+                android:name="com.tencent.tauth.AuthActivity"
+                android:launchMode="singleTask"
+                android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105866139" />
+            </intent-filter>
+        </activity>
+        <activity
+                android:name="com.tencent.connect.common.AssistActivity"
+                android:screenOrientation="portrait"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

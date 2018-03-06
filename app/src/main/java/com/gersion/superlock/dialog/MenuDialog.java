@@ -18,7 +18,7 @@ public class MenuDialog {
 
     public MenuDialog(Context context) {
         mContext = context;
-        mDialog = new AlertDialog.Builder(context,R.style.AnimBottom).create();
+        mDialog = new AlertDialog.Builder(context,R.style.AnimUp).create();
         mDialog.setCancelable(true);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.show();

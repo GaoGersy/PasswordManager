@@ -17,9 +17,10 @@ android {
         applicationId "com.gersion.superpasswordlock"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.5"
         resConfigs "zh"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的SO库架构
@@ -65,7 +66,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
     compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
-    compile 'org.greenrobot:eventbus:3.0.0'
+//    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:recyclerview-v7:26.+'
     compile 'jp.wasabeef:recyclerview-animators:2.2.4'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
@@ -94,4 +95,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.jungly.socialize:biliShare:0.1.0701' //必需
+    compile 'com.android.support:multidex:1.0.1'
 }

@@ -44,7 +44,7 @@
         <TextView
                 android:id="@+id/tv_pattern"
                 android:layout_marginLeft="50dp"
-                android:text="手势解锁"
+                android:text="图案解锁"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:background="@drawable/selector_lock_type"

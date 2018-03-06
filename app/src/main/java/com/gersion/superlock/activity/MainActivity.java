@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,14 +16,12 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.service.FloatBallService;
+import com.gersion.superlock.share.SharePopup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
-
-    //    @BindView(R.id.titleView)
-//    TitleView mTitleView;
     @BindView(R.id.title)
     TextView mTitle;
     @BindView(R.id.activity_iv_search)
@@ -39,12 +38,10 @@ public class MainActivity extends BaseActivity {
     View mContainer;
     @BindView(R.id.menu_container)
     LinearLayout mMenuContainer;
-    //    @BindView(R.id.mViewPager)
-//    ViewPager mViewPager;
-//    @BindView(R.id.viewpagertab)
-//    SmartTabLayout mViewPagerTab;
-//    @BindView(R.id.alphaIndicator)
-//    AlphaTabsIndicator mAlphaIndicator;
+    @BindView(R.id.fl_container)
+    FrameLayout mFlContainer;
+    @BindView(R.id.share)
+    TextView mShare;
 
     @Override
     protected int getLayoutId() {
@@ -166,6 +163,13 @@ public class MainActivity extends BaseActivity {
                 closeMenu();
             }
         });
+
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(SharePopup.class);
+            }
+        });
 //
 //        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            @Override
@@ -190,5 +194,4 @@ public class MainActivity extends BaseActivity {
 //            }
 //        });
     }
-
 }

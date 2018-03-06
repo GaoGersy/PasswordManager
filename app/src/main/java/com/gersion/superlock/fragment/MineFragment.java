@@ -18,6 +18,7 @@ import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.ResultCallback;
+import com.gersion.superlock.share.SharePopup;
 import com.gersion.superlock.utils.BackupHelper;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.GsonHelper;
@@ -202,6 +203,13 @@ public class MineFragment extends BasePermissionFragment {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toActivity(SharePopup.class);
             }
         });
 

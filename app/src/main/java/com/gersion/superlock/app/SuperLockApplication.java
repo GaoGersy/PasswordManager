@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.multidex.MultiDex;
 import android.view.WindowManager;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.MainActivity;
 import com.gersion.superlock.db.DbManager;
+import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.RudenessScreenHelper;
 import com.hitomi.cmlibrary.CircleMenu;
 import com.hitomi.cmlibrary.OnMenuSelectedListener;
@@ -23,6 +25,8 @@ import com.orhanobut.logger.Logger;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wei.android.lib.fingerprintidentify.FingerprintIdentify;
 import com.wei.android.lib.fingerprintidentify.base.BaseFingerprint;
 import com.yhao.floatwindow.FloatWindow;
@@ -53,6 +57,7 @@ public class SuperLockApplication extends Application {
     public static Handler mHandler;
     public static FingerprintIdentify mFingerprintIdentify;
     public final static float DESIGN_WIDTH = 750; //绘制页面时参照的设计图宽度
+    public static IWXAPI api;
 
     /**
      * 得到上下文对象
@@ -86,10 +91,19 @@ public class SuperLockApplication extends Application {
     }
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+//        Beta.installTinker();
+//        Beta.canNotifyUserRestart = true;
+    }
+
+    @Override
     public void onCreate() {
         super.onCreate();
         //初始化上下文
         mContext = getApplicationContext();
+        initWeixinApi();
         initBugly();
 //        resetDensity();
         new RudenessScreenHelper(this, 750).activate();
@@ -112,6 +126,11 @@ public class SuperLockApplication extends Application {
         //初始化主线程的一个handler
         mHandler = new Handler();
 //        initActionButton();
+    }
+
+    private void initWeixinApi() {
+        api = WXAPIFactory.createWXAPI(this, MyConstants.WEIXIN_APP_ID, true);
+        api.registerApp(MyConstants.WEIXIN_APP_ID);
     }
 
     private void initActionButton() {

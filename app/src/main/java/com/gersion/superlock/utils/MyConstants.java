@@ -1,18 +1,17 @@
-  
+
 package com.gersion.superlock.utils;
 
 /**
- * ClassName: NewsCenterBean <br/> 
- * Function: TODO ADD FUNCTION. <br/>  
- * date: 2016年8月9日 下午7:36:01 <br/> 
- * 
- * @作者 Gers 
- * @版本  
+ * ClassName: NewsCenterBean <br/>
+ * Function: TODO ADD FUNCTION. <br/>
+ * date: 2016年8月9日 下午7:36:01 <br/>
+ *
+ * @作者 Gers
+ * @版本
  * @包名 com.example.smartbeijing.bean
  * @待完成 TODO
  * @创建时间 2016年8月9日
  * @描述 TODO
- * 
  * @更新人 $Author$
  * @更新时间 $Date$
  * @更新版本 $Rev$
@@ -68,28 +67,30 @@ public interface MyConstants {
 
     String BACKUP_PATH = "superlock/backup";
 
-    String BACKUP_FILE_NAME= "data";
+    String BACKUP_FILE_NAME = "data";
 
     String SALT = "9ok78&ssa@";
 
     String FILE_TYPE = "slock";
+    String WEIXIN_APP_ID = "1105735333";
+    String QQ_APP_ID = "1105735333";
 
-    interface LockMode{
-        int MODE_INIT=0;//初始设置
-        int MODE_LOCK=1;//锁屏
-        int MODE_RESET=2;//重置密码
+    interface LockMode {
+        int MODE_INIT = 0;//初始设置
+        int MODE_LOCK = 1;//锁屏
+        int MODE_RESET = 2;//重置密码
     }
 
-    interface LockType{
-        int TYPE_PIN=0;//pin
-        int TYPE_PATTERN=1;//图案
-        int TYPE_FINGER_PRINT=2;//指纹
+    interface LockType {
+        int TYPE_PIN = 0;//pin
+        int TYPE_PATTERN = 1;//图案
+        int TYPE_FINGER_PRINT = 2;//指纹
     }
 
-    interface RegisterMode{
-        int MODE_INIT=0;//pin
-        int MODE_RESET=1;//图案
-        int MODE_CHANGE_LOCK_TYPE=2;//更换到
+    interface RegisterMode {
+        int MODE_INIT = 0;//pin
+        int MODE_RESET = 1;//图案
+        int MODE_CHANGE_LOCK_TYPE = 2;//更换到
     }
 }
   

@@ -12,7 +12,6 @@ import com.gersion.superlock.animator.EasyTransitionOptions;
 import com.gersion.superlock.base.BaseLifeActivity;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
-import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.utils.KeyboardUtils;
 import com.gersion.superlock.utils.MatchUtils;
 import com.gersion.superlock.view.SearchView;
@@ -87,12 +86,12 @@ public class GlobalSearchActivity extends BaseLifeActivity {
             }
         });
 
-        mSearchAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                startTrainsition(view,mDataList.get(position));
-            }
-        });
+//        mSearchAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                startTrainsition(view,mDataList.get(position));
+//            }
+//        });
     }
 
     private void startTrainsition(View view, DbBean bean){
