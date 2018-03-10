@@ -115,24 +115,25 @@
                 android:name=".share.SharePopup"
                 android:screenOrientation="portrait"
                 android:theme="@style/AlertDialogBottom"/>
-
         <activity
                 android:name="com.tencent.tauth.AuthActivity"
                 android:launchMode="singleTask"
                 android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="tencent1105866139" />
+                <data android:scheme="tencent1105866139"/>
             </intent-filter>
         </activity>
         <activity
                 android:name="com.tencent.connect.common.AssistActivity"
                 android:screenOrientation="portrait"
-                android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+                android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name=".activity.PasswordDetailActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.gersion.library.adapter.MultiTypeAdapter;
 import com.gersion.library.viewholder.BaseViewHolder;
 import com.gersion.superlock.R;
-import com.gersion.superlock.activity.AddPasswordActivity;
 import com.gersion.superlock.activity.MainActivity;
+import com.gersion.superlock.activity.PasswordDetailActivity;
 import com.gersion.superlock.bean.ItemBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.fragment.HomeFragment;
@@ -91,7 +91,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("itemBean",bean);
                         Logger.e(bean.getNotes());
-                        mainActivity.toActivity(AddPasswordActivity.class,bundle);
+                        mainActivity.toActivity(PasswordDetailActivity.class,bundle);
                     }
                 });
                 break;

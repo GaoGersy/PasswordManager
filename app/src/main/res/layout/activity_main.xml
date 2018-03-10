@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:textColor="@color/bg_white"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     />
 
@@ -56,6 +56,10 @@
                     />
 
         </RelativeLayout>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/bg_home_black"/>
         <FrameLayout
                 android:id="@+id/fl_container"
                 android:layout_width="match_parent"

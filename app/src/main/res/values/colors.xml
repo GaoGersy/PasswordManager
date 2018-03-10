@@ -10,7 +10,9 @@
     <color name="app_theme_color">#888888</color>
     <color name="transpant">#00000000</color>
     <color name="white">#fff</color>
-    <color name="font_color">#fff</color>
+    <color name="bg_home">#2E3542</color>
+    <color name="bg_home_black">#252932</color>
+    <color name="font_color">#7DD2F3</color>
     <color name="divider">#cdcdcd</color>
     <color name="red">#f00</color>
     <color name="gray_80">#808080</color>
@@ -34,17 +36,18 @@
     <color name="confirm">#a75190</color>
     <color name="item_divider">#d9d9d9</color>
     <color name="item_bg">#11ffffff</color>
-    <color name="primary_color">#008171</color>
+    <color name="primary_color">#2E3542</color>
+    <!--<color name="primary_color">#008171</color>-->
     <color name="secondary_color">#0d7d6f</color>
     <color name="search_title_color">#99c32f98</color>
     <color name="list_bg_color">#15ffffff</color>
-    <color name="item_home">#fdc647</color>
+    <color name="item_home">#534693</color>
     <color name="item_password">#7abe45</color>
     <color name="item_notes">#5aa7eb</color>
     <color name="theme_grey_bg">#efeff0</color>
     <color name="edit_text_bg">#fff</color>
     <color name="button_bg">#5aa7eb</color>
-    <color name="title_bg">#FFFFB314</color>
+    <color name="title_bg">#2A5374</color>
     <color name="dividers">#bfbfbf</color>
     <color name="grey_bg">#efeff0</color>
 
