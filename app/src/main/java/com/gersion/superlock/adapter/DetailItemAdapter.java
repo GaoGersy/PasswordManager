@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gersion.library.adapter.MultiTypeAdapter;
 import com.gersion.library.viewholder.BaseViewHolder;
 import com.gersion.superlock.R;
+import com.gersion.superlock.activity.AddPasswordActivity;
 import com.gersion.superlock.activity.MainActivity;
 import com.gersion.superlock.activity.PasswordDetailActivity;
 import com.gersion.superlock.bean.ItemBean;
@@ -58,6 +60,16 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                         }
                     }
                 });
+                ImageView ivInfo = (ImageView) baseViewHolder.getView(R.id.iv_info);
+                ivInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MainActivity mainActivity = (MainActivity) baseViewHolder.getConvertView().getContext();
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("id",bean.getId());
+                        mainActivity.toActivity(PasswordDetailActivity.class,bundle);
+                    }
+                });
                 break;
             case R.layout.item_detail_password:
                 baseViewHolder.setText(R.id.tv_name, bean.getName());
@@ -91,7 +103,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("itemBean",bean);
                         Logger.e(bean.getNotes());
-                        mainActivity.toActivity(PasswordDetailActivity.class,bundle);
+                        mainActivity.toActivity(AddPasswordActivity.class,bundle);
                     }
                 });
                 break;

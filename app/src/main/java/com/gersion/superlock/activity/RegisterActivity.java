@@ -1,6 +1,7 @@
 package com.gersion.superlock.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -62,6 +63,8 @@ public class RegisterActivity extends BaseActivity {
     private FrameLayout mFlContainer;
     private TitleView mTitleView;
     private LockAdapter mLockAdapter;
+    private int mLockType;
+    private boolean mReset;
 
     @Override
     protected int getLayoutId() {
@@ -79,10 +82,17 @@ public class RegisterActivity extends BaseActivity {
         mTitleView.setSearchVisiable(false);
         mTitleView.setTitleText("设置APP启动密码");
 
-        mConfigManager = ConfigManager.getInstance();
-        mIsChangePwd = mConfigManager.isChangePwd();
-        int mode = mIsChangePwd?MyConstants.LockMode.MODE_RESET:MyConstants.LockMode.MODE_INIT;
-        mLockAdapter = LockAdapterFactory.create(mode);
+//        mConfigManager = ConfigManager.getInstance();
+//        mIsChangePwd = mConfigManager.isChangePwd();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle!=null) {
+            mLockType = bundle.getInt("lockType");
+            mReset = bundle.getBoolean("reset");
+        }
+        mIsChangePwd = mReset;
+        int mode = mReset? MyConstants.LockMode.MODE_RESET:MyConstants.LockMode.MODE_INIT;
+        mLockAdapter = LockAdapterFactory.create(mLockType,mode);
         View view = mLockAdapter.init(this);
         mFlContainer.addView(view);
 
@@ -103,6 +113,8 @@ public class RegisterActivity extends BaseActivity {
 //
 //        RegesterAdapter adapter = new RegesterAdapter(mList);
 //        mVp.setAdapter(adapter);
+
+
     }
 
     @Override

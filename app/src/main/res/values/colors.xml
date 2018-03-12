@@ -54,4 +54,11 @@
     <color name="text_enabled">#FFFFFFFF</color>
     <color name="text_disabled">#4DFFFFFF</color>
 
+
+    <color name="item_title_bg">#3C4450</color>
+    <color name="item_title_font_color">#C2D0E9</color>
+    <color name="item_detail_font_color">#1C1C1C</color>
+    <color name="item_title_check_font_color">#20242B</color>
+
+
 </resources>

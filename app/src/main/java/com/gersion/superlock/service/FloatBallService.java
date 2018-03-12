@@ -19,7 +19,7 @@ public class FloatBallService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("aa","intent = "+intent);
+        Log.d("color_lock_type_title","intent = "+intent);
         if (intent != null) {
             Bundle data = intent.getExtras();
             if (data != null) {

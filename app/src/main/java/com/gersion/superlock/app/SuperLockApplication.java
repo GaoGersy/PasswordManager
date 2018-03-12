@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.multidex.MultiDex;
 import android.view.WindowManager;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
@@ -93,7 +92,7 @@ public class SuperLockApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+//        MultiDex.install(this);
 //        Beta.installTinker();
 //        Beta.canNotifyUserRestart = true;
     }
@@ -199,16 +198,16 @@ public class SuperLockApplication extends Application {
         /**
          * 设置通知栏大图标，largeIconId为项目中的图片资源;
          */
-        Beta.largeIconId = R.mipmap.ic_launcher;
+        Beta.largeIconId = R.mipmap.lock;
         /**
          * 设置状态栏小图标，smallIconId为项目中的图片资源Id;
          */
-        Beta.smallIconId = R.mipmap.ic_launcher;
+        Beta.smallIconId = R.mipmap.lock;
         /**
          * 设置更新弹窗默认展示的banner，defaultBannerId为项目中的图片资源Id;
          * 当后台配置的banner拉取失败时显示此banner，默认不设置则展示“loading“;
          */
-        Beta.defaultBannerId = R.mipmap.ic_launcher;
+        Beta.defaultBannerId = R.mipmap.lock;
         /**
          * 设置sd卡的Download为更新资源保存目录;
          * 后续更新资源会保存在此目录，需要在manifest中添加WRITE_EXTERNAL_STORAGE权限;

@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@color/primary_color"
         tools:context="com.gersion.superlock.activity.SelectLockTypeActivity"
         >
     <com.gersion.superlock.view.TitleView
@@ -14,7 +14,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            >
+        <TextView
+                android:id="@+id/pin"
+                android:text="密码解锁"
+                android:gravity="center"
+                android:layout_width="90dp"
+                android:layout_height="100dp"
+                android:textStyle="bold"
+                android:textColor="@color/color_lock_type_title"
+                android:background="@drawable/selector_lock_type_title"
+                />
+        <TextView
+                android:id="@+id/pattern"
+                android:layout_marginLeft="2dp"
+                android:layout_width="90dp"
+                android:layout_height="100dp"
+                android:text="图案解锁"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/color_lock_type_title"
+                android:background="@drawable/selector_lock_type_title"
+                />
+        <TextView
+                android:visibility="gone"
+                android:id="@+id/finger_print"
+                android:layout_marginLeft="2dp"
+                android:text="指纹解锁"
+                android:gravity="center"
+                android:layout_width="90dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/color_lock_type_title"
+                android:background="@drawable/selector_lock_type_title"
+                />
+    </LinearLayout>
+    <com.yarolegovich.discretescrollview.DiscreteScrollView
+            android:id="@+id/detail_discreteScrollView"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
     <TextView
+            android:visibility="gone"
             android:id="@+id/tv_finger_print"
             android:text="指纹解锁"
             android:gravity="center"
@@ -26,6 +75,7 @@
             android:layout_height="@dimen/select_lock_radius"
             />
     <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

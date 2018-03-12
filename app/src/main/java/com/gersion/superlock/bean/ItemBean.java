@@ -20,7 +20,7 @@ public class ItemBean implements IMultiLayout,Serializable {
     private int position;
     private boolean isVisible;
     private String notes;
-    private int index;
+    private long index;
     private String icon;
 
     public long getId() {
@@ -103,11 +103,11 @@ public class ItemBean implements IMultiLayout,Serializable {
         this.notes = notes;
     }
 
-    public int getIndex() {
+    public long getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(long index) {
         this.index = index;
     }
 
@@ -127,5 +127,20 @@ public class ItemBean implements IMultiLayout,Serializable {
     @Override
     public void setLayoutId(int i) {
         layoutId = i;
+    }
+
+    public static ItemBean DbBean2ItemBean(DbBean bean) {
+        ItemBean itemBean = new ItemBean();
+        itemBean.number = bean.getNumber();
+        itemBean.address = bean.getAddress();
+        itemBean.name = bean.getName();
+        itemBean.pwd = bean.getPwd();
+        itemBean.createTime = bean.getCreateTime();
+        itemBean.notes = bean.getNotes();
+        itemBean.index = bean.getIndex();
+        itemBean.icon = bean.getIcon();
+        itemBean.id = bean.getId();
+//            this.updateHistorys = bean.getUpdateHistorys();
+        return itemBean;
     }
 }

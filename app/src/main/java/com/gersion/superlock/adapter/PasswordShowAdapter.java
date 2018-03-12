@@ -148,7 +148,7 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
         public void setData(int position) {
             mPosition = position;
             DbBean passwordBean = mDatas.get(position);
-            mTvName.setText(passwordBean.getUpdateHistorys().get(0).getUpdateTime()+"");
+//            mTvName.setText(passwordBean.getUpdateHistorys().get(0).getUpdateTime()+"");
             mTvTitle.setText(passwordBean.getName());
             if (unfoldedIndexes.contains(position)) {
                 mFcContainer.unfold(true);

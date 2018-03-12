@@ -2,6 +2,8 @@ package com.gersion.superlock.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +13,14 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.adapter.PasswordDetailAdapter;
 import com.gersion.superlock.adapter.PasswordDetailTitleAdapter;
 import com.gersion.superlock.base.BaseActivity;
+import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.ItemBean;
+import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.view.TitleView;
+import com.orhanobut.logger.Logger;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.Orientation;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -24,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.DbBeanRealmProxy;
 
 public class PasswordDetailActivity extends BaseActivity {
 
@@ -37,8 +44,9 @@ public class PasswordDetailActivity extends BaseActivity {
     TextView mTvName;
     private PasswordDetailTitleAdapter mAdapter;
     private List<ItemBean> mList;
-    private PasswordDetailTitleAdapter mDetailAdapter;
+    private PasswordDetailAdapter mDetailAdapter;
     private boolean mIsTitleScroll;//是否是滑动的标题
+    private List<ItemBean> mDataList;
 
     @Override
     protected int getLayoutId() {
@@ -53,11 +61,8 @@ public class PasswordDetailActivity extends BaseActivity {
                 .setBackVisiable(true)
                 .setSearchVisiable(false);
         mTitleDiscreteScrollView.setOrientation(Orientation.HORIZONTAL);
-//            itemPicker.addOnItemChangedListener();
         mAdapter = new PasswordDetailTitleAdapter();
-        mAdapter.registerMultiBean(ItemBean.class, R.layout.item_password_title);
-//            mAdapter.registerMultiLayout(R.layout.item_detail_del);
-//            infiniteAdapter = InfiniteScrollAdapter.wrap(mAdapter);
+        mAdapter.registerMultiBean(DbBeanRealmProxy.class, R.layout.item_password_title);
         mTitleDiscreteScrollView.setAdapter(mAdapter);
         mTitleDiscreteScrollView.setItemTransitionTimeMillis(100);
         mTitleDiscreteScrollView.setOffscreenItems(0);
@@ -69,8 +74,6 @@ public class PasswordDetailActivity extends BaseActivity {
         mTitleDiscreteScrollView.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
             @Override
             public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-//                mTvName.setText(mList.get(adapterPosition).getAddress());
-
                 mIsTitleScroll = true;
             }
 
@@ -83,40 +86,29 @@ public class PasswordDetailActivity extends BaseActivity {
 
             @Override
             public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
-//                int i = currentPosition - newPosition;
-//                if (i > 0) {
-//                    toRight(mTvName);
-//                } else {
-//                    toLeft(mTvName);
-//                }
-
             }
         });
-        mList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            ItemBean itemBean = new ItemBean();
-            itemBean.setName("haha" + i);
-            itemBean.setAddress("xixi" + i);
-            mList.add(itemBean);
-        }
-        mAdapter.setItems(mList);
+//        mList = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            ItemBean itemBean = new ItemBean();
+//            itemBean.setName("haha" + i);
+//            itemBean.setAddress("xixi" + i);
+//            mList.add(itemBean);
+//        }
+//        mAdapter.setItems(mList);
 
         mDetailDiscreteScrollView.setOrientation(Orientation.HORIZONTAL);
-//            itemPicker.addOnItemChangedListener();
-        mDetailAdapter = new PasswordDetailTitleAdapter();
-        mDetailAdapter.registerMultiBean(ItemBean.class, R.layout.item_password_detail);
-//            mAdapter.registerMultiLayout(R.layout.item_detail_del);
-//            infiniteAdapter = InfiniteScrollAdapter.wrap(mAdapter);
+        mDetailAdapter = new PasswordDetailAdapter();
+        mDetailAdapter.registerMultiBean(DbBeanRealmProxy.class, R.layout.item_password_detail);
         mDetailDiscreteScrollView.setAdapter(mDetailAdapter);
         mDetailDiscreteScrollView.setItemTransitionTimeMillis(100);
         mDetailDiscreteScrollView.setOffscreenItems(0);
         mDetailDiscreteScrollView.setItemTransformer(new ScaleTransformer.Builder().setMaxScale(1).setMinScale(1).build());
-        mDetailAdapter.setItems(mList);
+//        mDetailAdapter.setItems(mList);
 
         mDetailDiscreteScrollView.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
             @Override
             public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-//                mTvName.setText(mList.get(adapterPosition).getAddress());
                 mIsTitleScroll = false;
             }
 
@@ -129,15 +121,9 @@ public class PasswordDetailActivity extends BaseActivity {
 
             @Override
             public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
-//                int i = currentPosition - newPosition;
-//                if (i > 0) {
-//                    toRight(mTvName);
-//                } else {
-//                    toLeft(mTvName);
-//                }
-
             }
         });
+
     }
 
     private void toRight(final View view) {
@@ -203,7 +189,30 @@ public class PasswordDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        long id = bundle.getLong("id");
+        Logger.e(id+"");
+        DbManager.getInstance().onStart();
+        List<DbBean> passwordBeans = DbManager.getInstance().load();
+        int position = 0;
+        if (passwordBeans != null && passwordBeans.size() > 0) {
+            mDataList = new ArrayList();
+            for (int i = 0; i < passwordBeans.size(); i++) {
+                DbBean passwordBean = passwordBeans.get(i);
+                ItemBean itemBean = ItemBean.DbBean2ItemBean(passwordBean);
+                mDataList.add(itemBean);
+                Logger.e(passwordBean.getId()+"");
+                if (id == passwordBean.getId()) {
+                    position = i;
+                }
+            }
+        }
+        mAdapter.setItems(passwordBeans);
+        mDetailAdapter.setItems(passwordBeans);
+        Logger.e(position + "");
+        mTitleDiscreteScrollView.scrollToPosition(position);
+        mDetailDiscreteScrollView.scrollToPosition(position);
     }
 
     @Override
@@ -214,5 +223,24 @@ public class PasswordDetailActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+
+        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
+    }
+
+    DbManager.OnDataChangeListener dataChangeListener = new DbManager.OnDataChangeListener() {
+        @Override
+        public void onDataChange(List<DbBean> list) {
+//            mDataList.clear();
+//            mDataList.addAll(list);
+//            mTotalCount = mDataList.size();
+//            ConfigManager.getInstance().setDataListCount(mTotalCount);
+//            mSmartRecycleView.onRefresh(mDataList);
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        DbManager.getInstance().destroy();
     }
 }

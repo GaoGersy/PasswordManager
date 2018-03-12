@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
@@ -18,8 +17,6 @@ import com.gersion.superlock.animator.EasyTransition;
 import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.db.DbManager;
-import com.gersion.superlock.utils.ImageLoader;
-import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.TitleView;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
 
@@ -130,7 +127,7 @@ public class DetailActivity extends BaseActivity {
         mTvTitle.setText(dbBean.getAddress());
         mTvName.setText("用户名：" + dbBean.getName());
         mTvPassword.setText("密  码：" + dbBean.getPwd());
-        mSmartRecycleView.handleData(dbBean.getUpdateHistorys());
+//        mSmartRecycleView.handleData(dbBean.getUpdateHistorys());
     }
 
     public static Intent getDetailIntent(Activity activity, long id) {

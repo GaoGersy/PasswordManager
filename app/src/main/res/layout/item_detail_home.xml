@@ -47,5 +47,13 @@
                 />
 
     </LinearLayout>
-
+    <ImageView
+            android:id="@+id/iv_info"
+            android:layout_gravity="right"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/info"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            />
 </FrameLayout>

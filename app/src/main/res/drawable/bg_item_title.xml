@@ -1,0 +1,15 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="rectangle">
+    <!--FFF98989, FFE03535-->
+    <!--FFC1E480, FF67CC34-->
+    <!--FFEDF179, FFFFB314-->
+    <!--FF80DDE4, FF286EDC-->
+    <!--FFE480C6, FFDC285E-->
+    <corners android:radius="@dimen/item_radius"></corners>
+    <solid android:color="@color/item_title_bg"/>
+    <!--<gradient-->
+        <!--android:angle="0"-->
+        <!--android:endColor="#FFDC285E"-->
+        <!--android:startColor="#FFE480C6"-->
+        <!--android:type="linear"/>-->
+</shape>

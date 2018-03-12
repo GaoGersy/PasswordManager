@@ -25,6 +25,8 @@ public class DbBean extends RealmObject implements Serializable {
     private String notes;
     private long index;
     private String icon;
+    private String extraOption;
+
 
     public void setId(long id){
         this.id = id;
@@ -74,14 +76,6 @@ public class DbBean extends RealmObject implements Serializable {
         this.createTime = createTime;
     }
 
-    public RealmList<UpdateBean> getUpdateHistorys() {
-        return updateHistorys;
-    }
-
-    public void setUpdateHistorys(RealmList<UpdateBean> updateHistorys) {
-        this.updateHistorys = updateHistorys;
-    }
-
     public boolean isSelected() {
         return isSelected;
     }
@@ -128,6 +122,22 @@ public class DbBean extends RealmObject implements Serializable {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public RealmList<UpdateBean> getUpdateHistorys() {
+        return updateHistorys;
+    }
+
+    public void setUpdateHistorys(RealmList<UpdateBean> updateHistorys) {
+        this.updateHistorys = updateHistorys;
+    }
+
+    public String getExtraOption() {
+        return extraOption;
+    }
+
+    public void setExtraOption(String extraOption) {
+        this.extraOption = extraOption;
     }
 
     public void copyParams(DbBean bean) {

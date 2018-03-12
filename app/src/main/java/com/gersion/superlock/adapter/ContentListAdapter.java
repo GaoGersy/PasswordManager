@@ -231,6 +231,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
             homeItemBean.setIcon(dbBean.getIcon());
             homeItemBean.setAddress(dbBean.getAddress());
             homeItemBean.setName(dbBean.getName());
+            homeItemBean.setId(dbBean.getId());
 
             ItemBean detailItemBean = new ItemBean();
             detailItemBean.setLayoutId(R.layout.item_detail_password);
