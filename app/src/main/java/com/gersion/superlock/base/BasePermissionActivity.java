@@ -53,10 +53,10 @@ public abstract class BasePermissionActivity extends BaseActivity {
     }
 
     //权限申请成功的处理
-    protected void onPermissionSuccess(){};
+    protected void onPermissionSuccess(){}
 
     //权限申请失败的处理
-    protected void onPermissionFialed(){};
+    protected void onPermissionFialed(){}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
