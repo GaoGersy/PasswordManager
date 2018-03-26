@@ -1,6 +1,9 @@
 package com.gersion.superlock.db;
 
+import android.content.Context;
+
 import org.greenrobot.greendao.AbstractDao;
+import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.Query;
 
 import java.util.ArrayList;
@@ -11,6 +14,23 @@ public abstract class BaseDbManager<T> {
 
     public BaseDbManager() {
         mOnDataChangeCallbacks = new ArrayList<>();
+    }
+
+    public void switchDb(Context context, String dbName) {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context.getApplicationContext(), dbName);
+        Database db = helper.getWritableDb();
+        DaoSession daoSession = new DaoMaster(db).newSession();
+        swithDaoSession(daoSession);
+        onDbSwitch();
+    }
+
+    public void onDbSwitch() {
+        for (OnDataChangeCallback onDataChangeListener : mOnDataChangeCallbacks) {
+            if (onDataChangeListener != null) {
+                List<T> list = queryAll();
+                onDataChangeListener.onDbSwitch(list);
+            }
+        }
     }
 
     public void onDataAdd(T bean) {
@@ -72,7 +92,7 @@ public abstract class BaseDbManager<T> {
     }
 
     public T queryById(long id) {
-        Query<T> query = getQueryById(id);
+        Query<T> query = getQueryByKey(id);
         return query.unique();
     }
 
@@ -88,14 +108,14 @@ public abstract class BaseDbManager<T> {
 
     public void deleteById(long id) {
         getDao().deleteByKey(id);
-        T unique = getQueryById(id).unique();
+        T unique = getQueryByKey(id).unique();
         onDataDelete(unique);
     }
 
 
     public void swap(long oldIndex, long newIndex) {
-        Query<T> oldQuery = getQueryById(oldIndex);
-        Query<T> newQuery = getQueryById(newIndex);
+        Query<T> oldQuery = getQueryByKey(oldIndex);
+        Query<T> newQuery = getQueryByKey(newIndex);
         T oldResult = oldQuery.unique();
         T newResult = newQuery.unique();
         T t1 = changeId(newResult, oldIndex);
@@ -125,13 +145,17 @@ public abstract class BaseDbManager<T> {
         void onDelete(T bean);
 
         void onDeleteAll();
+
+        void onDbSwitch(List<T> list);
     }
+
+    protected abstract void swithDaoSession(DaoSession daoSession);
 
     protected abstract AbstractDao getDao();
 
-    protected abstract Query<T> getQueryById(long id);
+    protected abstract Query<T> getQueryByKey(Object key);
 
-    protected abstract T changeId(T oldResult,long id);
+    protected abstract T changeId(T oldResult, Object key);
 
     protected abstract Query<T> getQuery();
 
