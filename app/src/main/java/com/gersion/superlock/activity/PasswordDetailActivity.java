@@ -16,8 +16,9 @@ import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.PasswordDetailAdapter;
 import com.gersion.superlock.adapter.PasswordDetailTitleAdapter;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.ItemBean;
+import com.gersion.superlock.bean.PasswordData;
+import com.gersion.superlock.db.BaseDbManager;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.view.TitleView;
 import com.orhanobut.logger.Logger;
@@ -30,7 +31,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.DbBeanRealmProxy;
 
 public class PasswordDetailActivity extends BaseActivity {
 
@@ -62,7 +62,7 @@ public class PasswordDetailActivity extends BaseActivity {
                 .setSearchVisiable(false);
         mTitleDiscreteScrollView.setOrientation(Orientation.HORIZONTAL);
         mAdapter = new PasswordDetailTitleAdapter();
-        mAdapter.registerMultiBean(DbBeanRealmProxy.class, R.layout.item_password_title);
+        mAdapter.registerMultiBean(PasswordData.class, R.layout.item_password_title);
         mTitleDiscreteScrollView.setAdapter(mAdapter);
         mTitleDiscreteScrollView.setItemTransitionTimeMillis(100);
         mTitleDiscreteScrollView.setOffscreenItems(0);
@@ -99,7 +99,7 @@ public class PasswordDetailActivity extends BaseActivity {
 
         mDetailDiscreteScrollView.setOrientation(Orientation.HORIZONTAL);
         mDetailAdapter = new PasswordDetailAdapter();
-        mDetailAdapter.registerMultiBean(DbBeanRealmProxy.class, R.layout.item_password_detail);
+        mDetailAdapter.registerMultiBean(PasswordData.class, R.layout.item_password_detail);
         mDetailDiscreteScrollView.setAdapter(mDetailAdapter);
         mDetailDiscreteScrollView.setItemTransitionTimeMillis(100);
         mDetailDiscreteScrollView.setOffscreenItems(0);
@@ -193,13 +193,12 @@ public class PasswordDetailActivity extends BaseActivity {
         Bundle bundle = intent.getExtras();
         long id = bundle.getLong("id");
         Logger.e(id+"");
-        DbManager.getInstance().onStart();
-        List<DbBean> passwordBeans = DbManager.getInstance().load();
+        List<PasswordData> passwordBeans = DbManager.getInstance().queryAll();
         int position = 0;
         if (passwordBeans != null && passwordBeans.size() > 0) {
             mDataList = new ArrayList();
             for (int i = 0; i < passwordBeans.size(); i++) {
-                DbBean passwordBean = passwordBeans.get(i);
+                PasswordData passwordBean = passwordBeans.get(i);
                 ItemBean itemBean = ItemBean.DbBean2ItemBean(passwordBean);
                 mDataList.add(itemBean);
                 Logger.e(passwordBean.getId()+"");
@@ -224,23 +223,18 @@ public class PasswordDetailActivity extends BaseActivity {
             }
         });
 
-        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
+        DbManager.getInstance().registerDataChangeListener(dataChangeListener);
     }
 
-    DbManager.OnDataChangeListener dataChangeListener = new DbManager.OnDataChangeListener() {
+    DbManager.OnDataChangeCallback<PasswordData> dataChangeListener = new BaseDbManager.OnDataChangeCallback<PasswordData>() {
         @Override
-        public void onDataChange(List<DbBean> list) {
+        public void onDataChange(List<PasswordData> list) {
 //            mDataList.clear();
 //            mDataList.addAll(list);
-//            mTotalCount = mDataList.size();
-//            ConfigManager.getInstance().setDataListCount(mTotalCount);
-//            mSmartRecycleView.onRefresh(mDataList);
         }
     };
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        DbManager.getInstance().destroy();
     }
 }

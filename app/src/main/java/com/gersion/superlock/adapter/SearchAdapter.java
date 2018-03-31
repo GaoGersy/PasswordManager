@@ -1,30 +1,23 @@
 package com.gersion.superlock.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseRVAdapter;
 import com.gersion.superlock.base.BaseViewHolder;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
-import com.ramotion.foldingcell.FoldingCell;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuAdapter;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
-import java.util.HashSet;
 import java.util.List;
 
-public class SearchAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<DbBean> {
+public class SearchAdapter extends BaseRVAdapter<PasswordData> implements IRVAdapter<PasswordData> {
 
     private OnItemClickListener mOnItemClickListener;
 
-    public SearchAdapter(List<DbBean> data) {
+    public SearchAdapter(List<PasswordData> data) {
         super(data);
     }
 
@@ -53,35 +46,35 @@ public class SearchAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<D
     }
 
     @Override
-    public void setNewData(List<DbBean> data) {
+    public void setNewData(List<PasswordData> data) {
         mData = data;
         notifyDataSetChanged();
     }
 
     @Override
-    public void addData(List<DbBean> data) {
+    public void addData(List<PasswordData> data) {
         mData.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void removeAll(List<DbBean> data) {
+    public void removeAll(List<PasswordData> data) {
         mData.removeAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void remove(DbBean data) {
+    public void remove(PasswordData data) {
         mData.remove(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public List<DbBean> getData() {
+    public List<PasswordData> getData() {
         return mData;
     }
 
-    class SeachViewHolder extends BaseViewHolder<DbBean> implements View.OnClickListener {
+    class SeachViewHolder extends BaseViewHolder<PasswordData> implements View.OnClickListener {
 
         private TextView mTvPassword;
         private TextView mTvName;
@@ -104,10 +97,10 @@ public class SearchAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<D
         }
 
         @Override
-        public void setData(DbBean dbBean) {
-            mTvName.setText("用户名："+dbBean.getName());
-            mTvTitle.setText(dbBean.getAddress());
-            mTvPassword.setText("密码："+dbBean.getPwd());
+        public void setData(PasswordData passwordData) {
+            mTvName.setText("用户名："+ passwordData.getName());
+            mTvTitle.setText(passwordData.getAddress());
+            mTvPassword.setText("密码："+ passwordData.getPwd());
         }
 
         @Override

@@ -3,7 +3,6 @@ package com.gersion.superlock.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.lockadapter.LockAdapter;
 import com.gersion.superlock.lockadapter.LockAdapterFactory;
 import com.gersion.superlock.lockadapter.LockCallback;
@@ -212,12 +210,12 @@ public class RegisterActivity extends BaseActivity {
             userName.setVisibility(View.GONE);
         }
 
-        tvNext.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onNext(type);
-            }
-        });
+//        tvNext.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onNext(type);
+//            }
+//        });
         tvTitle.setText(title);
 
         userName.addTextChangedListener(new TextWatcher() {
@@ -251,33 +249,33 @@ public class RegisterActivity extends BaseActivity {
         mList.add(view);
     }
 
-    private void onNext(int type) {
-        if (type == OLD_PWD) {
-            checkOldPwd();
-        } else if (type == NEW_PWD) {
-            regesterPwd();
-        } else if (type == VERIFY_PWD) {
-            verifyPwd();
-        }
-    }
+//    private void onNext(int type) {
+//        if (type == OLD_PWD) {
+//            checkOldPwd();
+//        } else if (type == NEW_PWD) {
+//            regesterPwd();
+//        } else if (type == VERIFY_PWD) {
+//            verifyPwd();
+//        }
+//    }
 
-    private void verifyPwd() {
-
-        String verifyPwd = mVerifyPwd.getText().toString().trim();
-        if (TextUtils.equals(mCurrentPwd, verifyPwd)) {
-            if (mIsChangePwd) {
-                PasswordManager.getInstance().updatePassword(verifyPwd);
-            } else {
-                PasswordManager.getInstance().addPassword(verifyPwd);
-                ConfigManager.getInstance().setFinishGuide(true);
-                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-            }
-            ConfigManager.getInstance().setPwdLength(verifyPwd.length());
-            finish();
-        } else {
-            ToastUtils.showTasty(RegisterActivity.this, "两次密码不一致", TastyToast.WARNING);
-        }
-    }
+//    private void verifyPwd() {
+//
+//        String verifyPwd = mVerifyPwd.getText().toString().trim();
+//        if (TextUtils.equals(mCurrentPwd, verifyPwd)) {
+//            if (mIsChangePwd) {
+//                PasswordManager.getInstance().updatePassword(verifyPwd);
+//            } else {
+//                PasswordManager.getInstance().addPassword(verifyPwd);
+//                ConfigManager.getInstance().setFinishGuide(true);
+//                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+//            }
+//            ConfigManager.getInstance().setPwdLength(verifyPwd.length());
+//            finish();
+//        } else {
+//            ToastUtils.showTasty(RegisterActivity.this, "两次密码不一致", TastyToast.WARNING);
+//        }
+//    }
 
     private void regesterPwd() {
         mCurrentPwd = mRegesterPwd.getText().toString().trim();
@@ -308,16 +306,16 @@ public class RegisterActivity extends BaseActivity {
         return true;
     }
 
-    private void checkOldPwd() {
-        String oldPwd = PasswordManager.getInstance().getEncyptPassword(mOldPwd.getText().toString().trim());
-        String password = PasswordManager.getInstance().getPassword();
-        if (TextUtils.equals(password, oldPwd)) {
-            stepNum++;
-            mVp.setCurrentItem(mVp.getCurrentItem() + 1);
-        } else {
-            ToastUtils.showTasty(RegisterActivity.this, "密码错误", TastyToast.ERROR);
-        }
-    }
+//    private void checkOldPwd() {
+//        String oldPwd = PasswordManager.getInstance().getEncyptPassword(mOldPwd.getText().toString().trim());
+//        String password = PasswordManager.getInstance().getPassword();
+//        if (TextUtils.equals(password, oldPwd)) {
+//            stepNum++;
+//            mVp.setCurrentItem(mVp.getCurrentItem() + 1);
+//        } else {
+//            ToastUtils.showTasty(RegisterActivity.this, "密码错误", TastyToast.ERROR);
+//        }
+//    }
 
     @Override
     public void onBackPressed() {

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.MainActivity;
+import com.gersion.superlock.bean.DaoSession;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.RudenessScreenHelper;
@@ -34,19 +35,9 @@ import com.yhao.floatwindow.Screen;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-import io.realm.Realm;
-
 
 /**
  * @作者 Gersy
- * @版本
- * @包名 com.gersion.superlock
- * @待完成
- * @创建时间 2016/9/25
- * @功能描述 TODO
- * @更新人 $
- * @更新时间 $
- * @更新版本 $
  */
 public class SuperLockApplication extends Application {
     //上下文
@@ -57,6 +48,8 @@ public class SuperLockApplication extends Application {
     public static FingerprintIdentify mFingerprintIdentify;
     public final static float DESIGN_WIDTH = 750; //绘制页面时参照的设计图宽度
     public static IWXAPI api;
+    private DaoSession mDaoSession;
+    private static SuperLockApplication INSTANCE;
 
     /**
      * 得到上下文对象
@@ -65,6 +58,10 @@ public class SuperLockApplication extends Application {
      */
     public static Context getContext() {
         return mContext;
+    }
+
+    public static SuperLockApplication getInstance(){
+        return INSTANCE;
     }
 
     /**
@@ -102,13 +99,13 @@ public class SuperLockApplication extends Application {
         super.onCreate();
         //初始化上下文
         mContext = getApplicationContext();
+        INSTANCE = this;
         initWeixinApi();
-        initBugly();
+//        initBugly();
 //        resetDensity();
         new RudenessScreenHelper(this, 750).activate();
-        Realm.init(this);
 //        PasswordManager.getInstance().init(this,1);
-        DbManager.getInstance().init();
+        mDaoSession = DbManager.getInstance().upgradeDb(mContext, "pass");
         CalligraphyConfig.
                 initDefault(new CalligraphyConfig.Builder()
                         .setDefaultFontPath("fonts/NotoSansHans.otf")
@@ -232,5 +229,13 @@ public class SuperLockApplication extends Application {
 
         /***** 统一初始化Bugly产品，包含Beta *****/
         Bugly.init(this, "83a16f6a72", true, strategy);
+    }
+
+    public DaoSession getDaoSession() {
+        return mDaoSession;
+    }
+
+    public void setDaoSession(DaoSession daoSession) {
+        mDaoSession = daoSession;
     }
 }

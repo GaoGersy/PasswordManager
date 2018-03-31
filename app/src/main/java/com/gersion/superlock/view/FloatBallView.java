@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.SettingActivity;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.service.FloatBallService;
 import com.gersion.superlock.service.FloatWindowManager;
 import com.gersion.superlock.utils.ClipBoardUtils;
@@ -82,7 +82,7 @@ public class FloatBallView extends FrameLayout {
     private TextView mTvPassword;
     private TextView mTvList;
     private OnMenuClickListener mListener;
-    private DbBean mDbBean;
+    private PasswordData mPasswordData;
     private FrameLayout mFlContainer;
 
     public FloatBallView(Context context) {
@@ -142,8 +142,8 @@ public class FloatBallView extends FrameLayout {
         mTvName.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDbBean != null) {
-                    ClipBoardUtils.copy(mContext, mDbBean.getName());
+                if (mPasswordData != null) {
+                    ClipBoardUtils.copy(mContext, mPasswordData.getName());
                     Toast.makeText(mContext, "用户名已经复制到剪贴板", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(mContext, "先去选择一条密码吧", Toast.LENGTH_LONG).show();
@@ -154,8 +154,8 @@ public class FloatBallView extends FrameLayout {
         mTvPassword.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mDbBean != null) {
-                    ClipBoardUtils.copy(mContext, mDbBean.getPwd());
+                if (mPasswordData != null) {
+                    ClipBoardUtils.copy(mContext, mPasswordData.getPwd());
                     Toast.makeText(mContext, "密码已经复制到剪贴板", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(mContext, "先去选择一条密码吧", Toast.LENGTH_LONG).show();
@@ -253,9 +253,9 @@ public class FloatBallView extends FrameLayout {
         translationAnimator(mLayoutParams.x, ScreenUtils.getScreenWidth(getContext()));
     }
 
-    public void setPwdData(DbBean dbBean) {
-        mDbBean = dbBean;
-        ClipBoardUtils.copy(mContext,mDbBean.getName());
+    public void setPwdData(PasswordData passwordData) {
+        mPasswordData = passwordData;
+        ClipBoardUtils.copy(mContext, mPasswordData.getName());
         Toast.makeText(mContext, "用户名已复制到剪贴板", Toast.LENGTH_LONG).show();
     }
 

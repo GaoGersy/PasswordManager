@@ -14,14 +14,15 @@ import com.gersion.superlock.activity.AboutActivity;
 import com.gersion.superlock.activity.DonationActivity;
 import com.gersion.superlock.activity.SelectLockTypeActivity;
 import com.gersion.superlock.base.BasePermissionFragment;
-import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.Keyer;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.ResultCallback;
 import com.gersion.superlock.share.SharePopup;
 import com.gersion.superlock.utils.BackupHelper;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.GsonHelper;
+import com.gersion.superlock.utils.LogUtils;
 import com.gersion.superlock.utils.RecoveryHelper;
 import com.gersion.superlock.utils.ToastUtils;
 import com.gersion.superlock.view.ItemView;
@@ -94,7 +95,6 @@ public class MineFragment extends BasePermissionFragment {
         mConfigManager = ConfigManager.getInstance();
         mOpenLock.setSwitchStatus(mConfigManager.isLock());
         mDbManager = DbManager.getInstance();
-        mDbManager.onStart();
         getData();
         mBackupHelper = BackupHelper.getInstance();
         mBackupHelper.setOnResultCallback(new ResultCallback() {
@@ -124,10 +124,10 @@ public class MineFragment extends BasePermissionFragment {
     }
 
     private void getData() {
-        List<DbBean> datas = mDbManager.load();
+        List<PasswordData> datas = mDbManager.queryAll();
         if (datas != null && datas.size() > 0) {
             List<Keyer> keyers = new ArrayList<>();
-            for (DbBean data : datas) {
+            for (PasswordData data : datas) {
                 Keyer keyer = new Keyer(data);
                 keyers.add(keyer);
             }
@@ -237,15 +237,14 @@ public class MineFragment extends BasePermissionFragment {
         Gson gson = getGson();
         TypeToken<List<Keyer>> type = new TypeToken<List<Keyer>>() {
         };
-        int dataListCount = ConfigManager.getInstance().getDataListCount();
         List<Keyer> keyers = gson.fromJson(dataJson, type.getType());
-        for (Keyer keyer : keyers) {
-            dataListCount++;
-            DbBean dbBean = keyer.keyer2DbBean();
-            dbBean.setIndex(dataListCount);
-            dbBean.setId(dataListCount);
-            mDbManager.add(dbBean);
+        for (int i = keyers.size() - 1; i >= 0; i--) {
+            Keyer keyer = keyers.get(i);
+            PasswordData passwordData = keyer.keyer2DbBean();
+            LogUtils.e(passwordData);
+            mDbManager.addOrReplace(passwordData);
         }
+        mDbManager.onDataChange();
         ToastUtils.show(getActivity(), "导入成功");
     }
 

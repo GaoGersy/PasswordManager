@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseRVAdapter;
 import com.gersion.superlock.base.BaseViewHolder;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
 
 import java.util.List;
@@ -17,11 +17,11 @@ import java.util.List;
  * Created by a3266 on 2017/6/10.
  */
 
-public class SelectListAdapter extends BaseRVAdapter<DbBean> implements IRVAdapter<DbBean> {
+public class SelectListAdapter extends BaseRVAdapter<PasswordData> implements IRVAdapter<PasswordData> {
 
     private OnItemClickListener mListener;
 
-    public SelectListAdapter(List<DbBean> data) {
+    public SelectListAdapter(List<PasswordData> data) {
         super(data);
     }
 
@@ -41,39 +41,39 @@ public class SelectListAdapter extends BaseRVAdapter<DbBean> implements IRVAdapt
     }
 
     @Override
-    public void setNewData(List<DbBean> data) {
+    public void setNewData(List<PasswordData> data) {
         mData = data;
         notifyDataSetChanged();
     }
 
     @Override
-    public void addData(List<DbBean> data) {
+    public void addData(List<PasswordData> data) {
         mData.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void removeAll(List<DbBean> data) {
+    public void removeAll(List<PasswordData> data) {
 
     }
 
     @Override
-    public void remove(DbBean data) {
+    public void remove(PasswordData data) {
 
     }
 
     @Override
-    public List<DbBean> getData() {
+    public List<PasswordData> getData() {
         return mData;
     }
 
-    class SelectListViewHolder extends BaseViewHolder<DbBean>{
+    class SelectListViewHolder extends BaseViewHolder<PasswordData>{
 
         private TextView mTvName;
         private TextView mTvPassword;
         private TextView mTvTitle;
         private LinearLayout mContainer;
-        private DbBean mBean;
+        private PasswordData mBean;
 
         public SelectListViewHolder(View itemView) {
             super(itemView);
@@ -97,7 +97,7 @@ public class SelectListAdapter extends BaseRVAdapter<DbBean> implements IRVAdapt
         }
 
         @Override
-        public void setData(DbBean bean) {
+        public void setData(PasswordData bean) {
             mBean = bean;
             mTvName.setText(bean.getName());
             mTvPassword.setText(bean.getPwd());
@@ -106,7 +106,7 @@ public class SelectListAdapter extends BaseRVAdapter<DbBean> implements IRVAdapt
     }
 
     public interface OnItemClickListener{
-        void onItemClick(DbBean bean);
+        void onItemClick(PasswordData bean);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

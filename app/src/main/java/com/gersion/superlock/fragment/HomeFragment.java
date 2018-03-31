@@ -1,18 +1,16 @@
 package com.gersion.superlock.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.AddPasswordActivity;
-import com.gersion.superlock.activity.DetailActivity;
 import com.gersion.superlock.adapter.ContentListAdapter;
-import com.gersion.superlock.animator.EasyTransition;
-import com.gersion.superlock.animator.EasyTransitionOptions;
 import com.gersion.superlock.base.BaseFragment;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
+import com.gersion.superlock.db.BaseDbManager;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.utils.ConfigManager;
@@ -29,27 +27,33 @@ public class HomeFragment extends BaseFragment {
     public static final String TOTAL_COUNT = "total_count";
     public static int mTotalCount = -1;
     private ContentListAdapter mPasswordShowAdapter;
-    private List<DbBean> mDataList = new ArrayList<>();
+    private List<PasswordData> mDataList = new ArrayList<>();
     private SmartRecycleView mSmartRecycleView;
     /**
      * 当Item移动的时候。
      */
     private OnItemMoveListener onItemMoveListener = new OnItemMoveListener() {
         @Override
-        public boolean onItemMove(int fromPosition, int toPosition) {
+        public boolean onItemMove(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder viewHolder1) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = viewHolder1.getAdapterPosition();
             Collections.swap(mDataList, fromPosition, toPosition);
             mPasswordShowAdapter.notifyItemMoved(fromPosition, toPosition);
-            DbManager.getInstance().setOnDataChangeListener(null);
-            DbManager.getInstance().swap(fromPosition,toPosition);
-            DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
+            long fromIndex = mDataList.get(fromPosition).getIndex();
+            long toIndex = mDataList.get(toPosition).getIndex();
+            DbManager.getInstance().registerDataChangeListener(null);
+            DbManager.getInstance().swap(fromIndex,toIndex);
+            DbManager.getInstance().registerDataChangeListener(dataChangeListener);
             return true;
         }
 
         @Override
-        public void onItemDismiss(int position) {
+        public void onItemDismiss(RecyclerView.ViewHolder viewHolder) {
+            int position = viewHolder.getAdapterPosition();
             mDataList.remove(position);
             mPasswordShowAdapter.notifyItemRemoved(position);
         }
+
 
     };
     private TextView mTvAdd;
@@ -63,7 +67,6 @@ public class HomeFragment extends BaseFragment {
     protected void initView() {
         mSmartRecycleView = findView(R.id.smartRecycleView);
         mTvAdd = findView(R.id.tv_add);
-        DbManager.getInstance().onStart();
         init();
     }
 
@@ -77,8 +80,8 @@ public class HomeFragment extends BaseFragment {
         mPasswordShowAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view,int position) {
-                DbBean dbBean = mDataList.get(position);
-                startTrainsition(view,dbBean);
+                PasswordData passwordData = mDataList.get(position);
+                startTrainsition(view, passwordData);
             }
         });
 
@@ -89,12 +92,12 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        DbManager.getInstance().setOnDataChangeListener(dataChangeListener);
+        DbManager.getInstance().registerDataChangeListener(dataChangeListener);
     }
 
-    DbManager.OnDataChangeListener dataChangeListener = new DbManager.OnDataChangeListener() {
+    DbManager.OnDataChangeCallback<PasswordData> dataChangeListener = new BaseDbManager.OnDataChangeCallback<PasswordData>() {
         @Override
-        public void onDataChange(List<DbBean> list) {
+        public void onDataChange(List<PasswordData> list) {
             mDataList.clear();
             mDataList.addAll(list);
             mTotalCount = mDataList.size();
@@ -134,7 +137,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        DbManager.getInstance().destroy();
+        DbManager.getInstance().unregisterDataChangeListener(dataChangeListener);
     }
 
     //初始化数据
@@ -144,7 +147,7 @@ public class HomeFragment extends BaseFragment {
 
     private void getDataFromDB() {
 //        for (int i = 0; i < 20; i++) {
-//            DbBean bean = new DbBean();
+//            PasswordData bean = new PasswordData();
 //            bean.setIndex(i);
 //            bean.setAddress("地址" + i);
 //            bean.setCreateTime(TimeUtils.getCurrentTimeInLong());
@@ -162,7 +165,7 @@ public class HomeFragment extends BaseFragment {
 //            DbManager.getInstance().add(bean,i);
 //        }
 
-        final List<DbBean> passwordBeans = DbManager.getInstance().load();
+        final List<PasswordData> passwordBeans = DbManager.getInstance().queryAll();
         mDataList.clear();
         mDataList.addAll(passwordBeans);
         mTotalCount = mDataList.size();
@@ -186,17 +189,17 @@ public class HomeFragment extends BaseFragment {
         mSmartRecycleView.handleData(mDataList);
     }
 
-    private void startTrainsition(View view, DbBean bean){
-        Intent intent = DetailActivity.getDetailIntent(getActivity(), bean.getId());
-
-        EasyTransitionOptions options =
-                EasyTransitionOptions.makeTransitionOptions(
-                        getActivity(),
-                        view.findViewById(R.id.piv_icon),
-                        view.findViewById(R.id.tv_title));
-//                        findViewById(R.id.v_top_card));
-
-        EasyTransition.startActivity(intent, options);
+    private void startTrainsition(View view, PasswordData bean){
+//        Intent intent = DetailActivity.getDetailIntent(getActivity(), bean.getId());
+//
+//        EasyTransitionOptions options =
+//                EasyTransitionOptions.makeTransitionOptions(
+//                        getActivity(),
+//                        view.findViewById(R.id.piv_icon),
+//                        view.findViewById(R.id.tv_title));
+////                        findViewById(R.id.v_top_card));
+//
+//        EasyTransition.startActivity(intent, options);
     }
 
 //

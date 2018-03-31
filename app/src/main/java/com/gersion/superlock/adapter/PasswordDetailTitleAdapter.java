@@ -5,13 +5,13 @@ import android.view.View;
 import com.gersion.library.adapter.MultiTypeAdapter;
 import com.gersion.library.viewholder.BaseViewHolder;
 import com.gersion.superlock.R;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 
-public class PasswordDetailTitleAdapter extends MultiTypeAdapter<DbBean, Object> {
+public class PasswordDetailTitleAdapter extends MultiTypeAdapter<PasswordData, Object> {
     private OnItemClickListener mItemClickListener;
 
     @Override
-    protected void convert(final BaseViewHolder baseViewHolder, final DbBean bean) {
+    protected void convert(final BaseViewHolder baseViewHolder, final PasswordData bean) {
         baseViewHolder.setText(R.id.tv_name, bean.getName());
         baseViewHolder.setText(R.id.tv_icon, bean.getAddress());
 //        FrameLayout flContainer = (FrameLayout) baseViewHolder.getView(R.id.fl_container);
@@ -26,7 +26,7 @@ public class PasswordDetailTitleAdapter extends MultiTypeAdapter<DbBean, Object>
     }
 
     public interface OnItemClickListener {
-        void onClik(View view,DbBean bean);
+        void onClik(View view, PasswordData bean);
     }
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {

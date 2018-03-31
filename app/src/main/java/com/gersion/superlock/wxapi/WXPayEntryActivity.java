@@ -1,4 +1,4 @@
-//package com.gersion.superlock.wxapi;
+package com.gersion.superlock.wxapi;//package com.gersion.superlock.wxapi;
 //
 //import android.app.Activity;
 //import android.content.Intent;

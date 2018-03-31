@@ -22,6 +22,7 @@ public class ItemBean implements IMultiLayout,Serializable {
     private String notes;
     private long index;
     private String icon;
+    private String extraOptions;
 
     public long getId() {
         return id;
@@ -129,7 +130,15 @@ public class ItemBean implements IMultiLayout,Serializable {
         layoutId = i;
     }
 
-    public static ItemBean DbBean2ItemBean(DbBean bean) {
+    public String getExtraOptions() {
+        return extraOptions;
+    }
+
+    public void setExtraOptions(String extraOptions) {
+        this.extraOptions = extraOptions;
+    }
+
+    public static ItemBean DbBean2ItemBean(PasswordData bean) {
         ItemBean itemBean = new ItemBean();
         itemBean.number = bean.getNumber();
         itemBean.address = bean.getAddress();
@@ -140,7 +149,7 @@ public class ItemBean implements IMultiLayout,Serializable {
         itemBean.index = bean.getIndex();
         itemBean.icon = bean.getIcon();
         itemBean.id = bean.getId();
-//            this.updateHistorys = bean.getUpdateHistorys();
+        itemBean.extraOptions = bean.getExtraOptions();
         return itemBean;
     }
 }

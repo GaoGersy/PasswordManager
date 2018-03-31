@@ -7,26 +7,11 @@ public class Keyer {
     public String pwd;
     public long createTime;
     public String updateTime;
-    public boolean isSelected;
-    public int position;
-    public boolean isVisible;
     public String notes;
-    public long index;
     public String icon;
+    private String extraOption;
 
     public Keyer(){}
-
-    public Keyer(DbBean dbBean) {
-        address = dbBean.getAddress();
-        createTime = dbBean.getCreateTime();
-        icon = dbBean.getIcon();
-        index = dbBean.getIndex();
-        name = dbBean.getName();
-        number = dbBean.getNumber();
-        notes = dbBean.getNotes();
-        position = dbBean.getPosition();
-        pwd = dbBean.getPwd();
-    }
 
     public String getNumber() {
         return number;
@@ -68,28 +53,12 @@ public class Keyer {
         this.createTime = createTime;
     }
 
-    public boolean isSelected() {
-        return isSelected;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getNotes() {
@@ -100,14 +69,6 @@ public class Keyer {
         this.notes = notes;
     }
 
-    public long getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
     public String getIcon() {
         return icon;
     }
@@ -116,18 +77,36 @@ public class Keyer {
         this.icon = icon;
     }
 
-    public DbBean keyer2DbBean() {
-        DbBean dbBean = new DbBean();
-        dbBean.setAddress(address);
-        dbBean.setCreateTime(createTime);
-        dbBean.setIcon(icon);
-        dbBean.setIndex(index);
-        dbBean.setName(name);
-        dbBean.setNumber(number);
-        dbBean.setNotes(notes);
-        dbBean.setPosition(position);
-        dbBean.setPwd(pwd);
-        return dbBean;
+    public String getExtraOption() {
+        return extraOption;
+    }
+
+    public void setExtraOption(String extraOption) {
+        this.extraOption = extraOption;
+    }
+
+    public Keyer(PasswordData passwordData) {
+        address = passwordData.getAddress();
+        createTime = passwordData.getCreateTime();
+        icon = passwordData.getIcon();
+        name = passwordData.getName();
+        number = passwordData.getNumber();
+        notes = passwordData.getNotes();
+        pwd = passwordData.getPwd();
+        extraOption = passwordData.getExtraOptions();
+    }
+
+    public PasswordData keyer2DbBean() {
+        PasswordData passwordData = new PasswordData();
+        passwordData.setAddress(address);
+        passwordData.setCreateTime(createTime);
+        passwordData.setIcon(icon);
+        passwordData.setName(name);
+        passwordData.setNumber(number);
+        passwordData.setNotes(notes);
+        passwordData.setExtraOptions(extraOption);
+        passwordData.setPwd(pwd);
+        return passwordData;
     }
 
 }

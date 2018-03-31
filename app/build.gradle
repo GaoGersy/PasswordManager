@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'realm-android'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     signingConfigs {
@@ -20,7 +20,7 @@ android {
         versionCode 3
         versionName "1.5"
         resConfigs "zh"
-        multiDexEnabled true
+        multiDexEnabled false
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             // 设置支持的SO库架构
@@ -33,8 +33,15 @@ android {
         debug {
             minifyEnabled false // 是否混淆
             shrinkResources false // 是否去除无效的资源文件
+            zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'debug-proguard-rules.pro'
         }
+//        debug {
+//            minifyEnabled false // 是否混淆
+//            shrinkResources true // 是否去除无效的资源文件
+//            zipAlignEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'debug-proguard-rules.pro'
+//        }
         release {
             minifyEnabled true
             shrinkResources true
@@ -58,7 +65,7 @@ dependencies {
     compile(name: 'paletteimageview', ext: 'aar')
 //    compile(name: 'blurpopupwindow', ext: 'aar')
     //    compile 'com.android.support:cardview-v7:26+'
-    compile 'com.yanzhenjie:recyclerview-swipe:1.0.4'
+    compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
     compile 'com.jakewharton:butterknife:8.6.0'
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.kyleduo.switchbutton:library:2.0.0'
@@ -97,4 +104,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.jungly.socialize:biliShare:0.1.0701' //必需
     compile 'com.android.support:multidex:1.0.1'
+    compile 'org.greenrobot:greendao:3.2.2'
 }

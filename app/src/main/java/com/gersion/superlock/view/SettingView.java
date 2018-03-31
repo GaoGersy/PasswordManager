@@ -79,7 +79,7 @@ public class SettingView extends RelativeLayout {
         }
     }
 
-    public void setItemClickListener(View.OnClickListener listener) {
+    public void setItemClickListener(OnClickListener listener) {
         if (mView != null) {
             mView.setOnClickListener(listener);
         }

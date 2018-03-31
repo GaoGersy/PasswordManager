@@ -10,7 +10,7 @@ import com.gersion.library.viewholder.BaseViewHolder;
 import com.gersion.superlock.R;
 import com.gersion.superlock.activity.RegisterActivity;
 import com.gersion.superlock.activity.SelectLockTypeActivity;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.utils.MyConstants;
 import com.gersion.superlock.utils.ToastUtils;
@@ -98,7 +98,7 @@ public class LockTypeDetailAdapter extends MultiTypeAdapter<String, Object> {
     }
 
     public interface OnItemClickListener {
-        void onClik(View view, DbBean bean);
+        void onClik(View view, PasswordData bean);
     }
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {

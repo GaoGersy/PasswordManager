@@ -46,5 +46,8 @@
     <dimen name="item_radius">5dp</dimen>
     <dimen name="select_lock_radius">100dp</dimen>
     <dimen name="text_size_16">16sp</dimen>
+    <dimen name="dp_70">70dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="extra_height">120dp</dimen>
 
 </resources>

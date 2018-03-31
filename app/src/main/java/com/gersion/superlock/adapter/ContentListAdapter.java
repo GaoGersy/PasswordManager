@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 
 import com.gersion.superlock.ItemTransformer;
 import com.gersion.superlock.R;
-import com.gersion.superlock.bean.DbBean;
 import com.gersion.superlock.bean.ItemBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.fragment.HomeFragment;
 import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuAdapter;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter;
@@ -25,16 +24,16 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.DefaultViewHolder> implements IRVAdapter<DbBean> {
+public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.DefaultViewHolder> implements IRVAdapter<PasswordData> {
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private SwipeMenuRecyclerView mMenuRecyclerView;
 
-    private List<DbBean> mDatas;
+    private List<PasswordData> mDatas;
 
     private OnItemClickListener mOnItemClickListener;
     private HomeFragment mHomeFragment;
 
-    public ContentListAdapter(SwipeMenuRecyclerView menuRecyclerView, List<DbBean> data) {
+    public ContentListAdapter(SwipeMenuRecyclerView menuRecyclerView, List<PasswordData> data) {
         this.mMenuRecyclerView = menuRecyclerView;
         this.mDatas = data;
     }
@@ -46,11 +45,6 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
     @Override
     public int getItemCount() {
         return mDatas == null ? 0 : mDatas.size();
-    }
-
-    @Override
-    public View onCreateContentView(ViewGroup parent, int viewType) {
-        return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_content, parent, false);
     }
 
     public void registerToggle(int position) {
@@ -69,15 +63,16 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
     }
 
     @Override
-    public ContentListAdapter.DefaultViewHolder onCompatCreateViewHolder(View realContentView, int viewType) {
-        DefaultViewHolder viewHolder = new DefaultViewHolder(realContentView);
+    public DefaultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_content, parent, false);
+        DefaultViewHolder viewHolder = new DefaultViewHolder(view);
 //        viewHolder.mOnItemClickListener = mOnItemClickListener;
 //        viewHolder.mMenuRecyclerView = mMenuRecyclerView;
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ContentListAdapter.DefaultViewHolder holder, int position) {
+    public void onBindViewHolder(DefaultViewHolder holder, int position) {
         holder.setData(position);
 
     }
@@ -88,32 +83,32 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
     }
 
     @Override
-    public void setNewData(List<DbBean> data) {
+    public void setNewData(List<PasswordData> data) {
         mDatas = data;
         notifyDataSetChanged();
     }
 
     @Override
-    public void addData(List<DbBean> data) {
+    public void addData(List<PasswordData> data) {
         mDatas.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void removeAll(List<DbBean> data) {
+    public void removeAll(List<PasswordData> data) {
         mDatas.removeAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void remove(DbBean data) {
+    public void remove(PasswordData data) {
         mDatas.remove(data);
 //        DbManager.getInstance().delete(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public List<DbBean> getData() {
+    public List<PasswordData> getData() {
         return mDatas;
     }
 
@@ -142,7 +137,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
 //
 //        public void setData(int position) {
 //            mPosition = position;
-//            DbBean passwordBean = mDatas.get(position);
+//            PasswordData passwordBean = mDatas.get(position);
 //            mTvName.setText("用户名："+passwordBean.getName());
 //            mTvTitle.setText(passwordBean.getAddress());
 //            mTvPassword.setText("密码："+passwordBean.getPwd());
@@ -185,7 +180,7 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
 //            itemPicker.addOnItemChangedListener();
             mAdapter = new DetailItemAdapter();
             mAdapter.registerMultiLayout(R.layout.item_detail_home);
-//            mAdapter.registerMultiLayout(R.layout.item_detail_del);
+            mAdapter.registerMultiLayout(R.layout.item_detail_more);
             mAdapter.registerMultiLayout(R.layout.item_detail_notice);
             mAdapter.registerMultiLayout(R.layout.item_detail_password);
 //            infiniteAdapter = InfiniteScrollAdapter.wrap(mAdapter);
@@ -219,36 +214,38 @@ public class ContentListAdapter extends SwipeMenuAdapter<ContentListAdapter.Defa
         }
 
         public void setData(int position) {
-            DbBean dbBean = mDatas.get(position);
+            PasswordData passwordData = mDatas.get(position);
             List<ItemBean> list = new ArrayList<>();
-
-//            ItemBean delItemBean = new ItemBean();
-//            delItemBean.setId(dbBean.getId());
-//            delItemBean.setLayoutId(R.layout.item_detail_del);
 
             ItemBean homeItemBean = new ItemBean();
             homeItemBean.setLayoutId(R.layout.item_detail_home);
-            homeItemBean.setIcon(dbBean.getIcon());
-            homeItemBean.setAddress(dbBean.getAddress());
-            homeItemBean.setName(dbBean.getName());
-            homeItemBean.setId(dbBean.getId());
+            homeItemBean.setIcon(passwordData.getIcon());
+            homeItemBean.setAddress(passwordData.getAddress());
+            homeItemBean.setName(passwordData.getName());
+            homeItemBean.setId(passwordData.getId());
 
             ItemBean detailItemBean = new ItemBean();
             detailItemBean.setLayoutId(R.layout.item_detail_password);
-            detailItemBean.setAddress(dbBean.getAddress());
-            detailItemBean.setPwd(dbBean.getPwd());
-            detailItemBean.setName(dbBean.getName());
-            detailItemBean.setNotes(dbBean.getNotes());
-            detailItemBean.setId(dbBean.getId());
+            detailItemBean.setAddress(passwordData.getAddress());
+            detailItemBean.setPwd(passwordData.getPwd());
+            detailItemBean.setName(passwordData.getName());
+            detailItemBean.setNotes(passwordData.getNotes());
+            detailItemBean.setId(passwordData.getId());
+            detailItemBean.setExtraOptions(passwordData.getExtraOptions());
 
             ItemBean noticeItemBean = new ItemBean();
             noticeItemBean.setLayoutId(R.layout.item_detail_notice);
-            noticeItemBean.setNotes(dbBean.getNotes());
+            noticeItemBean.setNotes(passwordData.getNotes());
 
-//            list.add(delItemBean);
+            ItemBean moreItemBean = new ItemBean();
+            moreItemBean.setId(passwordData.getId());
+            moreItemBean.setExtraOptions(passwordData.getExtraOptions());
+            moreItemBean.setLayoutId(R.layout.item_detail_more);
+
             list.add(homeItemBean);
             list.add(detailItemBean);
             list.add(noticeItemBean);
+            list.add(moreItemBean);
             mAdapter.setItems(list);
             mAdapter.setOnItemClickListener(new DetailItemAdapter.OnItemClickListener() {
                 @Override

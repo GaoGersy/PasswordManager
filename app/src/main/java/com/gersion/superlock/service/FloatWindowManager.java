@@ -7,7 +7,7 @@ import android.view.Gravity;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.view.FloatBall;
 import com.gersion.superlock.view.SelectListView;
 import com.orhanobut.logger.Logger;
@@ -43,19 +43,19 @@ public class FloatWindowManager {
 //        mFloatBallparams = new LayoutParams();
         int flags = 0;
         int type = 0;
-        int w = WindowManager.LayoutParams.MATCH_PARENT;
-        int h = WindowManager.LayoutParams.MATCH_PARENT;
+        int w = LayoutParams.MATCH_PARENT;
+        int h = LayoutParams.MATCH_PARENT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT > 24) {
-                type = WindowManager.LayoutParams.TYPE_PHONE;
+                type = LayoutParams.TYPE_PHONE;
             } else {
-                type = WindowManager.LayoutParams.TYPE_TOAST;
+                type = LayoutParams.TYPE_TOAST;
             }
         } else {
-            type = WindowManager.LayoutParams.TYPE_PHONE;
+            type = LayoutParams.TYPE_PHONE;
         }
 
-        mFloatBallparams = new WindowManager.LayoutParams(w, h, type, flags, PixelFormat.TRANSLUCENT);
+        mFloatBallparams = new LayoutParams(w, h, type, flags, PixelFormat.TRANSLUCENT);
         mFloatBallparams.x = screenWidth;
         mFloatBallparams.y = screenHeight / 3 * 2;
         mFloatBallparams.width = LayoutParams.WRAP_CONTENT;
@@ -75,7 +75,7 @@ public class FloatWindowManager {
 
             mSelectListView.setOnItemSelectedListener(new SelectListView.OnItemSelectedListener() {
                 @Override
-                public void onItemSeleted(DbBean bean) {
+                public void onItemSeleted(PasswordData bean) {
 //                    mBallView.setPwdData(bean);
                 }
             });
@@ -93,19 +93,19 @@ public class FloatWindowManager {
 //            params.y = screenHeight / 2;
         int flags = 0;
         int type = 0;
-        int w = WindowManager.LayoutParams.MATCH_PARENT;
-        int h = WindowManager.LayoutParams.MATCH_PARENT;
+        int w = LayoutParams.MATCH_PARENT;
+        int h = LayoutParams.MATCH_PARENT;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (Build.VERSION.SDK_INT > 24) {
-                type = WindowManager.LayoutParams.TYPE_PHONE;
+                type = LayoutParams.TYPE_PHONE;
             } else {
-                type = WindowManager.LayoutParams.TYPE_TOAST;
+                type = LayoutParams.TYPE_TOAST;
             }
         } else {
-            type = WindowManager.LayoutParams.TYPE_PHONE;
+            type = LayoutParams.TYPE_PHONE;
         }
 
-        mSelectListViewParams = new WindowManager.LayoutParams(w, h, type, flags, PixelFormat.TRANSLUCENT);
+        mSelectListViewParams = new LayoutParams(w, h, type, flags, PixelFormat.TRANSLUCENT);
         mSelectListViewParams.width = LayoutParams.WRAP_CONTENT;
         mSelectListViewParams.height = LayoutParams.WRAP_CONTENT;
         mSelectListViewParams.gravity = Gravity.CENTER | Gravity.TOP;

@@ -14,9 +14,8 @@ import android.widget.Toast;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.SelectListAdapter;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.db.DbManager;
-import com.gersion.superlock.db.PasswordManager;
 import com.gersion.superlock.service.FloatWindowManager;
 import com.gersion.superlock.utils.ConfigManager;
 import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
@@ -55,7 +54,6 @@ public class SelectListView extends LinearLayout {
     }
 
     private void initRecycleView() {
-        DbManager.getInstance().onStart();
         mAdapter = new SelectListAdapter(null);
         mSmartRecycleView
                 .setAutoRefresh(false)
@@ -71,15 +69,15 @@ public class SelectListView extends LinearLayout {
     }
 
     private void initData() {
-        mPassword = PasswordManager.getInstance().getPassword();
-        List<DbBean> passwordBeans = DbManager.getInstance().load();
+//        mPassword = PasswordManager.getInstance().getPassword();
+        List<PasswordData> passwordBeans = DbManager.getInstance().queryAll();
         mSmartRecycleView.handleData(passwordBeans);
     }
 
     private void initListener() {
         mAdapter.setOnItemClickListener(new SelectListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(DbBean bean) {
+            public void onItemClick(PasswordData bean) {
                 if (mListener != null) {
                     mListener.onItemSeleted(bean);
                 }
@@ -124,7 +122,7 @@ public class SelectListView extends LinearLayout {
     }
 
     public interface OnItemSelectedListener {
-        void onItemSeleted(DbBean bean);
+        void onItemSeleted(PasswordData bean);
     }
 
     public void setOnItemSelectedListener(OnItemSelectedListener listener) {

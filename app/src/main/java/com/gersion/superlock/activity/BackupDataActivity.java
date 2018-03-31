@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.ResultCallback;
@@ -51,11 +51,10 @@ public class BackupDataActivity extends BaseActivity {
     @Override
     protected void initData() {
         mDbManager = DbManager.getInstance();
-        mDbManager.onStart();
-        List<DbBean> datas = mDbManager.load();
+        List<PasswordData> datas = mDbManager.queryAll();
         if (datas != null && datas.size() > 0) {
             List<Keyer> keyers = new ArrayList<>();
-            for (DbBean data : datas) {
+            for (PasswordData data : datas) {
                 Keyer keyer = new Keyer(data);
                 keyers.add(keyer);
             }
@@ -78,7 +77,6 @@ public class BackupDataActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDbManager.destroy();
     }
 
     @Override

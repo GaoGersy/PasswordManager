@@ -2,6 +2,10 @@ package com.gersion.superlock.db;
 
 import android.content.Context;
 
+import com.gersion.superlock.bean.DaoMaster;
+import com.gersion.superlock.bean.DaoSession;
+import com.gersion.superlock.bean.PasswordData;
+
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.Query;
@@ -21,64 +25,53 @@ public abstract class BaseDbManager<T> {
         Database db = helper.getWritableDb();
         DaoSession daoSession = new DaoMaster(db).newSession();
         swithDaoSession(daoSession);
-        onDbSwitch();
+        onDataChange();
     }
 
-    public void onDbSwitch() {
+    public DaoSession upgradeDb(Context context, String dbName) {
+        MySQLiteOpenHelper devOpenHelper = new
+                MySQLiteOpenHelper(context, dbName, null);
+        Database writableDb = devOpenHelper.getWritableDb();
+        DaoMaster daoMaster = new DaoMaster(writableDb);
+        devOpenHelper.onUpgrade(writableDb, 1, 2);
+        DaoSession daoSession = daoMaster.newSession();
+        swithDaoSession(daoSession);
+        onDataChange();
+        return daoSession;
+    }
+
+    public void onDataChange() {
         for (OnDataChangeCallback onDataChangeListener : mOnDataChangeCallbacks) {
             if (onDataChangeListener != null) {
                 List<T> list = queryAll();
-                onDataChangeListener.onDbSwitch(list);
+                onDataChangeListener.onDataChange(list);
             }
         }
     }
 
-    public void onDataAdd(T bean) {
-        for (OnDataChangeCallback onDataChangeListener : mOnDataChangeCallbacks) {
-            if (onDataChangeListener != null) {
-                onDataChangeListener.onAdd(bean);
+    public void addOrReplace(T bean) {
+        long result = getDao().insertOrReplace(bean);
+        if (result>0){
+            if (bean instanceof PasswordData) {
+                PasswordData passwordData = (PasswordData) queryById(result);
+                passwordData.setIndex(result);
+                getDao().update(passwordData);
             }
         }
     }
 
-    public void onDataDelete(T bean) {
-        for (OnDataChangeCallback onDataChangeListener : mOnDataChangeCallbacks) {
-            if (onDataChangeListener != null) {
-                onDataChangeListener.onDelete(bean);
-            }
-        }
-    }
-
-    public void onDataDeleteAll() {
-        for (OnDataChangeCallback onDataChangeListener : mOnDataChangeCallbacks) {
-            if (onDataChangeListener != null) {
-                onDataChangeListener.onDeleteAll();
-            }
-        }
-    }
-
-    public void onDataUpdate(T bean) {
-        for (OnDataChangeCallback<T> onUpdateCallback : mOnDataChangeCallbacks) {
-            if (onUpdateCallback != null) {
-                onUpdateCallback.onUpdate(bean);
-            }
-        }
-    }
-
-    public boolean add(T bean) {
+    public long add(T bean) {
         long result = getDao().insert(bean);
         if (result > 0) {
-            onDataAdd(bean);
-            return true;
-        } else {
-            return false;
+            onDataChange();
         }
+        return result;
     }
 
     public boolean update(T bean) {
         try {
             getDao().update(bean);
-            onDataUpdate(bean);
+            onDataChange();
             return true;
         } catch (Exception e) {
             return false;
@@ -92,24 +85,28 @@ public abstract class BaseDbManager<T> {
     }
 
     public T queryById(long id) {
-        Query<T> query = getQueryByKey(id);
+        Query<T> query = getQueryById(id);
+        return query.unique();
+    }
+
+    public T queryByKey(Object key) {
+        Query<T> query = getQueryByKey(key);
         return query.unique();
     }
 
     public void delete(T bean) {
         getDao().delete(bean);
-        onDataDelete(bean);
+        onDataChange();
     }
 
     public void deleteAll() {
         getDao().deleteAll();
-        onDataDeleteAll();
+        onDataChange();
     }
 
     public void deleteById(long id) {
         getDao().deleteByKey(id);
-        T unique = getQueryByKey(id).unique();
-        onDataDelete(unique);
+        onDataChange();
     }
 
 
@@ -118,15 +115,10 @@ public abstract class BaseDbManager<T> {
         Query<T> newQuery = getQueryByKey(newIndex);
         T oldResult = oldQuery.unique();
         T newResult = newQuery.unique();
-        T t1 = changeId(newResult, oldIndex);
-        T t2 = changeId(oldResult, newIndex);
+        T t1 = changeIndex(newResult, oldIndex);
+        T t2 = changeIndex(oldResult, newIndex);
         getDao().update(t1);
         getDao().update(t2);
-    }
-
-    public List<T> load() {
-        Query<T> notesQuery = getDao().queryBuilder().orderAsc(NoteDao.Properties.Text).build();
-        return notesQuery.list();
     }
 
     public void registerDataChangeListener(OnDataChangeCallback<T> listener) {
@@ -138,15 +130,8 @@ public abstract class BaseDbManager<T> {
     }
 
     public interface OnDataChangeCallback<T> {
-        void onUpdate(T bean);
 
-        void onAdd(T bean);
-
-        void onDelete(T bean);
-
-        void onDeleteAll();
-
-        void onDbSwitch(List<T> list);
+        void onDataChange(List<T> list);
     }
 
     protected abstract void swithDaoSession(DaoSession daoSession);
@@ -155,8 +140,9 @@ public abstract class BaseDbManager<T> {
 
     protected abstract Query<T> getQueryByKey(Object key);
 
-    protected abstract T changeId(T oldResult, Object key);
+    protected abstract T changeIndex(T oldResult, Object key);
 
     protected abstract Query<T> getQuery();
 
+    protected abstract Query<T> getQueryById(long id);
 }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.base.BaseActivity;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.bean.Keyer;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.ResultCallback;
@@ -77,7 +77,6 @@ public class ImportOldDataActivity extends BaseActivity {
 
         currentLocationId = R.id.rb_backup;
         mDbManager = DbManager.getInstance();
-        mDbManager.onStart();
     }
 
     @Override
@@ -155,14 +154,14 @@ public class ImportOldDataActivity extends BaseActivity {
         Gson gson = getGson();
         TypeToken<List<Keyer>> type = new TypeToken<List<Keyer>>() {
         };
-        int dataListCount = ConfigManager.getInstance().getDataListCount();
+        long dataListCount = ConfigManager.getInstance().getDataListCount();
         List<Keyer> keyers = gson.fromJson(dataJson, type.getType());
         for (Keyer keyer : keyers) {
             dataListCount++;
-            DbBean dbBean = keyer.keyer2DbBean();
-            dbBean.setIndex(dataListCount);
-            dbBean.setId(dataListCount);
-            mDbManager.add(dbBean);
+            PasswordData passwordData = keyer.keyer2DbBean();
+            passwordData.setIndex(dataListCount);
+            passwordData.setId(dataListCount);
+            mDbManager.add(passwordData);
         }
         ToastUtils.showTasty(this, "导入成功", TastyToast.SUCCESS);
     }
@@ -170,7 +169,6 @@ public class ImportOldDataActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mDbManager.destroy();
     }
 
     @Override

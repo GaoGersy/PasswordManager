@@ -32,7 +32,7 @@ import static com.gersion.superlock.utils.MyConstants.USER_NAME;
  */
 
 public class ConfigManager {
-    private int mDataListCount;
+    private long mDataListCount;
     private String mBackupEmailAddress;
     private boolean mSuperPasswordSeted;
     private int mLockType;
@@ -257,7 +257,7 @@ public class ConfigManager {
         SpfUtils.putString(mContext, BACKUP_EMAIL_ADDRESS,backupEmailAddress);
     }
 
-    public int getDataListCount() {
+    public long getDataListCount() {
         return mDataListCount;
     }
 

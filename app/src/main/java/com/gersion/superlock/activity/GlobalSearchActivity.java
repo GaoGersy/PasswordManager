@@ -7,10 +7,8 @@ import android.view.View;
 
 import com.gersion.superlock.R;
 import com.gersion.superlock.adapter.SearchAdapter;
-import com.gersion.superlock.animator.EasyTransition;
-import com.gersion.superlock.animator.EasyTransitionOptions;
 import com.gersion.superlock.base.BaseLifeActivity;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.utils.KeyboardUtils;
 import com.gersion.superlock.utils.MatchUtils;
@@ -25,8 +23,8 @@ public class GlobalSearchActivity extends BaseLifeActivity {
 
     private SearchView mSearchView;
     private SmartRecycleView mSmartRecycleView;
-    private List<DbBean> mDataList = new ArrayList<>();
-    private List<DbBean> mPasswordBeans;
+    private List<PasswordData> mDataList = new ArrayList<>();
+    private List<PasswordData> mPasswordBeans;
     private SearchAdapter mSearchAdapter;
 
     public static final void start(Context context) {
@@ -57,7 +55,7 @@ public class GlobalSearchActivity extends BaseLifeActivity {
     }
 
     protected void initData() {
-        mPasswordBeans = DbManager.getInstance().load();
+        mPasswordBeans = DbManager.getInstance().queryAll();
     }
 
     protected void initListener() {
@@ -94,22 +92,22 @@ public class GlobalSearchActivity extends BaseLifeActivity {
 //        });
     }
 
-    private void startTrainsition(View view, DbBean bean){
-        Intent intent = DetailActivity.getDetailIntent(this, bean.getId());
-
-        EasyTransitionOptions options =
-                EasyTransitionOptions.makeTransitionOptions(
-                        this,
-                        view.findViewById(R.id.piv_icon),
-                        view.findViewById(R.id.tv_title));
-//                        findViewById(R.id.v_top_card));
-
-        EasyTransition.startActivity(intent, options);
+    private void startTrainsition(View view, PasswordData bean){
+//        Intent intent = DetailActivity.getDetailIntent(this, bean.getId());
+//
+//        EasyTransitionOptions options =
+//                EasyTransitionOptions.makeTransitionOptions(
+//                        this,
+//                        view.findViewById(R.id.piv_icon),
+//                        view.findViewById(R.id.tv_title));
+////                        findViewById(R.id.v_top_card));
+//
+//        EasyTransition.startActivity(intent, options);
     }
 
     private void onSearch(String query) {
         mDataList.clear();
-        for (DbBean passwordBean : mPasswordBeans) {
+        for (PasswordData passwordBean : mPasswordBeans) {
             if (MatchUtils.isMatch(passwordBean.getAddress(), query) ||
                     MatchUtils.isMatch(passwordBean.getName(), query) ||
                     MatchUtils.isMatch(passwordBean.getPwd(), query)) {

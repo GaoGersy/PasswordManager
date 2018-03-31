@@ -1,10 +1,6 @@
 package com.gersion.superlock.utils;
 
-import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.listener.ResultCallback;
-import com.orhanobut.logger.Logger;
-
-import java.util.List;
 
 /**
  * Created by aa326 on 2018/1/28.
@@ -43,10 +39,7 @@ public class BackupHelper {
             return ;
         }
 
-        List<String> sdCardPaths = SDCardUtilss.getSDCardPaths(SuperLockApplication.mContext);
-        for (String sdCardPath : sdCardPaths) {
-            Logger.e(sdCardPath);
-        }
+//        List<String> sdCardPaths = SDCardUtilss.getSDCardPaths(SuperLockApplication.mContext);
         try {
             boolean b = SDCardUtils.saveFileToSDCard(MyConstants.BACKUP_PATH, MyConstants.BACKUP_FILE_NAME + "."+ MyConstants.FILE_TYPE, encryptResult);
             if (b){

@@ -188,7 +188,7 @@ public class PermissionHelper {
         final Activity finalActivity = activity;
         final OnDialogClickListener finalListener = listener;
         rxPermissions.requestEach(CAMERA)
-                .subscribe(new io.reactivex.Observer<Permission>() {
+                .subscribe(new Observer<Permission>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mDisposable = d;
@@ -251,7 +251,7 @@ public class PermissionHelper {
         RxPermissions rxPermissions = new RxPermissions(activity);
         rxPermissions.setLogging(false);
         rxPermissions.requestEach(permissions)
-                .subscribe(new io.reactivex.Observer<Permission>() {
+                .subscribe(new Observer<Permission>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mDisposable = d;

@@ -23,25 +23,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
-import com.gersion.superlock.bean.DbBean;
+import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.listener.OnItemClickListener;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
 import com.ramotion.foldingcell.FoldingCell;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuAdapter;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.HashSet;
 import java.util.List;
 
-public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.DefaultViewHolder>implements IRVAdapter<DbBean> {
+public class PasswordShowAdapter extends RecyclerView.Adapter<PasswordShowAdapter.DefaultViewHolder>implements IRVAdapter<PasswordData> {
     private HashSet<Integer> unfoldedIndexes = new HashSet<>();
     private SwipeMenuRecyclerView mMenuRecyclerView;
 
-    private List<DbBean> mDatas;
+    private List<PasswordData> mDatas;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public PasswordShowAdapter(SwipeMenuRecyclerView menuRecyclerView, List<DbBean> data) {
+    public PasswordShowAdapter(SwipeMenuRecyclerView menuRecyclerView, List<PasswordData> data) {
         this.mMenuRecyclerView = menuRecyclerView;
         this.mDatas = data;
     }
@@ -53,11 +52,6 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
     @Override
     public int getItemCount() {
         return mDatas == null ? 0 : mDatas.size();
-    }
-
-    @Override
-    public View onCreateContentView(ViewGroup parent, int viewType) {
-        return LayoutInflater.from(parent.getContext()).inflate(R.layout.item_password_show, parent, false);
     }
 
     public void registerToggle(int position) {
@@ -75,16 +69,18 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
         unfoldedIndexes.add(position);
     }
 
+
     @Override
-    public PasswordShowAdapter.DefaultViewHolder onCompatCreateViewHolder(View realContentView, int viewType) {
-        DefaultViewHolder viewHolder = new DefaultViewHolder(realContentView);
+    public DefaultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_password_show, parent, false);
+        DefaultViewHolder viewHolder = new DefaultViewHolder(view);
         viewHolder.mOnItemClickListener = mOnItemClickListener;
         viewHolder.mMenuRecyclerView = mMenuRecyclerView;
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(PasswordShowAdapter.DefaultViewHolder holder, int position) {
+    public void onBindViewHolder(DefaultViewHolder holder, int position) {
         holder.setData(position);
 
     }
@@ -95,31 +91,31 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
     }
 
     @Override
-    public void setNewData(List<DbBean> data) {
+    public void setNewData(List<PasswordData> data) {
         mDatas = data;
         notifyDataSetChanged();
     }
 
     @Override
-    public void addData(List<DbBean> data) {
+    public void addData(List<PasswordData> data) {
         mDatas.addAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void removeAll(List<DbBean> data) {
+    public void removeAll(List<PasswordData> data) {
         mDatas.removeAll(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public void remove(DbBean data) {
+    public void remove(PasswordData data) {
         mDatas.remove(data);
         notifyDataSetChanged();
     }
 
     @Override
-    public List<DbBean> getData() {
+    public List<PasswordData> getData() {
         return null;
     }
 
@@ -147,7 +143,7 @@ public class PasswordShowAdapter extends SwipeMenuAdapter<PasswordShowAdapter.De
 
         public void setData(int position) {
             mPosition = position;
-            DbBean passwordBean = mDatas.get(position);
+            PasswordData passwordBean = mDatas.get(position);
 //            mTvName.setText(passwordBean.getUpdateHistorys().get(0).getUpdateTime()+"");
             mTvTitle.setText(passwordBean.getName());
             if (unfoldedIndexes.contains(position)) {
