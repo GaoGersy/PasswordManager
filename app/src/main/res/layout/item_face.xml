@@ -23,7 +23,6 @@
         android:textSize="20sp"/>
 
     <TextView
-        android:drawableLeft="@drawable/ic_av_timer_purple_200_24dp"
         android:id="@+id/tv_create_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

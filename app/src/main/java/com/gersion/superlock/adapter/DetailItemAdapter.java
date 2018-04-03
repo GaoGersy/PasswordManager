@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,17 +36,19 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
     protected void convert(final BaseViewHolder baseViewHolder, final ItemBean bean) {
         switch (bean.getLayoutId()) {
             case R.layout.item_detail_home:
-                baseViewHolder.setText(R.id.tv_name, bean.getName());
-                baseViewHolder.setText(R.id.tv_icon, bean.getAddress());
-                FrameLayout flContainer = (FrameLayout) baseViewHolder.getView(R.id.fl_container);
-                flContainer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mItemClickListener != null) {
-                            mItemClickListener.onClik(v);
-                        }
-                    }
-                });
+                baseViewHolder.setText(R.id.tv_name, bean.getAddress());
+                Integer icon = bean.getIcon();
+                int iconResource = icon==null?R.mipmap.default_icon:icon;
+                baseViewHolder.setImageResource(R.id.iv_icon, iconResource);
+//                FrameLayout flContainer = (FrameLayout) baseViewHolder.getView(R.id.fl_container);
+//                flContainer.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (mItemClickListener != null) {
+//                            mItemClickListener.onClik(v);
+//                        }
+//                    }
+//                });
                 ImageView ivInfo = (ImageView) baseViewHolder.getView(R.id.iv_info);
                 ivInfo.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -61,6 +62,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                 break;
             case R.layout.item_detail_password:
                 baseViewHolder.setText(R.id.tv_name, bean.getName());
+                baseViewHolder.setText(R.id.tv_title, bean.getAddress());
                 final TextView tvPassword = (TextView) baseViewHolder.getView(R.id.et_password);
                 tvPassword.setText(bean.getPwd());
                 TextView tvDel = (TextView) baseViewHolder.getView(R.id.tv_del);
@@ -95,6 +97,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                 });
                 break;
             case R.layout.item_detail_notice:
+                baseViewHolder.setText(R.id.tv_title, bean.getAddress());
                 String notes = bean.getNotes();
                 if (TextUtils.isEmpty(notes)) {
                     notes = "没有任何备注信息";
@@ -102,6 +105,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                 baseViewHolder.setText(R.id.tv_notice, notes);
                 break;
             case R.layout.item_detail_more:
+                baseViewHolder.setText(R.id.tv_title, bean.getAddress());
                 TextView tvNoData = (TextView) baseViewHolder.getView(R.id.tv_no_data);
                 LinearLayout container = (LinearLayout) baseViewHolder.getView(R.id.container);
                 Context context = baseViewHolder.getConvertView().getContext();

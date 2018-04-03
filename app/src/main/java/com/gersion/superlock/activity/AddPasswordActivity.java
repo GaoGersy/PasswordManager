@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
@@ -23,8 +21,9 @@ import com.gersion.superlock.base.BaseActivity;
 import com.gersion.superlock.bean.ExtraOptionBean;
 import com.gersion.superlock.bean.ItemBean;
 import com.gersion.superlock.bean.PasswordData;
+import com.gersion.superlock.bean.UpdateData;
 import com.gersion.superlock.db.DbManager;
-import com.gersion.superlock.fragment.HomeFragment;
+import com.gersion.superlock.db.UpdateManager;
 import com.gersion.superlock.utils.AnimatorUtils;
 import com.gersion.superlock.utils.GsonHelper;
 import com.gersion.superlock.utils.ToastUtils;
@@ -62,13 +61,12 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     ImageView mSelector;
     @BindView(R.id.titleView)
     TitleView mTitleView;
-    @BindView(R.id.activity_add_password)
-    LinearLayout mActivityAddPassword;
     @BindView(R.id.tv_add_option)
     TextView mTvAddOption;
     @BindView(R.id.extra_RecyclerView)
     SwipeMenuRecyclerView mExtraRecyclerView;
-    private long mTotalCount;
+    @BindView(R.id.iv_select_icon)
+    ImageView mIvSelectIcon;
     private boolean mIsEdit;
 
     CharSequence[] words = {
@@ -87,12 +85,6 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     private ItemBean mItemBean;
     private ExtraItemAdapter mExtraItemAdapter;
 
-    public static void startIntent(Activity activity, int totalCount) {
-        Intent intent = new Intent(activity, AddPasswordActivity.class);
-        intent.putExtra(HomeFragment.TOTAL_COUNT, totalCount);
-        activity.startActivity(intent);
-    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_add_password;
@@ -109,14 +101,12 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         mExtraRecyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
         mExtraRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mExtraItemAdapter = new ExtraItemAdapter();
-        mExtraItemAdapter.registerMultiBean(ExtraOptionBean.class,R.layout.view_extra);
+        mExtraItemAdapter.registerMultiBean(ExtraOptionBean.class, R.layout.view_extra);
         mExtraRecyclerView.setAdapter(mExtraItemAdapter);
     }
 
     @Override
     protected void initData() {
-        mTotalCount = HomeFragment.mTotalCount;
-        mTotalCount--;
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
@@ -129,9 +119,9 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
                 mCetvPassword.setText(mItemBean.getPwd());
                 mIsEdit = true;
                 String extraOptions = mItemBean.getExtraOptions();
-                if (extraOptions!=null) {
+                if (extraOptions != null) {
                     List<ExtraOptionBean> extraOptionBeans = GsonHelper.toList(extraOptions, ExtraOptionBean.class);
-                    if (extraOptionBeans!=null){
+                    if (extraOptionBeans != null) {
                         mExtraItemAdapter.addAll(extraOptionBeans);
                     }
                 }
@@ -155,7 +145,19 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
                 addExtraItem();
             }
         });
-
+        mIvSelectIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                if (mItemBean!=null) {
+                    Integer icon = mItemBean.getIcon();
+                    if (icon != null) {
+                        bundle.putInt("resourceId", icon);
+                    }
+                }
+                toActivityForResult(SelectIconActivity.class,bundle,100);
+            }
+        });
     }
 
     private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
@@ -193,11 +195,11 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
     };
 
     private void addExtraItem() {
-        if (mExtraItemAdapter.getItems().size()>=5){
-            ToastUtils.showTasty(this,"最多只能添加5条额外的数据",TastyToast.WARNING);
+        if (mExtraItemAdapter.getItems().size() >= 5) {
+            ToastUtils.showTasty(this, "最多只能添加5条额外的数据", TastyToast.WARNING);
             return;
         }
-        ExtraOptionBean  extraOptionBean = new ExtraOptionBean();
+        ExtraOptionBean extraOptionBean = new ExtraOptionBean();
         mExtraItemAdapter.add(extraOptionBean);
     }
 
@@ -259,14 +261,14 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
             boolean needWarn = false;
             final List<ExtraOptionBean> resultList = new ArrayList<>();
             for (ExtraOptionBean item : items) {
-                if (TextUtils.isEmpty(item.getKey())||TextUtils.isEmpty(item.getValue())){
+                if (TextUtils.isEmpty(item.getKey()) || TextUtils.isEmpty(item.getValue())) {
                     needWarn = true;
-                }else {
+                } else {
                     resultList.add(item);
                 }
             }
             String extraOptions = null;
-            if (resultList.size()>0){
+            if (resultList.size() > 0) {
                 extraOptions = GsonHelper.toJsonFromList(resultList);
             }
             if (needWarn) {
@@ -282,7 +284,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
 
                     }
                 }).show();
-            }else {
+            } else {
                 onAddPassword(pwd, name, location, notes, extraOptions);
             }
 
@@ -300,10 +302,23 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         passwordData.setNotes(notes);
         passwordData.setPwd(pwd);
         passwordData.setExtraOptions(extraOptions);
+        passwordData.setIcon(mItemBean==null?null:mItemBean.getIcon());
         if (mIsEdit) {
+            PasswordData oldPasswordData = DbManager.getInstance().queryById(mItemBean.getId());
+            UpdateData updateData = UpdateData.toUpdateData(oldPasswordData);
+            updateData.setUpdateTime(System.currentTimeMillis());
+            long index = UpdateManager.getInstance().add(updateData);
+            String updateHistoryIds = passwordData.getUpdateHistoryIds();
+            if (updateHistoryIds!=null){
+                updateHistoryIds=updateHistoryIds+","+index;
+            }else {
+                updateHistoryIds = index+"";
+            }
+            passwordData.setUpdateHistoryIds(updateHistoryIds);
             passwordData.setId(mItemBean.getId());
             passwordData.setId(mItemBean.getIndex());
             DbManager.getInstance().update(passwordData);
+
             ToastUtils.showTasty(AddPasswordActivity.this, "修改成功", TastyToast.SUCCESS);
         } else {
             DbManager.getInstance().add(passwordData);
@@ -329,5 +344,22 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
         animatorSet.setDuration(300);
         animatorSet.setInterpolator(new OvershootInterpolator(2));
         animatorSet.start();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode ==RESULT_OK){
+            if (requestCode==100){
+                int resourceId = data.getIntExtra("resourceId", -1);
+                if (resourceId!=-1){
+                    mIvSelectIcon.setImageResource(resourceId);
+                    if (mItemBean==null){
+                        mItemBean = new ItemBean();
+                    }
+                    mItemBean.setIcon(resourceId);
+                }
+            }
+        }
     }
 }

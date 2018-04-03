@@ -17,7 +17,6 @@
         android:text="这里是密码所在的地方"/>
 
     <TextView
-        android:drawableLeft="@drawable/ic_assignment_ind_purple_200_24dp"
         android:id="@+id/name"
         style="@style/ListTextStyle"
         android:text="这里是用户名"/>

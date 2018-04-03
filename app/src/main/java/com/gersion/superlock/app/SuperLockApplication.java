@@ -101,7 +101,7 @@ public class SuperLockApplication extends Application {
         mContext = getApplicationContext();
         INSTANCE = this;
         initWeixinApi();
-//        initBugly();
+        initBugly();
 //        resetDensity();
         new RudenessScreenHelper(this, 750).activate();
 //        PasswordManager.getInstance().init(this,1);

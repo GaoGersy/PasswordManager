@@ -82,7 +82,6 @@ public class SelectFileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String filePath = mAdapter.getFileInfo().getPath();
-                Logger.e(filePath);
             }
         });
     }

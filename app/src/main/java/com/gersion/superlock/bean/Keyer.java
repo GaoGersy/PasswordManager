@@ -8,7 +8,7 @@ public class Keyer {
     public long createTime;
     public String updateTime;
     public String notes;
-    public String icon;
+    public Integer icon;
     private String extraOption;
 
     public Keyer(){}
@@ -69,11 +69,11 @@ public class Keyer {
         this.notes = notes;
     }
 
-    public String getIcon() {
+    public Integer getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
+    public void setIcon(Integer icon) {
         this.icon = icon;
     }
 

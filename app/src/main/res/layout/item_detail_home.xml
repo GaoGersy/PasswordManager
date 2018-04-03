@@ -12,35 +12,26 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="left|center"
             >
 
         <ImageView
                 android:id="@+id/iv_icon"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:src="@mipmap/ic_launcher"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                />
-        <TextView
-                android:id="@+id/tv_icon"
-                android:textColor="@color/gray_a0"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:text="淘宝"
-                android:lines="1"
-                android:background="@drawable/shape_guide_bg_blue"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
                 />
         <TextView
                 android:id="@+id/tv_name"
                 android:text="Homeasdfa"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="16sp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:textColor="@color/font_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

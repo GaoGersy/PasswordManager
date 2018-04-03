@@ -1,31 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/bg_home"
         >
-    <FrameLayout
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/smartRecycleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
 
-        <com.gersion.superlock.view.smartRecycleView.SmartRecycleView
-                android:id="@+id/smartRecycleView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        <TextView
-                android:id="@+id/tv_add"
-                android:layout_width="100pt"
-                android:layout_height="100pt"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:text="+"
-                android:layout_gravity="bottom|right"
-                android:textSize="30sp"
-                android:textColor="@color/white"
-                android:background="@drawable/bg_press"
-                />
-    </FrameLayout>
-</LinearLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/tv_add"-->
+    <!--android:layout_width="100pt"-->
+    <!--android:layout_height="100pt"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:text="+"-->
+    <!--android:layout_gravity="bottom|right"-->
+    <!--android:textSize="30sp"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:background="@drawable/bg_press"-->
+    <!--/>-->
+    <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="100pt"
+            android:layout_height="100pt"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:text="+"
+            android:layout_gravity="bottom|right"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_press"
+            app:layout_behavior="com.gersion.superlock.behavior.FabBehavior"
+            />
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--app:fabSize="normal"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="end|bottom"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--app:layout_behavior="com.gersion.superlock.behavior.FabBehavior" />-->
+</android.support.design.widget.CoordinatorLayout>

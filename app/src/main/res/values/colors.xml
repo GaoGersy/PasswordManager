@@ -60,5 +60,6 @@
     <color name="item_detail_font_color">#1C1C1C</color>
     <color name="item_title_check_font_color">#20242B</color>
 
-
+    <color name="colorInitFloatBackground">#b0ffffff</color>
+    <color name="colorCollapsedFloatBackground">#e4e4e4</color>
 </resources>

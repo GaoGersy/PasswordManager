@@ -1,10 +1,7 @@
 package com.gersion.superlock.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -64,7 +61,7 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
 
     @Override
     public DefaultViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_content, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note, parent, false);
         DefaultViewHolder viewHolder = new DefaultViewHolder(view);
 //        viewHolder.mOnItemClickListener = mOnItemClickListener;
 //        viewHolder.mMenuRecyclerView = mMenuRecyclerView;
@@ -112,58 +109,8 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
         return mDatas;
     }
 
-//    class DefaultViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnTouchListener {
-//
-//        private TextView mTvPassword;
-//        OnItemClickListener mOnItemClickListener;
-//        SwipeMenuRecyclerView mMenuRecyclerView;
-//        private FoldingCell mFcContainer;
-//        private int mPosition;
-//        private TextView mTvName;
-//        private TextView mTvTitle;
-//
-//        public DefaultViewHolder(View itemView) {
-//            super(itemView);
-//            itemView.setOnClickListener(this);
-//            mTvName = findView(R.id.tv_name);
-//            mTvTitle = findView(R.id.tv_title);
-//            mTvPassword = findView(R.id.tv_password);
-//            itemView.findViewById(R.id.iv_touch).setOnTouchListener(this);
-//        }
-//
-//        protected <T extends View> T findView(int id){
-//            return (T) itemView.findViewById(id);
-//        }
-//
-//        public void setData(int position) {
-//            mPosition = position;
-//            PasswordData passwordBean = mDatas.get(position);
-//            mTvName.setText("用户名："+passwordBean.getName());
-//            mTvTitle.setText(passwordBean.getAddress());
-//            mTvPassword.setText("密码："+passwordBean.getPwd());
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            if (mOnItemClickListener != null) {
-//                mOnItemClickListener.onItemClick(v,getAdapterPosition());
-//            }
-//        }
-//
-//        @Override
-//        public boolean onTouch(View v, MotionEvent event) {
-//            int action = event.getAction();
-//            switch (action) {
-//                case MotionEvent.ACTION_DOWN: {
-//                    mMenuRecyclerView.startDrag(this);
-//                    break;
-//                }
-//            }
-//            return false;
-//        }
-//    }
 
-    class DefaultViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
+    class DefaultViewHolder extends RecyclerView.ViewHolder {
 
         private DiscreteScrollView itemPicker;
         private DetailItemAdapter mAdapter;
@@ -191,22 +138,6 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
                     .setMinScale(0.7f)
                     .setDegree(90f)
                     .build());
-            itemPicker.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
-                @Override
-                public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-
-                }
-
-                @Override
-                public void onScrollEnd(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-
-                }
-
-                @Override
-                public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
-
-                }
-            });
         }
 
         protected <T extends View> T findView(int id) {
@@ -217,29 +148,16 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
             PasswordData passwordData = mDatas.get(position);
             List<ItemBean> list = new ArrayList<>();
 
-            ItemBean homeItemBean = new ItemBean();
+            ItemBean homeItemBean = ItemBean.dbBean2ItemBean(passwordData);
             homeItemBean.setLayoutId(R.layout.item_detail_home);
-            homeItemBean.setIcon(passwordData.getIcon());
-            homeItemBean.setAddress(passwordData.getAddress());
-            homeItemBean.setName(passwordData.getName());
-            homeItemBean.setId(passwordData.getId());
 
-            ItemBean detailItemBean = new ItemBean();
+            ItemBean detailItemBean = ItemBean.dbBean2ItemBean(passwordData);
             detailItemBean.setLayoutId(R.layout.item_detail_password);
-            detailItemBean.setAddress(passwordData.getAddress());
-            detailItemBean.setPwd(passwordData.getPwd());
-            detailItemBean.setName(passwordData.getName());
-            detailItemBean.setNotes(passwordData.getNotes());
-            detailItemBean.setId(passwordData.getId());
-            detailItemBean.setExtraOptions(passwordData.getExtraOptions());
 
-            ItemBean noticeItemBean = new ItemBean();
+            ItemBean noticeItemBean = ItemBean.dbBean2ItemBean(passwordData);
             noticeItemBean.setLayoutId(R.layout.item_detail_notice);
-            noticeItemBean.setNotes(passwordData.getNotes());
 
-            ItemBean moreItemBean = new ItemBean();
-            moreItemBean.setId(passwordData.getId());
-            moreItemBean.setExtraOptions(passwordData.getExtraOptions());
+            ItemBean moreItemBean = ItemBean.dbBean2ItemBean(passwordData);
             moreItemBean.setLayoutId(R.layout.item_detail_more);
 
             list.add(homeItemBean);
@@ -258,17 +176,17 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
 //            itemPicker.scrollToPosition(1);
         }
 
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            int action = event.getAction();
-            switch (action) {
-                case MotionEvent.ACTION_DOWN: {
-                    mMenuRecyclerView.startDrag(this);
-                    break;
-                }
-            }
-            return false;
-        }
+//        @Override
+//        public boolean onTouch(View v, MotionEvent event) {
+//            int action = event.getAction();
+//            switch (action) {
+//                case MotionEvent.ACTION_DOWN: {
+//                    mMenuRecyclerView.startDrag(this);
+//                    break;
+//                }
+//            }
+//            return false;
+//        }
     }
 
     public void setFragment(HomeFragment homeFragment){

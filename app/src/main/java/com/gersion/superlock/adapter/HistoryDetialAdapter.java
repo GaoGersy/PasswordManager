@@ -7,7 +7,7 @@
 //import com.gersion.superlock.R;
 //import com.gersion.superlock.base.BaseRVAdapter;
 //import com.gersion.superlock.base.BaseViewHolder;
-//import com.gersion.superlock.bean.UpdateBean;
+//import com.gersion.superlock.bean.UpdateData;
 //import com.gersion.superlock.utils.TimeUtils;
 //import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
 //
@@ -18,8 +18,8 @@
 // * Created by a3266 on 2017/6/10.
 // */
 //
-//public class HistoryDetialAdapter extends BaseRVAdapter<UpdateBean> implements IRVAdapter<UpdateBean> {
-//    public HistoryDetialAdapter(List<UpdateBean> data) {
+//public class HistoryDetialAdapter extends BaseRVAdapter<UpdateData> implements IRVAdapter<UpdateData> {
+//    public HistoryDetialAdapter(List<UpdateData> data) {
 //        super(data);
 //    }
 //
@@ -39,33 +39,33 @@
 //    }
 //
 //    @Override
-//    public void setNewData(List<UpdateBean> data) {
-//        mData = data==null?new ArrayList<UpdateBean>():data;
+//    public void setNewData(List<UpdateData> data) {
+//        mData = data==null?new ArrayList<UpdateData>():data;
 //        notifyDataSetChanged();
 //    }
 //
 //    @Override
-//    public void addData(List<UpdateBean> data) {
+//    public void addData(List<UpdateData> data) {
 //        mData.addAll(data);
 //        notifyDataSetChanged();
 //    }
 //
 //    @Override
-//    public void removeAll(List<UpdateBean> data) {
+//    public void removeAll(List<UpdateData> data) {
 //
 //    }
 //
 //    @Override
-//    public void remove(UpdateBean data) {
+//    public void remove(UpdateData data) {
 //
 //    }
 //
 //    @Override
-//    public List<UpdateBean> getData() {
+//    public List<UpdateData> getData() {
 //        return mData;
 //    }
 //
-//    static class HistoryDetialViewHolder extends BaseViewHolder<UpdateBean>{
+//    static class HistoryDetialViewHolder extends BaseViewHolder<UpdateData>{
 //
 //        private TextView mTvTime;
 //        private TextView mTvPassword;
@@ -81,7 +81,7 @@
 //        }
 //
 //        @Override
-//        public void setData(UpdateBean updateBean) {
+//        public void setData(UpdateData updateBean) {
 //            mTvTime.setText("时间："+TimeUtils.getTime(updateBean.getUpdateTime()));
 //            mTvPassword.setText("密码："+updateBean.getPassword());
 //        }

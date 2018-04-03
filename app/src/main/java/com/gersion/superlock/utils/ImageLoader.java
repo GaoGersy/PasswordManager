@@ -18,7 +18,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ImageLoader {
 
     private static ImageLoader mInstance;
-    public ImageLoader() {
+    private ImageLoader() {
     }
 
     //单例模式，节省资源

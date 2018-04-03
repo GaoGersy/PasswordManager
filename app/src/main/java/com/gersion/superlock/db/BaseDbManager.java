@@ -62,8 +62,13 @@ public abstract class BaseDbManager<T> {
 
     public long add(T bean) {
         long result = getDao().insert(bean);
-        if (result > 0) {
-            onDataChange();
+        if (result>0){
+            if (bean instanceof PasswordData) {
+                PasswordData passwordData = (PasswordData) queryById(result);
+                passwordData.setIndex(result);
+                getDao().update(passwordData);
+                onDataChange();
+            }
         }
         return result;
     }

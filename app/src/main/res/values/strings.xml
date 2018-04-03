@@ -17,4 +17,5 @@
     <string name="super_password_info">\t\t设置一个超级密码，用来保护您的密码安全！</string>
     <string name="super_password_warn">\t\t\t密码越复杂越好！\n\n\t\t\t我们强烈建议您拿个本子把这个超级密码记好，如无必要，也不建议您经常修改。\n\n\t\t请不要向任何人透露您的超级密码，除非您真的一点也不担心您各种密码的安全！</string>
     <string name="import_data_warn">\t\t\t为了保证您的密码安全，导入旧密码数据时需要设置备份密码时的超级密码，以免导入旧的密码数据失败！</string>
+    <string name="header_scrolling_behavior">com.gersion.superlock.behavior.HeaderScrollingBehavior</string>
 </resources>

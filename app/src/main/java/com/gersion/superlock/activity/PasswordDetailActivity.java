@@ -199,7 +199,7 @@ public class PasswordDetailActivity extends BaseActivity {
             mDataList = new ArrayList();
             for (int i = 0; i < passwordBeans.size(); i++) {
                 PasswordData passwordBean = passwordBeans.get(i);
-                ItemBean itemBean = ItemBean.DbBean2ItemBean(passwordBean);
+                ItemBean itemBean = ItemBean.dbBean2ItemBean(passwordBean);
                 mDataList.add(itemBean);
                 Logger.e(passwordBean.getId()+"");
                 if (id == passwordBean.getId()) {

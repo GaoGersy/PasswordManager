@@ -1,6 +1,7 @@
 package com.gersion.superlock.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -13,9 +14,6 @@ import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.db.BaseDbManager;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.listener.OnItemClickListener;
-import com.gersion.superlock.utils.ConfigManager;
-import com.gersion.superlock.view.smartRecycleView.PullToRefreshLayout;
-import com.gersion.superlock.view.smartRecycleView.SmartRecycleView;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yanzhenjie.recyclerview.swipe.touch.OnItemMoveListener;
 
@@ -24,11 +22,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class HomeFragment extends BaseFragment {
-    public static final String TOTAL_COUNT = "total_count";
-    public static int mTotalCount = -1;
     private ContentListAdapter mPasswordShowAdapter;
     private List<PasswordData> mDataList = new ArrayList<>();
-    private SmartRecycleView mSmartRecycleView;
+    private SwipeMenuRecyclerView mRecyclerView;
     /**
      * 当Item移动的时候。
      */
@@ -65,14 +61,14 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        mSmartRecycleView = findView(R.id.smartRecycleView);
+        mRecyclerView = findView(R.id.smartRecycleView);
         mTvAdd = findView(R.id.tv_add);
         init();
     }
 
     @Override
     protected void initData(Bundle bundle) {
-
+        getDataFromDB();
     }
 
     @Override
@@ -100,37 +96,20 @@ public class HomeFragment extends BaseFragment {
         public void onDataChange(List<PasswordData> list) {
             mDataList.clear();
             mDataList.addAll(list);
-            mTotalCount = mDataList.size();
-            ConfigManager.getInstance().setDataListCount(mTotalCount);
-            mSmartRecycleView.onRefresh(mDataList);
+            mPasswordShowAdapter.setNewData(mDataList);
         }
     };
 
     private void init() {
-        SwipeMenuRecyclerView menuRecyclerView = mSmartRecycleView.getRecyclerView();
-        mPasswordShowAdapter = new ContentListAdapter(menuRecyclerView, mDataList);
-        mSmartRecycleView
-                .setAutoRefresh(true)
-                .setAdapter(mPasswordShowAdapter)
-                .loadMoreEnable(false)
-                .refreshEnable(false)
-                .setLayoutManger(SmartRecycleView.LayoutManagerType.LINEAR_LAYOUT)
-                .setRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh(int page) {
-                        initData();
-                    }
-
-                    @Override
-                    public void onLoadMore(final int page) {
-                    }
-                });
+        mPasswordShowAdapter = new ContentListAdapter(mRecyclerView, mDataList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mPasswordShowAdapter);
 
         // 触摸拖拽的代码在Adapter中：SwipeMenuRecyclerView#startDrag(ViewHolder);
 //        mDragAdapter.setOnItemClickListener(onItemClickListener);
-        menuRecyclerView.setLongPressDragEnabled(true); // 开启拖拽。
-        menuRecyclerView.setItemViewSwipeEnabled(false); // 开启滑动删除。
-        menuRecyclerView.setOnItemMoveListener(onItemMoveListener);// 监听拖拽，更新UI。
+        mRecyclerView.setLongPressDragEnabled(true); // 开启拖拽。
+        mRecyclerView.setItemViewSwipeEnabled(false); // 开启滑动删除。
+        mRecyclerView.setOnItemMoveListener(onItemMoveListener);// 监听拖拽，更新UI。
 //        menuRecyclerView.setOnItemStateChangedListener(mOnItemStateChangedListener);
     }
 
@@ -140,53 +119,12 @@ public class HomeFragment extends BaseFragment {
         DbManager.getInstance().unregisterDataChangeListener(dataChangeListener);
     }
 
-    //初始化数据
-    private void initData() {
-        getDataFromDB();
-    }
-
     private void getDataFromDB() {
-//        for (int i = 0; i < 20; i++) {
-//            PasswordData bean = new PasswordData();
-//            bean.setIndex(i);
-//            bean.setAddress("地址" + i);
-//            bean.setCreateTime(TimeUtils.getCurrentTimeInLong());
-//            bean.setName("名称" + i);
-//            bean.setNotes("备注" + i);
-//            bean.setPwd("密码" + i);
-//            mDataList.add(bean);
-//            bean.setUpdateHistorys(new RealmList<UpdateBean>());
-//            for (int j=0;j<5;j++){
-//                UpdateBean updateBean = new UpdateBean();
-//                updateBean.setPassword("aaaa"+j);
-//                updateBean.setUpdateTime(System.currentTimeMillis());
-//                bean.getUpdateHistorys().add(updateBean);
-//            }
-//            DbManager.getInstance().add(bean,i);
-//        }
 
         final List<PasswordData> passwordBeans = DbManager.getInstance().queryAll();
         mDataList.clear();
         mDataList.addAll(passwordBeans);
-        mTotalCount = mDataList.size();
-        ConfigManager.getInstance().setDataListCount(mTotalCount);
-//        final UpdateBean updateBean = passwordBeans.get(0).getUpdateHistorys().get(0);
-//        DbManager.getInstance().update(new DbManager.OnUpdateCallback() {
-//            @Override
-//            public PasswordBean onUpdate() {
-//                updateBean.setUpdateTime(123459999);
-//                return passwordBeans.get(0);
-//            }
-//        });
-//
-//        DbManager.getInstance().updateById(2, new DbManager.OnUpdateByIdCallback() {
-//            @Override
-//            public PasswordBean onUpdate(PasswordBean bean) {
-//                bean.getUpdateHistorys().get(0).setUpdateTime(9990767);
-//                return bean;
-//            }
-//        });
-        mSmartRecycleView.handleData(mDataList);
+        mPasswordShowAdapter.setNewData(mDataList);
     }
 
     private void startTrainsition(View view, PasswordData bean){
