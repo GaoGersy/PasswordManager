@@ -1,14 +1,18 @@
 package com.gersion.superlock.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
+import com.gersion.superlock.activity.GlobalSearchActivity;
+import com.gersion.superlock.activity.PasswordDetailActivity;
 import com.gersion.superlock.base.BaseRVAdapter;
 import com.gersion.superlock.base.BaseViewHolder;
 import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.listener.OnItemClickListener;
+import com.gersion.superlock.utils.KeyboardUtils;
 import com.gersion.superlock.view.smartRecycleView.IRVAdapter;
 
 import java.util.List;
@@ -90,24 +94,28 @@ public class SearchAdapter extends BaseRVAdapter<PasswordData> implements IRVAda
 
         @Override
         protected void initView(View itemView) {
-            itemView.setOnClickListener(this);
             mTvName = findView(R.id.tv_name);
             mTvTitle = findView(R.id.tv_title);
             mTvPassword = findView(R.id.tv_password);
+
         }
 
         @Override
-        public void setData(PasswordData passwordData) {
+        public void setData(final PasswordData passwordData) {
             mTvName.setText("用户名："+ passwordData.getName());
             mTvTitle.setText(passwordData.getAddress());
             mTvPassword.setText("密码："+ passwordData.getPwd());
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(v,getAdapterPosition());
-            }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GlobalSearchActivity globalSearchActivity = (GlobalSearchActivity) v.getContext();
+                    Intent intent = new Intent(globalSearchActivity,PasswordDetailActivity.class );
+                    Long id = passwordData.getId();
+                    intent.putExtra("id",id);
+                    globalSearchActivity.startActivity(intent);
+                    KeyboardUtils.hideSoftInput(globalSearchActivity);
+                }
+            });
         }
     }
 

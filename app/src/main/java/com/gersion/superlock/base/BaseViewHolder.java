@@ -37,7 +37,6 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
-
     protected abstract void initView(View itemView);
 
     public abstract void setData(T t);

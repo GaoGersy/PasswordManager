@@ -1,5 +1,7 @@
 package com.gersion.superlock.adapter;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,6 +140,29 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
                     .setMinScale(0.7f)
                     .setDegree(90f)
                     .build());
+//            itemPicker.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
+//                @Override
+//                public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+//                    mAdapter.playAnimator(adapterPosition);
+//                }
+//            });
+
+            itemPicker.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
+                @Override
+                public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
+
+                }
+
+                @Override
+                public void onScrollEnd(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
+                    mAdapter.playAnimator(adapterPosition);
+                }
+
+                @Override
+                public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
+
+                }
+            });
         }
 
         protected <T extends View> T findView(int id) {

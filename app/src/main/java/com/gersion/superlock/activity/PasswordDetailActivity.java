@@ -21,7 +21,6 @@ import com.gersion.superlock.bean.PasswordData;
 import com.gersion.superlock.db.BaseDbManager;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.view.TitleView;
-import com.orhanobut.logger.Logger;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.Orientation;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -88,14 +87,6 @@ public class PasswordDetailActivity extends BaseActivity {
             public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
             }
         });
-//        mList = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            ItemBean itemBean = new ItemBean();
-//            itemBean.setName("haha" + i);
-//            itemBean.setAddress("xixi" + i);
-//            mList.add(itemBean);
-//        }
-//        mAdapter.setItems(mList);
 
         mDetailDiscreteScrollView.setOrientation(Orientation.HORIZONTAL);
         mDetailAdapter = new PasswordDetailAdapter();
@@ -104,7 +95,6 @@ public class PasswordDetailActivity extends BaseActivity {
         mDetailDiscreteScrollView.setItemTransitionTimeMillis(100);
         mDetailDiscreteScrollView.setOffscreenItems(0);
         mDetailDiscreteScrollView.setItemTransformer(new ScaleTransformer.Builder().setMaxScale(1).setMinScale(1).build());
-//        mDetailAdapter.setItems(mList);
 
         mDetailDiscreteScrollView.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
             @Override
@@ -192,7 +182,6 @@ public class PasswordDetailActivity extends BaseActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         long id = bundle.getLong("id");
-        Logger.e(id+"");
         List<PasswordData> passwordBeans = DbManager.getInstance().queryAll();
         int position = 0;
         if (passwordBeans != null && passwordBeans.size() > 0) {
@@ -201,15 +190,14 @@ public class PasswordDetailActivity extends BaseActivity {
                 PasswordData passwordBean = passwordBeans.get(i);
                 ItemBean itemBean = ItemBean.dbBean2ItemBean(passwordBean);
                 mDataList.add(itemBean);
-                Logger.e(passwordBean.getId()+"");
                 if (id == passwordBean.getId()) {
                     position = i;
+                    break;
                 }
             }
         }
         mAdapter.setItems(passwordBeans);
         mDetailAdapter.setItems(passwordBeans);
-        Logger.e(position + "");
         mTitleDiscreteScrollView.scrollToPosition(position);
         mDetailDiscreteScrollView.scrollToPosition(position);
     }
@@ -229,12 +217,13 @@ public class PasswordDetailActivity extends BaseActivity {
     DbManager.OnDataChangeCallback<PasswordData> dataChangeListener = new BaseDbManager.OnDataChangeCallback<PasswordData>() {
         @Override
         public void onDataChange(List<PasswordData> list) {
-//            mDataList.clear();
-//            mDataList.addAll(list);
+            mAdapter.setItems(list);
+            mDetailAdapter.setItems(list);
         }
     };
     @Override
     public void onDestroy() {
         super.onDestroy();
+        DbManager.getInstance().unregisterDataChangeListener(dataChangeListener);
     }
 }

@@ -83,13 +83,6 @@ public class GlobalSearchActivity extends BaseLifeActivity {
                 }
             }
         });
-
-//        mSearchAdapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                startTrainsition(view,mDataList.get(position));
-//            }
-//        });
     }
 
     private void startTrainsition(View view, PasswordData bean){
