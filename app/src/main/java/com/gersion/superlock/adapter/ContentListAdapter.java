@@ -150,17 +150,17 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
             itemPicker.addScrollStateChangeListener(new DiscreteScrollView.ScrollStateChangeListener<RecyclerView.ViewHolder>() {
                 @Override
                 public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
-
+                    mAdapter.hideView(adapterPosition);
                 }
 
                 @Override
                 public void onScrollEnd(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
+                    mAdapter.needShowViews(adapterPosition);
                     mAdapter.playAnimator(adapterPosition);
                 }
 
                 @Override
                 public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
-
                 }
             });
         }

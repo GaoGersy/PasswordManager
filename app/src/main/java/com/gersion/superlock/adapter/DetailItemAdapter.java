@@ -1,5 +1,7 @@
 package com.gersion.superlock.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,7 +26,6 @@ import com.gersion.superlock.utils.GsonHelper;
 import com.gersion.superlock.utils.ToastUtils;
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyDialogListener;
-import com.orhanobut.logger.Logger;
 import com.sdsmdg.tastytoast.TastyToast;
 
 import java.util.ArrayList;
@@ -113,6 +114,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                         mainActivity.toActivity(AddPasswordActivity.class, bundle);
                     }
                 });
+                viewGone(views_1);
                 break;
             case R.layout.item_detail_notice:
                 TextView tvTitle = (TextView) baseViewHolder.getView(R.id.tv_title);
@@ -125,6 +127,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                 tv_notice.setText(notes);
                 views_2.add(tvTitle);
                 views_2.add(tv_notice);
+                viewGone(views_2);
                 break;
             case R.layout.item_detail_more:
                 TextView myTvTitle = (TextView) baseViewHolder.getView(R.id.tv_title);
@@ -147,6 +150,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                         }
                     }
                 }
+                viewGone(views_3);
                 break;
             default:
                 break;
@@ -154,13 +158,59 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
     }
 
     public void playAnimator(int position) {
-        Logger.e(position+"");
+        if (currentPosition == position) {
+            return;
+        }
+        currentPosition = position;
         if (position == 1) {
+            viewGone(views_1);
             startPlay(views_1);
         } else if (position == 2) {
+            viewGone(views_2);
             startPlay(views_2);
         } else if (position == 3) {
+            viewGone(views_3);
             startPlay(views_3);
+        }
+    }
+
+    int currentPosition = 0;
+
+    public void hideView(int position) {
+        currentPosition = position;
+        if (position == 1) {
+            viewGone(views_1);
+        } else if (position == 2) {
+            viewGone(views_2);
+        } else if (position == 3) {
+            viewGone(views_3);
+        }
+    }
+
+    public void needShowViews(int position) {
+        if (currentPosition != position) {
+            return;
+        }
+        if (position == 1) {
+            viewVisible(views_1);
+        } else if (position == 2) {
+            viewVisible(views_2);
+        } else if (position == 3) {
+            viewVisible(views_3);
+        }
+    }
+
+    private void viewVisible(List<View> views) {
+        for (int i = 0; i < views.size(); i++) {
+            View view = views.get(i);
+            view.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void viewGone(List<View> views) {
+        for (int i = 0; i < views.size(); i++) {
+            View view = views.get(i);
+            view.setVisibility(View.GONE);
         }
     }
 
@@ -171,7 +221,7 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
         }
     }
 
-    private void doAnimator(View mView, View view, int dely) {
+    private void doAnimator(View mView, final View view, int dely) {
         if (mView == null) {
             return;
         }
@@ -179,6 +229,12 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
         animator.setInterpolator(new OvershootInterpolator());
         animator.setStartDelay(dely);
         animator.setDuration(500);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                view.setVisibility(View.VISIBLE);
+            }
+        });
         animator.start();
     }
 
