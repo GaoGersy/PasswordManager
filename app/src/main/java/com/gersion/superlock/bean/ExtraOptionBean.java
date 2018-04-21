@@ -8,6 +8,14 @@ public class ExtraOptionBean {
     private String key;
     private String value;
 
+    public ExtraOptionBean() {
+    }
+
+    public ExtraOptionBean(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
     public String getKey() {
         return key;
     }

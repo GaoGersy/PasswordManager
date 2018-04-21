@@ -24,6 +24,7 @@ import com.gersion.superlock.bean.ItemBean;
 import com.gersion.superlock.db.DbManager;
 import com.gersion.superlock.utils.GsonHelper;
 import com.gersion.superlock.utils.ToastUtils;
+import com.gersion.superlock.view.DetaiItemView;
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyDialogListener;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -73,19 +74,20 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                 });
                 break;
             case R.layout.item_detail_password:
-                TextView tv_name = (TextView) baseViewHolder.getView(R.id.tv_name);
-                TextView tv_title = (TextView) baseViewHolder.getView(R.id.tv_title);
-                final TextView tvPassword = (TextView) baseViewHolder.getView(R.id.et_password);
+                TextView title = (TextView) baseViewHolder.getView(R.id.tv_title);
+                DetaiItemView itemName = (DetaiItemView) baseViewHolder.getView(R.id.item_name);
+                DetaiItemView itemPwd = (DetaiItemView) baseViewHolder.getView(R.id.item_pwd);
+                itemName.setItemName("用户名");
+                itemName.setItemValue(bean.getName());
+                itemPwd.setItemName("密码");
+                itemPwd.setItemValue(bean.getPwd());
                 TextView tvDel = (TextView) baseViewHolder.getView(R.id.tv_del);
                 TextView tvEdit = (TextView) baseViewHolder.getView(R.id.tv_edit);
-                tv_name.setText("用户名 : " + bean.getName());
-                tv_title.setText("密码归属于 : " + bean.getAddress());
-                tvPassword.setText("密    码 : " + bean.getPwd());
-                views_1.add(tv_title);
-                views_1.add(tv_name);
-                views_1.add(tvPassword);
-                views_1.add(tvDel);
-                views_1.add(tvEdit);
+                addView(views_1,title);
+                addView(views_1,itemName);
+                addView(views_1,itemPwd);
+                addView(views_1,tvDel);
+                addView(views_1,tvEdit);
                 tvDel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -119,21 +121,17 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
             case R.layout.item_detail_notice:
                 TextView tvTitle = (TextView) baseViewHolder.getView(R.id.tv_title);
                 TextView tv_notice = (TextView) baseViewHolder.getView(R.id.tv_notice);
-                tvTitle.setText("密码归属于：" + bean.getAddress());
                 String notes = bean.getNotes();
                 if (TextUtils.isEmpty(notes)) {
                     notes = "没有任何备注信息";
                 }
                 tv_notice.setText(notes);
-                views_2.add(tvTitle);
-                views_2.add(tv_notice);
+                addView(views_2,tvTitle);
+                addView(views_2,tv_notice);
                 viewGone(views_2);
                 break;
             case R.layout.item_detail_more:
-                TextView myTvTitle = (TextView) baseViewHolder.getView(R.id.tv_title);
                 TextView tvNoData = (TextView) baseViewHolder.getView(R.id.tv_no_data);
-                myTvTitle.setText("密码归属于：" + bean.getAddress());
-                views_3.add(myTvTitle);
                 LinearLayout container = (LinearLayout) baseViewHolder.getView(R.id.container);
                 Context context = mConvertView.getContext();
                 LayoutInflater inflater = LayoutInflater.from(context);
@@ -142,11 +140,14 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                     List<ExtraOptionBean> extraOptionBeans = GsonHelper.toList(extraOptions, ExtraOptionBean.class);
                     if (extraOptionBeans != null) {
                         tvNoData.setVisibility(View.GONE);
-                        for (ExtraOptionBean extraOptionBean : extraOptionBeans) {
-                            TextView view = (TextView) inflater.inflate(R.layout.view_more_item, null);
-                            view.setText(extraOptionBean.getKey() + " ： " + extraOptionBean.getValue());
-                            container.addView(view);
-                            views_3.add(view);
+                        int size = extraOptionBeans.size()>2?2:extraOptionBeans.size();
+                        for (int i = 0; i < size; i++) {
+                            ExtraOptionBean extraOptionBean = extraOptionBeans.get(i);
+                            DetaiItemView detaiItemView = new DetaiItemView(context);
+                            detaiItemView.setItemName(extraOptionBean.getKey());
+                            detaiItemView.setItemValue(extraOptionBean.getValue());
+                            container.addView(detaiItemView);
+                            views_3.add(detaiItemView);
                         }
                     }
                 }
@@ -154,6 +155,12 @@ public class DetailItemAdapter extends MultiTypeAdapter<ItemBean, Object> {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void addView(List<View> views_1, View tv_title) {
+        if (!views_1.contains(tv_title)){
+            views_1.add(tv_title);
         }
     }
 

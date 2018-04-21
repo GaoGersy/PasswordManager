@@ -74,6 +74,7 @@ public class PasswordDetailActivity extends BaseActivity {
             @Override
             public void onScrollStart(@NonNull RecyclerView.ViewHolder currentItemHolder, int adapterPosition) {
                 mIsTitleScroll = true;
+                mAdapter.lowLightItem(currentItemHolder);
             }
 
             @Override
@@ -81,10 +82,18 @@ public class PasswordDetailActivity extends BaseActivity {
                 if (mIsTitleScroll) {
                     mDetailDiscreteScrollView.smoothScrollToPosition(adapterPosition);
                 }
+
             }
 
             @Override
             public void onScroll(float scrollPosition, int currentPosition, int newPosition, @Nullable RecyclerView.ViewHolder currentHolder, @Nullable RecyclerView.ViewHolder newCurrent) {
+            }
+        });
+
+        mTitleDiscreteScrollView.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
+            @Override
+            public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+                mAdapter.hightLightItem(viewHolder);
             }
         });
 

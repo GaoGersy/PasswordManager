@@ -1,7 +1,6 @@
 package com.gersion.superlock.control;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,10 +32,10 @@ public class DetailNotesControl extends BaseDetailControl{
     //初始化控件
     public View initView() {
         mView = View.inflate(mContext, R.layout.item_note, null);
-        mNotes = (TextView) mView.findViewById(R.id.tv_notes);
-        if (!TextUtils.isEmpty(mKeyer.notes)){
-            mNotes.setText(mKeyer.notes);
-        }
+//        mNotes = (TextView) mView.findViewById(R.id.tv_notes);
+//        if (!TextUtils.isEmpty(mKeyer.notes)){
+//            mNotes.setText(mKeyer.notes);
+//        }
         return mView;
     }
 

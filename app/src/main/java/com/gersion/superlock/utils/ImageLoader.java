@@ -58,8 +58,8 @@ public class ImageLoader {
         Glide
                 .with(imageView.getContext())
                 .load(resId)
-                .placeholder(R.mipmap.yellow) //设置占位图
-                .error(R.mipmap.yellow) //设置错误图片
+//                .placeholder(R.mipmap.yellow) //设置占位图
+//                .error(R.mipmap.yellow) //设置错误图片
                 .bitmapTransform(new BlurTransformation(imageView.getContext(), 14, 5))
                 .into(imageView);
     }
@@ -79,7 +79,7 @@ public class ImageLoader {
     }
 
     public void loadLocalBlurImage(String path, ImageView imageView) {
-        loadLocalBlurImage(path,R.mipmap.yellow,imageView);
+        loadLocalBlurImage(path,R.mipmap.default_icon,imageView);
     }
 
     /*
@@ -97,7 +97,7 @@ public class ImageLoader {
     }
 
     public void loadLocalImage(String path, ImageView imageView) {
-        loadCircleImage(path,R.mipmap.yellow,imageView);
+        loadCircleImage(path,R.mipmap.default_icon,imageView);
     }
 
     /**
@@ -119,14 +119,14 @@ public class ImageLoader {
     }
 
     public void loadImage(String url, ImageView imageView) {
-        loadImage(url,R.mipmap.yellow,imageView);
+        loadImage(url,R.mipmap.default_icon,imageView);
     }
 
     public void loadGifImage(String url, int placeholder, ImageView imageView) {
     }
 
     public void loadCircleImage(String url, ImageView imageView) {
-        loadCircleImage(url,R.mipmap.yellow,imageView);
+        loadCircleImage(url,R.mipmap.default_icon,imageView);
     }
 
     public void loadCircleImage(String url, int placeholder, ImageView imageView) {

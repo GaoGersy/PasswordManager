@@ -56,4 +56,6 @@
     <dimen name="init_float_margin">20dp</dimen>
     <dimen name="collapsed_float_margin">5dp</dimen>
 
+    <dimen name="search_list_font_size">15sp</dimen>
+
 </resources>

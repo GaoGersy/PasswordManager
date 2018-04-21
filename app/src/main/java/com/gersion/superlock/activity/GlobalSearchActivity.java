@@ -103,7 +103,9 @@ public class GlobalSearchActivity extends BaseLifeActivity {
         for (PasswordData passwordBean : mPasswordBeans) {
             if (MatchUtils.isMatch(passwordBean.getAddress(), query) ||
                     MatchUtils.isMatch(passwordBean.getName(), query) ||
-                    MatchUtils.isMatch(passwordBean.getPwd(), query)) {
+                    MatchUtils.isMatch(passwordBean.getPwd(), query)||
+                    MatchUtils.isMatch(passwordBean.getNotes(),query)||
+                    MatchUtils.isMatch(passwordBean.getExtraOptions(),query)) {
                 mDataList.add(passwordBean);
             }
         }

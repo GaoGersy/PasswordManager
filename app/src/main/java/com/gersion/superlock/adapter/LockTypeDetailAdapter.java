@@ -22,7 +22,6 @@ public class LockTypeDetailAdapter extends MultiTypeAdapter<String, Object> {
 
     @Override
     protected void convert(final BaseViewHolder baseViewHolder, final String name) {
-        baseViewHolder.setText(R.id.tv_name, name);
         TextView tvEdit = (TextView) baseViewHolder.getView(R.id.tv_edit);
         TextView tvDel = (TextView) baseViewHolder.getView(R.id.tv_del);
         TextView tvSelect = (TextView) baseViewHolder.getView(R.id.tv_select);

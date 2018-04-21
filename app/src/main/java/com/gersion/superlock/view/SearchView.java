@@ -67,7 +67,7 @@ public class SearchView extends LinearLayout {
             if (attr == R.styleable.SearchView_search_hint) {
                 setHintText(a.getString(attr));
             } else if (attr == R.styleable.SearchView_search_background) {
-                setBackgroundColor(a.getColor(attr, getResources().getColor(R.color.font_black)));
+                setBackgroundColor(a.getColor(attr, getResources().getColor(R.color.font_item_color)));
             } else if (attr == R.styleable.SearchView_search_hint_color) {
                 setHintTextColor(a.getColor(attr, getResources().getColor(R.color.gray_e0)));
             } else if (attr == R.styleable.SearchView_search_text_size) {

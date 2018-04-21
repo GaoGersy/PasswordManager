@@ -14,7 +14,6 @@
             >
         <ImageView
                 android:id="@+id/piv_icon"
-                android:src="@mipmap/yellow"
                 android:scaleType="center"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -60,7 +59,7 @@
             android:layout_marginRight="5dp"
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/white"
+            android:background="@color/item_font_grey"
             />
 
 </LinearLayout>

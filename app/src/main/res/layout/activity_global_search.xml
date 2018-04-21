@@ -12,8 +12,9 @@
     <com.gersion.superlock.view.smartRecycleView.SmartRecycleView
             android:visibility="gone"
             android:id="@+id/smartRecycleView"
-            android:background="@color/white"
+            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/primary_color"
             />
 </LinearLayout>

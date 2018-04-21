@@ -1,19 +1,19 @@
 package com.gersion.superlock.adapter;
 
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.gersion.library.adapter.MultiTypeAdapter;
 import com.gersion.library.viewholder.BaseViewHolder;
 import com.gersion.superlock.R;
+import com.gersion.superlock.app.SuperLockApplication;
 import com.gersion.superlock.bean.PasswordData;
 
 public class PasswordDetailTitleAdapter extends MultiTypeAdapter<PasswordData, Object> {
-    private OnItemClickListener mItemClickListener;
-
     @Override
     protected void convert(final BaseViewHolder baseViewHolder, final PasswordData bean) {
         baseViewHolder.setText(R.id.tv_name, bean.getName());
-        baseViewHolder.setText(R.id.tv_icon, bean.getAddress());
+        baseViewHolder.setText(R.id.tv_address, bean.getAddress());
 //        FrameLayout flContainer = (FrameLayout) baseViewHolder.getView(R.id.fl_container);
 //        flContainer.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -25,12 +25,20 @@ public class PasswordDetailTitleAdapter extends MultiTypeAdapter<PasswordData, O
 //        });
     }
 
-    public interface OnItemClickListener {
-        void onClik(View view, PasswordData bean);
+    public void hightLightItem(RecyclerView.ViewHolder baseViewHolder){
+        setColor((BaseViewHolder) baseViewHolder,R.color.font_yellow);
     }
 
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+    private void setColor(BaseViewHolder baseViewHolder, int colorResId) {
+        BaseViewHolder viewHolder = baseViewHolder;
+        TextView tvName = (TextView) viewHolder.getView(R.id.tv_name);
+        TextView tvAddress = (TextView) viewHolder.getView(R.id.tv_address);
+        int color = SuperLockApplication.getContext().getResources().getColor(colorResId);
+        tvName.setTextColor(color);
+        tvAddress.setTextColor(color);
+    }
 
-        mItemClickListener = itemClickListener;
+    public void lowLightItem(RecyclerView.ViewHolder currentItemHolder) {
+        setColor((BaseViewHolder) currentItemHolder,R.color.item_title_font_color);
     }
 }

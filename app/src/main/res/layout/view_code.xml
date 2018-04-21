@@ -4,7 +4,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/font_black"
         >
     <TextView
             android:visibility="gone"
@@ -25,8 +24,8 @@
         <TextView
                 android:id="@+id/tv_notice"
                 android:text="请输入密码"
-                android:textSize="15sp"
-                android:textColor="@color/gray_f0"
+                android:textSize="18sp"
+                android:textColor="@color/font_pure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -41,7 +40,7 @@
                 app:borderWidth="2px"
                 app:dividerColor="@color/transparent"
                 app:dividerWidth="0px"
-                app:codeColor="@color/white"
+                app:codeColor="@color/item_detail_font_color"
                 app:pointRadius="5dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="100dp"

@@ -4,7 +4,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/item_font_grey"
         >
     <com.gersion.superlock.view.ItemView
             android:layout_marginTop="20dp"

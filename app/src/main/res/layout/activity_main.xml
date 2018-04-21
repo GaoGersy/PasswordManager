@@ -10,12 +10,6 @@
             android:orientation="vertical"
             android:background="@color/primary_color"
             >
-        <com.gersion.superlock.view.TitleView
-                android:id="@+id/titleView"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="100pt"
@@ -27,8 +21,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textColor="@color/title_color"
+                    android:textSize="18sp"
                     />
 
             <ImageView
@@ -50,16 +44,12 @@
                     android:layout_marginRight="15dp"
                     android:textSize="4sp"
                     android:text="● ● ●"
-                    android:textColor="@color/white"
+                    android:textColor="@color/item_font_grey"
                     android:gravity="center"
                     android:background="@drawable/menu_back_drawable"
                     />
 
         </RelativeLayout>
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@color/bg_home_black"/>
         <FrameLayout
                 android:id="@+id/fl_container"
                 android:layout_width="match_parent"
@@ -105,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:text="密码生成器"
                     android:typeface="sans"
-                    android:textColor="@color/white"
+                    android:textColor="@color/item_font_grey"
                     android:textSize="16sp"
                     android:gravity="center_vertical"
                     android:padding="15dp"
@@ -122,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:text="设置"
                     android:typeface="sans"
-                    android:textColor="@color/white"
+                    android:textColor="@color/item_font_grey"
                     android:textSize="16sp"
                     android:gravity="center_vertical"
                     android:padding="15dp"
@@ -139,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:text="分享"
                     android:typeface="sans"
-                    android:textColor="@color/white"
+                    android:textColor="@color/item_font_grey"
                     android:textSize="16sp"
                     android:gravity="center_vertical"
                     android:padding="15dp"

@@ -6,7 +6,7 @@
         android:paddingLeft="15dp"
         android:paddingTop="10dp"
         android:gravity="center"
-        android:background="#ffffff"
+        android:background="@color/item_bg"
         >
 
     <RelativeLayout
@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/ll_icon"
                 android:typeface="sans"
-                android:textColor="@color/font_black"
+                android:textColor="@color/font_item_color"
                 android:textSize="16sp"
                 />
 

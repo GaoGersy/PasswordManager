@@ -3,6 +3,7 @@ package com.gersion.superlock.adapter;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gersion.superlock.R;
@@ -83,6 +84,7 @@ public class SearchAdapter extends BaseRVAdapter<PasswordData> implements IRVAda
         private TextView mTvPassword;
         private TextView mTvName;
         private TextView mTvTitle;
+        private ImageView mIcon;
 
         public SeachViewHolder(View itemView) {
             super(itemView);
@@ -97,7 +99,7 @@ public class SearchAdapter extends BaseRVAdapter<PasswordData> implements IRVAda
             mTvName = findView(R.id.tv_name);
             mTvTitle = findView(R.id.tv_title);
             mTvPassword = findView(R.id.tv_password);
-
+            mIcon = findView(R.id.piv_icon);
         }
 
         @Override
@@ -116,6 +118,9 @@ public class SearchAdapter extends BaseRVAdapter<PasswordData> implements IRVAda
                     KeyboardUtils.hideSoftInput(globalSearchActivity);
                 }
             });
+            Integer icon = passwordData.getIcon();
+            int iconResource = icon == null ? R.mipmap.default_icon : icon;
+            mIcon.setImageResource(iconResource);
         }
     }
 

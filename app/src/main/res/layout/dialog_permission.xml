@@ -18,7 +18,7 @@
     <TextView
             android:id="@+id/tv_content"
             android:layout_marginTop="5dp"
-            android:textColor="@color/font_black"
+            android:textColor="@color/font_item_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -31,7 +31,7 @@
                 android:id="@+id/tv_ok"
                 android:text="去设置"
                 android:textSize="15sp"
-                android:textColor="@color/font_black"
+                android:textColor="@color/font_item_color"
                 android:layout_alignParentRight="true"
                 android:padding="10dp"
                 android:layout_width="wrap_content"

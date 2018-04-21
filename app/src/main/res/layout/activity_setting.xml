@@ -21,7 +21,6 @@
     <com.gersion.superlock.view.SettingView
             android:id="@+id/open_lock"
             app:setting_title="开启程序锁"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:setting_switch_show="true"

@@ -225,7 +225,7 @@
                 android:paddingLeft="48dp"
                 android:paddingRight="48dp"
                 android:scaleType="fitCenter"
-                android:tint="@color/white"
+                android:tint="@color/item_font_grey"
                 android:src="@drawable/img_kb_delete"
                 android:tag="delete"
                 />

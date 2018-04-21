@@ -3,10 +3,10 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="#ffffff"
+        android:background="@color/title_bg"
         android:orientation="vertical"
         android:paddingLeft="15dp"
-        android:paddingRight="12dp"
+        android:paddingRight="5dp"
         android:paddingTop="12dp"
         >
 
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/ll_icon"
-                android:textColor="@color/font_black"
+                android:textColor="@color/item_font_grey"
                 android:typeface="sans"
                 android:textSize="16sp"
                 />

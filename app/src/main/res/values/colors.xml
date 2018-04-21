@@ -9,7 +9,7 @@
     <color name="material_white">#f9f9f9</color>
     <color name="app_theme_color">#888888</color>
     <color name="transpant">#00000000</color>
-    <color name="white">#4f5c72</color>
+    <color name="item_font_grey">#4f5c72</color>
     <color name="bg_home">#2E3542</color>
     <color name="bg_home_black">#252932</color>
     <color name="font_color">#7DD2F3</color>
@@ -25,7 +25,7 @@
     <color name="gray_f1">#E9EAEA</color>
     <color name="gray_77">#777777</color>
     <color name="light_gray">#F2F3F5</color>
-    <color name="font_black">#5f5f5f</color>
+    <color name="font_item_color">#4f5c72</color>
     <color name="font_grey">#737373</color>
     <color name="global_bg">#9000</color>
     <color name="title">#090e17</color>
@@ -34,10 +34,13 @@
     <color name="password_bg">#f8f9fb</color>
     <color name="password_boarder">#f0f2f1</color>
     <color name="confirm">#a75190</color>
-    <color name="item_divider">#d9d9d9</color>
-    <color name="item_bg">#11ffffff</color>
+    <color name="item_divider">#4f5c72</color>
     <color name="primary_color">#151320</color>
     <color name="title_bg">#1e1c2a</color>
+    <color name="font_yellow">#ff9500</color>
+    <color name="font_list_grey">#6a7e9f</color>
+    <color name="title_color">#d3ceff</color>
+    <color name="item_bg">#1e1c2a</color>
 
     <!--<color name="white">#4f5c72</color>-->
     <!--<color name="primary_color">#151320</color>-->
@@ -50,7 +53,7 @@
     <color name="item_home">#534693</color>
     <color name="item_password">#7abe45</color>
     <color name="item_notes">#5856d6</color>
-    <color name="theme_grey_bg">#efeff0</color>
+    <color name="theme_grey_bg">#151320</color>
     <color name="edit_text_bg">#fff</color>
     <color name="button_bg">#5856d6</color>
 
@@ -60,10 +63,16 @@
     <color name="text_enabled">#FFFFFFFF</color>
     <color name="text_disabled">#4DFFFFFF</color>
 
+    <color name="bg_pure">#392f54</color>
+    <color name="font_pure">#9081bb</color>
 
-    <color name="item_title_bg">#3C4450</color>
-    <color name="item_title_font_color">#C2D0E9</color>
-    <color name="item_detail_font_color">#1C1C1C</color>
+    <color name="font_black_yellow">#ac6605</color>
+
+
+    <color name="item_title_bg">#211e2e</color>
+    <color name="item_title_font_color">#4f5c72</color>
+    <color name="item_detail_font_color">#5f45a9</color>
+    <color name="item_detail_bg_color">#211e2e</color>
     <color name="item_title_check_font_color">#20242B</color>
 
     <color name="colorInitFloatBackground">#b0ffffff</color>

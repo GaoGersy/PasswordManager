@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@color/item_font_grey"
         >
     <com.gersion.superlock.view.TitleView
             android:id="@+id/titleView"
@@ -16,7 +16,7 @@
             android:text="   为了保证您的密码数据安全，备份密码数据后请保存好您现在的超级密码，以免下次导入密码数据时失败！"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/font_black"
+            android:textColor="@color/font_item_color"
             android:textSize="15sp"
             android:padding="10dp"
             />

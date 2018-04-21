@@ -85,7 +85,7 @@
                 android:layout_marginTop="30dp"
                 android:visibility="visible"
                 android:text="下一步"
-                android:textColor="@color/white"
+                android:textColor="@color/item_font_grey"
                 android:gravity="center"
                 android:background="@drawable/shape_confirm_bg"
                 android:padding="10dp"

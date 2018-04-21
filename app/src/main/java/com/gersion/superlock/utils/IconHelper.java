@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class IconHelper {
-    private static final String ICONS = "alipay,aliyun,apple,baidu,bilibili,csdn,douban,evernote,facebook,github,guokr,jd,jeujin,jianshu,kingsoft,linkedin,linux,mail,momo,netease,netease_music,onenote,qihoo,qq,renren,sina,skype,steam_game,taobao,tencent_music,tencent_video,tencent_weibo,wandoujia,wechat,windows,wiz_note,xiami,xiaomi,xunlei,youdao_note,youku,zaker,zhihu";
+    private static final String ICONS = "alipay,apple,baidu,bili,csdn,default_icon,douban,github,guoke,jd,jianshu,linux,mail,momo,qq,sina,taobao,tudou,wangyi,wangyiyunyinyue,weixin,weizhi,windows,xiami,xiaomi,xunlei,yingxiang,youku,zakker,zhihu";
 
     public static List<IconBean> getIconResourceId() {
         String[] split = ICONS.split(",");

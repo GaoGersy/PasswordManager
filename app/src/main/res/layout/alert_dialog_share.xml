@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="朋友圈"
-                        android:textColor="@color/font_black"
+                        android:textColor="@color/font_item_color"
                         android:textSize="@dimen/text_size_16"
                         />
             </LinearLayout>
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="微信"
-                        android:textColor="@color/font_black"
+                        android:textColor="@color/font_item_color"
                         android:textSize="@dimen/text_size_16"
                         />
             </LinearLayout>
@@ -105,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="QQ"
-                        android:textColor="@color/font_black"
+                        android:textColor="@color/font_item_color"
                         android:textSize="@dimen/text_size_16"
                         />
             </LinearLayout>

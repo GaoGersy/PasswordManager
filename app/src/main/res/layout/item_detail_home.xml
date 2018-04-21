@@ -20,9 +20,8 @@
         <ImageView
                 android:id="@+id/iv_icon"
                 android:visibility="visible"
-                android:src="@mipmap/ic_launcher"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginLeft="20dp"
                 />
         <TextView
@@ -31,20 +30,18 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/font_color"
+                android:textColor="@color/font_list_grey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
-
     </LinearLayout>
     <ImageView
             android:id="@+id/iv_info"
-            android:layout_gravity="right"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/info"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
+            android:layout_gravity="right|bottom"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/arrow"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             />
 </FrameLayout>

@@ -15,8 +15,8 @@
             android:gravity="center"
             android:maxLines="1"
             android:text="绘制解锁图案"
-            android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textColor="@color/font_pure"
+            android:textSize="18sp"/>
     <com.andrognito.patternlockview.PatternLockView
             android:id="@+id/patter_lock_view"
             android:layout_width="280dp"

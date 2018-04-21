@@ -117,6 +117,7 @@ public class AddPasswordActivity extends BaseActivity implements View.OnClickLis
                 mCetvName.setText(mItemBean.getName());
                 mEtNotes.setText(mItemBean.getNotes());
                 mCetvPassword.setText(mItemBean.getPwd());
+                mIvSelectIcon.setImageResource(mItemBean.getIcon());
                 mIsEdit = true;
                 String extraOptions = mItemBean.getExtraOptions();
                 if (extraOptions != null) {
